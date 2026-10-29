@@ -1,9 +1,10 @@
 {
   "version": 1,
-  "status": "in_progress",
+  "status": "paused_by_user",
   "notes": [
     "Existing Paimon, Klee and Venti illustrations are preserved; legacy assets are not regenerated.",
-    "Visual reference mapping inspected from contact sheets; detailed reference inspection precedes each generation."
+    "Visual reference mapping inspected from contact sheets; detailed reference inspection precedes each generation.",
+    "Production paused at user request. Seven new character sets are complete; remaining 24 characters have not been generated."
   ],
   "characters": [
     {
@@ -15,7 +16,40 @@
         "Genshin Real References/4879ec2df03cd8b091ed45793ee6665a.jpg"
       ],
       "status": "existing_preserved",
-      "images": {}
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/file_00000000896c82078246650c93b76d1e.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1062437,
+          "sha256": "0fb0909c61acd4c8b68a5041519806316c7ee7befb84740f885fd815a293899f",
+          "status": "existing_preserved"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/file_00000000a88c8211ac1122516d9058b6.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1062390,
+          "sha256": "86376b5015149db7cc0a323c79b6b8a1adac8fd4b20d7830a5b1e36ab94acff6",
+          "status": "existing_preserved"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/file_000000000850820781962f05c9c5dcdb.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1129324,
+          "sha256": "f7aca59d2fcf2fe845e58e7f4b3596ee516495aa33dfe938606e45c4a66c1f4c",
+          "status": "existing_preserved"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/file_0000000096bc82119a8150d1dcbaaabc.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1021809,
+          "sha256": "33ef2b5d6feb88bac67bb54e6cf6175f0eb918fe67a656c44e0276d14f12856a",
+          "status": "existing_preserved"
+        }
+      }
     },
     {
       "id": "klee",
@@ -25,7 +59,40 @@
         "Genshin Real References/bf2ac9fb48443d9eb0b85641c9b41433.jpg"
       ],
       "status": "existing_preserved",
-      "images": {}
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Klee_Santai.png",
+          "width": 1024,
+          "height": 1536,
+          "bytes": 2236287,
+          "sha256": "82d0ef6f47392622b31b57228268c30b4508ab8f65d5834526ada1ecf15d4f9e",
+          "status": "existing_preserved"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Klee_Senang.png",
+          "width": 1024,
+          "height": 1536,
+          "bytes": 2235343,
+          "sha256": "ff9f78f32e62223a52f88993f212a0973c4477358f347d08759447da63ea8cac",
+          "status": "existing_preserved"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Klee_Menyemangati.png",
+          "width": 1024,
+          "height": 1536,
+          "bytes": 2258048,
+          "sha256": "5fe34c989a387043f37b4735394e609afe76b3d01eb8a720c28adc5137f7225f",
+          "status": "existing_preserved"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Klee_Tidur.png",
+          "width": 1294,
+          "height": 1216,
+          "bytes": 1902424,
+          "sha256": "4201b6eb80c0837e0412142d676ba156b0d9733be9d3bf6a8d3175bc155894db",
+          "status": "existing_preserved"
+        }
+      }
     },
     {
       "id": "venti",
@@ -36,7 +103,40 @@
         "Genshin Real References/f7c551d00feebbea7324c3ad9c63d88b.jpg"
       ],
       "status": "existing_preserved",
-      "images": {}
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/file_00000000c1688211bb03202745954dc4.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1849732,
+          "sha256": "fb57620fc26982f444360427e874587b5499a68bea4df9d504280de4c39f9804",
+          "status": "existing_preserved"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/file_000000002b908211b558c99ccda0237d.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 2135799,
+          "sha256": "4fd854b651246ef3cbc8d1f4d2c42bc82386eef80452e5820115752256270fc5",
+          "status": "existing_preserved"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/file_00000000f4c08211816b51b889d35b66.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 2216310,
+          "sha256": "0683d3d61fc836128944c013e625b1ed6877e3ae1015fc59f47e6a3fb546030f",
+          "status": "existing_preserved"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/file_00000000f6e882118726b450089b1bd6.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 2017482,
+          "sha256": "b62fe0900ec773a3fb0321eda716dbcc69884b616939250f7f35883e7a70b025",
+          "status": "existing_preserved"
+        }
+      }
     },
     {
       "id": "amber",
@@ -189,7 +289,7 @@
       "references": [
         "Genshin Real References/f2e3b17b1801950346b243366677b6fb.jpg"
       ],
-      "status": "in_progress",
+      "status": "complete",
       "images": {
         "santai": {
           "path": "Genshin Chibi Generate Ver/Lisa_Santai.png",
@@ -197,6 +297,30 @@
           "height": 1254,
           "bytes": 1411908,
           "sha256": "00ab3c3fd77fa973e2ee8b5d430ff01b88174552a3fe2e5e21ecd61466581a56",
+          "status": "validated"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Lisa_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1315308,
+          "sha256": "f5a41372cea568389dc6528edf35f7c1ad34d611b039dad8450c19a999fe93bb",
+          "status": "validated"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Lisa_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1333701,
+          "sha256": "8236621cf9358b3864991f0648107a26ad8eba2268151f8f91a4a4e79f3a3ab5",
+          "status": "validated"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Lisa_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1354717,
+          "sha256": "8d703c1fe1209d4a57db099d4441a17aa936c77e737fdf3ea96938da6bd7c902",
           "status": "validated"
         }
       }
@@ -277,7 +401,7 @@
         "Genshin Real References/79dd4693c665c6aa3c2f9b552319613c.jpg",
         "Genshin Real References/8d6ff67f9ea760d098c437fecc807e03.jpg"
       ],
-      "status": "in_progress",
+      "status": "complete",
       "images": {
         "santai": {
           "path": "Genshin Chibi Generate Ver/Zhongli_Santai.png",
@@ -285,6 +409,30 @@
           "height": 1254,
           "bytes": 1210044,
           "sha256": "07c6aae5f386e914b7ea5c12857d205ad905afc7929d953b345834d120dd2a70",
+          "status": "validated"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Zhongli_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1588587,
+          "sha256": "24c837d1e0f64bf30c0d595584ad794afdee1367b61e22b08ae1e1a8767565a6",
+          "status": "validated"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Zhongli_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1607116,
+          "sha256": "722051bb743aa1160ae88030a55fd7c4a71e5dcb1c489c5eeccc8c736139c328",
+          "status": "validated"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Zhongli_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1570286,
+          "sha256": "73972b0424aa00454cff6c37d2d75413a31f542883660e85e9cb9661cd891b20",
           "status": "validated"
         }
       }
@@ -366,15 +514,39 @@
       "references": [
         "Genshin Real References/Raiden_Shogun_Official.png"
       ],
-      "status": "in_progress",
+      "status": "complete",
       "images": {
         "santai": {
           "path": "Genshin Chibi Generate Ver/Raiden_Shogun_Santai.png",
           "width": 1254,
           "height": 1254,
-          "bytes": 1924049,
-          "sha256": "64b00026f7c2d3a81b814315ccdf6226839ad61383cf2560e4d27544ec05a4ba",
-          "status": "needs_framing_review"
+          "bytes": 1404587,
+          "sha256": "899a627efe7b16d89ea08dc1787d1b19fad99a49144d5c75d97afe6dde8281d4",
+          "status": "validated"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Raiden_Shogun_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1481520,
+          "sha256": "147591e4ca1e2630d6a9085aa0128d32bceba78c75fdaaf87469399d9e078814",
+          "status": "validated"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Raiden_Shogun_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1911772,
+          "sha256": "291b99c8269c7c1f5f5df3db07e0aee67ff3f81dbca4c8236014ef29c6275eb4",
+          "status": "validated"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Raiden_Shogun_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1680613,
+          "sha256": "b9fb5faa2cbb82dde6bc6ebc2a3f3cef1f8d172e98b4c6119cc271ce83cd2264",
+          "status": "validated"
         }
       },
       "reference_sources": [
