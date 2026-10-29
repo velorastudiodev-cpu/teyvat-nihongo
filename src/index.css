@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #fbf3e4;
+  --color-paper-deep: #f1e4cb;
+  --color-ink: #3b2a24;
+  --color-torii: #d1402f;
+  --color-anemo: #3fae8f;
+  --color-geo: #e0a526;
+  --font-sans: "Noto Sans JP", system-ui, sans-serif;
+  --font-display: "Baloo 2", "Noto Sans JP", sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* chibi loops: SVG groups animate around their own box */
+.chibi :is(.chibi-blink, .chibi-breathe, .chibi-float, .chibi-hop, .chibi-doze, .chibi-zzz) { transform-box: fill-box; transform-origin: center; }
+.chibi-blink { animation: blink 4.2s infinite; }
+.chibi-breathe { animation: breathe 3s ease-in-out infinite; transform-origin: bottom; }
+.chibi-float { animation: float 2.6s ease-in-out infinite; }
+.chibi-hop { animation: hop .7s ease-in-out infinite; }
+.chibi-doze { animation: doze 4s ease-in-out infinite; transform-origin: bottom; }
+.chibi-zzz { animation: zzz 2.4s ease-in-out infinite; }
+
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes breathe { 50% { transform: scaleY(1.025); } }
+@keyframes float { 50% { transform: translateY(-6px); } }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-12px); } }
+@keyframes doze { 50% { transform: rotate(-3deg) scaleY(.98); } }
+@keyframes zzz { 0% { opacity: 0; transform: translate(0, 4px); } 50% { opacity: 1; } 100% { opacity: 0; transform: translate(6px, -10px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .chibi * { animation: none !important; }
+}
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes appear { to { opacity: 1; } }
+@keyframes drift { from { left: 2%; } to { left: 82%; } }
+
+/* keyboard users always see where they are */
+:focus-visible { outline: 3px solid var(--color-anemo); outline-offset: 2px; border-radius: 10px; }

@@ -1,0 +1,988 @@
+[
+ {
+  "id": "paimon",
+  "name": "Paimon",
+  "nameJa": "パイモン",
+  "region": "mondstadt",
+  "element": "none",
+  "buff": {
+   "game": "all",
+   "effect": "hint",
+   "value": 1,
+   "desc": "+1 petunjuk gratis per sesi"
+  },
+  "lines": [
+   {
+    "ja": "いっしょにがんばろう！",
+    "tr": "Ayo berjuang bersama!"
+   },
+   {
+    "ja": "パイモン、おなかすいた…",
+    "tr": "Paimon lapar…"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/paimon/idle.svg",
+   "happy": "/chibi/paimon/happy.svg",
+   "sad": "/chibi/paimon/sad.svg",
+   "sleep": "/chibi/paimon/sleep.svg"
+  }
+ },
+ {
+  "id": "klee",
+  "name": "Klee",
+  "nameJa": "クレー",
+  "region": "mondstadt",
+  "element": "pyro",
+  "buff": {
+   "game": "kana-rain",
+   "effect": "scoreMult",
+   "value": 1.2,
+   "desc": "Skor ×1.2 di Kana Rain"
+  },
+  "lines": [
+   {
+    "ja": "ドカーン！",
+    "tr": "Duaar!"
+   },
+   {
+    "ja": "クレー、がんばる！",
+    "tr": "Klee akan berusaha!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/klee/idle.svg",
+   "happy": "/chibi/klee/happy.svg",
+   "sad": "/chibi/klee/sad.svg",
+   "sleep": "/chibi/klee/sleep.svg"
+  }
+ },
+ {
+  "id": "venti",
+  "name": "Venti",
+  "nameJa": "ウェンティ",
+  "region": "mondstadt",
+  "element": "anemo",
+  "buff": {
+   "game": "listening-echo",
+   "effect": "slowAudio",
+   "value": 1,
+   "desc": "Audio 0.75× gratis di Listening Echo"
+  },
+  "lines": [
+   {
+    "ja": "風がうたってるよ。",
+    "tr": "Angin sedang bernyanyi."
+   },
+   {
+    "ja": "いっしょに歌おう！",
+    "tr": "Ayo bernyanyi bersama!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/venti/idle.svg",
+   "happy": "/chibi/venti/happy.svg",
+   "sad": "/chibi/venti/sad.svg",
+   "sleep": "/chibi/venti/sleep.svg"
+  }
+ },
+ {
+  "id": "amber",
+  "name": "Amber",
+  "nameJa": "アンバー",
+  "region": "mondstadt",
+  "element": "pyro",
+  "buff": {
+   "game": "kana-rain",
+   "effect": "extraTime",
+   "value": 3,
+   "desc": "+3 detik di Kana Rain"
+  },
+  "lines": [
+   {
+    "ja": "偵察騎士アンバー、参上！",
+    "tr": "Ksatria pengintai Amber, hadir!"
+   },
+   {
+    "ja": "ねらいをさだめて！",
+    "tr": "Bidik dengan tepat!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/amber/idle.svg",
+   "happy": "/chibi/amber/happy.svg",
+   "sad": "/chibi/amber/sad.svg",
+   "sleep": "/chibi/amber/sleep.svg"
+  }
+ },
+ {
+  "id": "diluc",
+  "name": "Diluc",
+  "nameJa": "ディルック",
+  "region": "mondstadt",
+  "element": "pyro",
+  "buff": {
+   "game": "domain-run",
+   "effect": "comboShield",
+   "value": 1,
+   "desc": "Combo tidak putus 1× di Domain Run"
+  },
+  "lines": [
+   {
+    "ja": "…悪くない。",
+    "tr": "…Tidak buruk."
+   },
+   {
+    "ja": "つづけろ。",
+    "tr": "Lanjutkan."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/diluc/idle.svg",
+   "happy": "/chibi/diluc/happy.svg",
+   "sad": "/chibi/diluc/sad.svg",
+   "sleep": "/chibi/diluc/sleep.svg"
+  }
+ },
+ {
+  "id": "jean",
+  "name": "Jean",
+  "nameJa": "ジン",
+  "region": "mondstadt",
+  "element": "anemo",
+  "buff": {
+   "game": "all",
+   "effect": "streakFreeze",
+   "value": 1,
+   "desc": "+1 Streak Freeze per minggu"
+  },
+  "lines": [
+   {
+    "ja": "騎士団の名にかけて。",
+    "tr": "Demi nama Ordo Ksatria."
+   },
+   {
+    "ja": "休むことも大事よ。",
+    "tr": "Istirahat juga penting."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/jean/idle.svg",
+   "happy": "/chibi/jean/happy.svg",
+   "sad": "/chibi/jean/sad.svg",
+   "sleep": "/chibi/jean/sleep.svg"
+  }
+ },
+ {
+  "id": "barbara",
+  "name": "Barbara",
+  "nameJa": "バーバラ",
+  "region": "mondstadt",
+  "element": "hydro",
+  "buff": {
+   "game": "domain-run",
+   "effect": "heal",
+   "value": 1,
+   "desc": "Pulihkan 1 nyawa tiap 10 soal di Domain Run"
+  },
+  "lines": [
+   {
+    "ja": "バーバラ、準備OK！",
+    "tr": "Barbara siap!"
+   },
+   {
+    "ja": "元気出して！",
+    "tr": "Semangat!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/barbara/idle.svg",
+   "happy": "/chibi/barbara/happy.svg",
+   "sad": "/chibi/barbara/sad.svg",
+   "sleep": "/chibi/barbara/sleep.svg"
+  }
+ },
+ {
+  "id": "lisa",
+  "name": "Lisa",
+  "nameJa": "リサ",
+  "region": "mondstadt",
+  "element": "electro",
+  "buff": {
+   "game": "reading",
+   "effect": "furiganaPeek",
+   "value": 3,
+   "desc": "Lihat furigana 3× gratis di Reading"
+  },
+  "lines": [
+   {
+    "ja": "勉強の時間よ、かわいい子。",
+    "tr": "Waktunya belajar, manis."
+   },
+   {
+    "ja": "あら、よくできました。",
+    "tr": "Wah, bagus sekali."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/lisa/idle.svg",
+   "happy": "/chibi/lisa/happy.svg",
+   "sad": "/chibi/lisa/sad.svg",
+   "sleep": "/chibi/lisa/sleep.svg"
+  }
+ },
+ {
+  "id": "kaeya",
+  "name": "Kaeya",
+  "nameJa": "ガイア",
+  "region": "mondstadt",
+  "element": "cryo",
+  "buff": {
+   "game": "fill-blank-rush",
+   "effect": "freezeTimer",
+   "value": 2,
+   "desc": "Timer berhenti 2 detik saat combo 5"
+  },
+  "lines": [
+   {
+    "ja": "ふふ、面白い。",
+    "tr": "Hehe, menarik."
+   },
+   {
+    "ja": "油断するなよ。",
+    "tr": "Jangan lengah."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/kaeya/idle.svg",
+   "happy": "/chibi/kaeya/happy.svg",
+   "sad": "/chibi/kaeya/sad.svg",
+   "sleep": "/chibi/kaeya/sleep.svg"
+  }
+ },
+ {
+  "id": "mona",
+  "name": "Mona",
+  "nameJa": "モナ",
+  "region": "mondstadt",
+  "element": "hydro",
+  "buff": {
+   "game": "all",
+   "effect": "projection",
+   "value": 1,
+   "desc": "Proyeksi kelulusan lebih detail"
+  },
+  "lines": [
+   {
+    "ja": "星が告げています。",
+    "tr": "Bintang telah berbicara."
+   },
+   {
+    "ja": "運命は変えられる。",
+    "tr": "Takdir bisa diubah."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/mona/idle.svg",
+   "happy": "/chibi/mona/happy.svg",
+   "sad": "/chibi/mona/sad.svg",
+   "sleep": "/chibi/mona/sleep.svg"
+  }
+ },
+ {
+  "id": "sucrose",
+  "name": "Sucrose",
+  "nameJa": "スクロース",
+  "region": "mondstadt",
+  "element": "anemo",
+  "buff": {
+   "game": "radical-forge",
+   "effect": "hint",
+   "value": 1,
+   "desc": "+1 petunjuk radikal di Radical Forge"
+  },
+  "lines": [
+   {
+    "ja": "じ、実験です…！",
+    "tr": "I-ini eksperimen…!"
+   },
+   {
+    "ja": "データを集めましょう。",
+    "tr": "Mari kumpulkan data."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/sucrose/idle.svg",
+   "happy": "/chibi/sucrose/happy.svg",
+   "sad": "/chibi/sucrose/sad.svg",
+   "sleep": "/chibi/sucrose/sleep.svg"
+  }
+ },
+ {
+  "id": "zhongli",
+  "name": "Zhongli",
+  "nameJa": "鍾離",
+  "region": "liyue",
+  "element": "geo",
+  "buff": {
+   "game": "domain-run",
+   "effect": "extraLife",
+   "value": 1,
+   "desc": "+1 nyawa di Domain Run"
+  },
+  "lines": [
+   {
+    "ja": "契約は守る。",
+    "tr": "Kontrak harus ditepati."
+   },
+   {
+    "ja": "急がずともよい。",
+    "tr": "Tak perlu terburu-buru."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/zhongli/idle.svg",
+   "happy": "/chibi/zhongli/happy.svg",
+   "sad": "/chibi/zhongli/sad.svg",
+   "sleep": "/chibi/zhongli/sleep.svg"
+  }
+ },
+ {
+  "id": "xiangling",
+  "name": "Xiangling",
+  "nameJa": "香菱",
+  "region": "liyue",
+  "element": "pyro",
+  "buff": {
+   "game": "vocab",
+   "effect": "xpMult",
+   "value": 1.1,
+   "desc": "XP kosakata ×1.1"
+  },
+  "lines": [
+   {
+    "ja": "おいしい言葉、召し上がれ！",
+    "tr": "Silakan nikmati kata-kata lezat!"
+   },
+   {
+    "ja": "グゥオパァー、いくよ！",
+    "tr": "Guoba, ayo!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/xiangling/idle.svg",
+   "happy": "/chibi/xiangling/happy.svg",
+   "sad": "/chibi/xiangling/sad.svg",
+   "sleep": "/chibi/xiangling/sleep.svg"
+  }
+ },
+ {
+  "id": "hutao",
+  "name": "Hu Tao",
+  "nameJa": "胡桃",
+  "region": "liyue",
+  "element": "pyro",
+  "buff": {
+   "game": "memory-match",
+   "effect": "revealPair",
+   "value": 1,
+   "desc": "Buka 1 pasangan di Memory Match"
+  },
+  "lines": [
+   {
+    "ja": "往生堂へようこそ！",
+    "tr": "Selamat datang di Wangsheng!"
+   },
+   {
+    "ja": "ひひっ、まだまだ！",
+    "tr": "Hihi, belum selesai!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/hutao/idle.svg",
+   "happy": "/chibi/hutao/happy.svg",
+   "sad": "/chibi/hutao/sad.svg",
+   "sleep": "/chibi/hutao/sleep.svg"
+  }
+ },
+ {
+  "id": "xiao",
+  "name": "Xiao",
+  "nameJa": "魈",
+  "region": "liyue",
+  "element": "anemo",
+  "buff": {
+   "game": "speed-speak",
+   "effect": "extraTime",
+   "value": 1,
+   "desc": "+1 detik per kata di Speed Speak"
+  },
+  "lines": [
+   {
+    "ja": "…集中しろ。",
+    "tr": "…Fokus."
+   },
+   {
+    "ja": "呼べば来る。",
+    "tr": "Panggil, aku akan datang."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/xiao/idle.svg",
+   "happy": "/chibi/xiao/happy.svg",
+   "sad": "/chibi/xiao/sad.svg",
+   "sleep": "/chibi/xiao/sleep.svg"
+  }
+ },
+ {
+  "id": "ganyu",
+  "name": "Ganyu",
+  "nameJa": "甘雨",
+  "region": "liyue",
+  "element": "cryo",
+  "buff": {
+   "game": "all",
+   "effect": "reviewXp",
+   "value": 1.15,
+   "desc": "XP review SRS ×1.15"
+  },
+  "lines": [
+   {
+    "ja": "お仕事、がんばります。",
+    "tr": "Saya akan bekerja keras."
+   },
+   {
+    "ja": "少し休憩しませんか？",
+    "tr": "Mau istirahat sebentar?"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/ganyu/idle.svg",
+   "happy": "/chibi/ganyu/happy.svg",
+   "sad": "/chibi/ganyu/sad.svg",
+   "sleep": "/chibi/ganyu/sleep.svg"
+  }
+ },
+ {
+  "id": "keqing",
+  "name": "Keqing",
+  "nameJa": "刻晴",
+  "region": "liyue",
+  "element": "electro",
+  "buff": {
+   "game": "fill-blank-rush",
+   "effect": "comboMult",
+   "value": 1.2,
+   "desc": "Multiplier combo ×1.2"
+  },
+  "lines": [
+   {
+    "ja": "効率がすべてよ。",
+    "tr": "Efisiensi adalah segalanya."
+   },
+   {
+    "ja": "次、いくわよ！",
+    "tr": "Berikutnya, ayo!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/keqing/idle.svg",
+   "happy": "/chibi/keqing/happy.svg",
+   "sad": "/chibi/keqing/sad.svg",
+   "sleep": "/chibi/keqing/sleep.svg"
+  }
+ },
+ {
+  "id": "qiqi",
+  "name": "Qiqi",
+  "nameJa": "七七",
+  "region": "liyue",
+  "element": "cryo",
+  "buff": {
+   "game": "all",
+   "effect": "mistakeReminder",
+   "value": 1,
+   "desc": "Mistake Journal mengingatkan lebih cepat"
+  },
+  "lines": [
+   {
+    "ja": "七七…覚える。",
+    "tr": "Qiqi… akan ingat."
+   },
+   {
+    "ja": "メモ、する。",
+    "tr": "Catat."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/qiqi/idle.svg",
+   "happy": "/chibi/qiqi/happy.svg",
+   "sad": "/chibi/qiqi/sad.svg",
+   "sleep": "/chibi/qiqi/sleep.svg"
+  }
+ },
+ {
+  "id": "raiden",
+  "name": "Raiden Shogun",
+  "nameJa": "雷電将軍",
+  "region": "inazuma",
+  "element": "electro",
+  "buff": {
+   "game": "stroke-duel",
+   "effect": "extraTime",
+   "value": 5,
+   "desc": "+5 detik di Stroke Duel"
+  },
+  "lines": [
+   {
+    "ja": "永遠を見せましょう。",
+    "tr": "Akan kutunjukkan keabadian."
+   },
+   {
+    "ja": "鍛錬あるのみ。",
+    "tr": "Hanya latihan yang ada."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/raiden/idle.svg",
+   "happy": "/chibi/raiden/happy.svg",
+   "sad": "/chibi/raiden/sad.svg",
+   "sleep": "/chibi/raiden/sleep.svg"
+  }
+ },
+ {
+  "id": "yae",
+  "name": "Yae Miko",
+  "nameJa": "八重神子",
+  "region": "inazuma",
+  "element": "electro",
+  "buff": {
+   "game": "reading",
+   "effect": "xpMult",
+   "value": 1.2,
+   "desc": "XP Reading ×1.2"
+  },
+  "lines": [
+   {
+    "ja": "ふふ、妾を楽しませておくれ。",
+    "tr": "Fufu, hiburlah aku."
+   },
+   {
+    "ja": "小説の続きが気になるのう。",
+    "tr": "Penasaran lanjutan novelnya."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/yae/idle.svg",
+   "happy": "/chibi/yae/happy.svg",
+   "sad": "/chibi/yae/sad.svg",
+   "sleep": "/chibi/yae/sleep.svg"
+  }
+ },
+ {
+  "id": "ayaka",
+  "name": "Kamisato Ayaka",
+  "nameJa": "神里綾華",
+  "region": "inazuma",
+  "element": "cryo",
+  "buff": {
+   "game": "grammar",
+   "effect": "hint",
+   "value": 1,
+   "desc": "+1 petunjuk pola grammar"
+  },
+  "lines": [
+   {
+    "ja": "よろしくお願いいたします。",
+    "tr": "Mohon bimbingannya."
+   },
+   {
+    "ja": "お見事です。",
+    "tr": "Luar biasa."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/ayaka/idle.svg",
+   "happy": "/chibi/ayaka/happy.svg",
+   "sad": "/chibi/ayaka/sad.svg",
+   "sleep": "/chibi/ayaka/sleep.svg"
+  }
+ },
+ {
+  "id": "kazuha",
+  "name": "Kaedehara Kazuha",
+  "nameJa": "楓原万葉",
+  "region": "inazuma",
+  "element": "anemo",
+  "buff": {
+   "game": "shadowing",
+   "effect": "tolerance",
+   "value": 1,
+   "desc": "Toleransi Shadowing +1 mora"
+  },
+  "lines": [
+   {
+    "ja": "風の声を聞け。",
+    "tr": "Dengarkan suara angin."
+   },
+   {
+    "ja": "一句、詠もうか。",
+    "tr": "Mau kubacakan haiku?"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/kazuha/idle.svg",
+   "happy": "/chibi/kazuha/happy.svg",
+   "sad": "/chibi/kazuha/sad.svg",
+   "sleep": "/chibi/kazuha/sleep.svg"
+  }
+ },
+ {
+  "id": "yoimiya",
+  "name": "Yoimiya",
+  "nameJa": "宵宮",
+  "region": "inazuma",
+  "element": "pyro",
+  "buff": {
+   "game": "particle-shooter",
+   "effect": "scoreMult",
+   "value": 1.2,
+   "desc": "Skor ×1.2 di Particle Shooter"
+  },
+  "lines": [
+   {
+    "ja": "花火みたいにいこう！",
+    "tr": "Ayo meriah seperti kembang api!"
+   },
+   {
+    "ja": "やったね！",
+    "tr": "Berhasil!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/yoimiya/idle.svg",
+   "happy": "/chibi/yoimiya/happy.svg",
+   "sad": "/chibi/yoimiya/sad.svg",
+   "sleep": "/chibi/yoimiya/sleep.svg"
+  }
+ },
+ {
+  "id": "nahida",
+  "name": "Nahida",
+  "nameJa": "ナヒーダ",
+  "region": "sumeru",
+  "element": "dendro",
+  "buff": {
+   "game": "all",
+   "effect": "newItemHint",
+   "value": 1,
+   "desc": "Mnemonic tambahan untuk kanji baru"
+  },
+  "lines": [
+   {
+    "ja": "知恵は分けあうものよ。",
+    "tr": "Kebijaksanaan itu untuk dibagi."
+   },
+   {
+    "ja": "夢の中でも覚えられるわ。",
+    "tr": "Bahkan dalam mimpi pun bisa hafal."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/nahida/idle.svg",
+   "happy": "/chibi/nahida/happy.svg",
+   "sad": "/chibi/nahida/sad.svg",
+   "sleep": "/chibi/nahida/sleep.svg"
+  }
+ },
+ {
+  "id": "alhaitham",
+  "name": "Alhaitham",
+  "nameJa": "アルハイゼン",
+  "region": "sumeru",
+  "element": "dendro",
+  "buff": {
+   "game": "reading",
+   "effect": "skipPenalty",
+   "value": 1,
+   "desc": "Tidak ada penalti skip di Reading"
+  },
+  "lines": [
+   {
+    "ja": "論理的に考えろ。",
+    "tr": "Berpikirlah logis."
+   },
+   {
+    "ja": "読書の邪魔をするな。",
+    "tr": "Jangan ganggu bacaanku."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/alhaitham/idle.svg",
+   "happy": "/chibi/alhaitham/happy.svg",
+   "sad": "/chibi/alhaitham/sad.svg",
+   "sleep": "/chibi/alhaitham/sleep.svg"
+  }
+ },
+ {
+  "id": "tighnari",
+  "name": "Tighnari",
+  "nameJa": "ティナリ",
+  "region": "sumeru",
+  "element": "dendro",
+  "buff": {
+   "game": "radical-forge",
+   "effect": "extraTime",
+   "value": 5,
+   "desc": "+5 detik di Radical Forge"
+  },
+  "lines": [
+   {
+    "ja": "基礎が大事だよ。",
+    "tr": "Dasar itu penting."
+   },
+   {
+    "ja": "ちゃんと休んだ？",
+    "tr": "Sudah istirahat cukup?"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/tighnari/idle.svg",
+   "happy": "/chibi/tighnari/happy.svg",
+   "sad": "/chibi/tighnari/sad.svg",
+   "sleep": "/chibi/tighnari/sleep.svg"
+  }
+ },
+ {
+  "id": "nilou",
+  "name": "Nilou",
+  "nameJa": "ニィロウ",
+  "region": "sumeru",
+  "element": "hydro",
+  "buff": {
+   "game": "listening-echo",
+   "effect": "replay",
+   "value": 1,
+   "desc": "+1 putar ulang audio"
+  },
+  "lines": [
+   {
+    "ja": "いっしょに踊りましょう！",
+    "tr": "Ayo menari bersama!"
+   },
+   {
+    "ja": "リズムに乗って！",
+    "tr": "Ikuti iramanya!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/nilou/idle.svg",
+   "happy": "/chibi/nilou/happy.svg",
+   "sad": "/chibi/nilou/sad.svg",
+   "sleep": "/chibi/nilou/sleep.svg"
+  }
+ },
+ {
+  "id": "cyno",
+  "name": "Cyno",
+  "nameJa": "セノ",
+  "region": "sumeru",
+  "element": "electro",
+  "buff": {
+   "game": "weekly-boss",
+   "effect": "damageMult",
+   "value": 1.15,
+   "desc": "Damage ×1.15 ke Weekly Boss"
+  },
+  "lines": [
+   {
+    "ja": "審判の時だ。",
+    "tr": "Waktunya penghakiman."
+   },
+   {
+    "ja": "…今のはダジャレだ。",
+    "tr": "…Tadi itu plesetan."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/cyno/idle.svg",
+   "happy": "/chibi/cyno/happy.svg",
+   "sad": "/chibi/cyno/sad.svg",
+   "sleep": "/chibi/cyno/sleep.svg"
+  }
+ },
+ {
+  "id": "furina",
+  "name": "Furina",
+  "nameJa": "フリーナ",
+  "region": "fontaine",
+  "element": "hydro",
+  "buff": {
+   "game": "all",
+   "effect": "kiramekiMult",
+   "value": 1.1,
+   "desc": "Kirameki ×1.1"
+  },
+  "lines": [
+   {
+    "ja": "拍手を！",
+    "tr": "Tepuk tangan!"
+   },
+   {
+    "ja": "主役はこのボクさ！",
+    "tr": "Bintang utamanya adalah aku!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/furina/idle.svg",
+   "happy": "/chibi/furina/happy.svg",
+   "sad": "/chibi/furina/sad.svg",
+   "sleep": "/chibi/furina/sleep.svg"
+  }
+ },
+ {
+  "id": "neuvillette",
+  "name": "Neuvillette",
+  "nameJa": "ヌヴィレット",
+  "region": "fontaine",
+  "element": "hydro",
+  "buff": {
+   "game": "jlpt-mock",
+   "effect": "analysis",
+   "value": 1,
+   "desc": "Analisis kelemahan lebih rinci"
+  },
+  "lines": [
+   {
+    "ja": "判決を下そう。",
+    "tr": "Mari jatuhkan putusan."
+   },
+   {
+    "ja": "水はおいしいものだ。",
+    "tr": "Air itu enak."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/neuvillette/idle.svg",
+   "happy": "/chibi/neuvillette/happy.svg",
+   "sad": "/chibi/neuvillette/sad.svg",
+   "sleep": "/chibi/neuvillette/sleep.svg"
+  }
+ },
+ {
+  "id": "navia",
+  "name": "Navia",
+  "nameJa": "ナヴィア",
+  "region": "fontaine",
+  "element": "geo",
+  "buff": {
+   "game": "domain-run",
+   "effect": "scoreMult",
+   "value": 1.1,
+   "desc": "Skor ×1.1 di Domain Run"
+  },
+  "lines": [
+   {
+    "ja": "さあ、いくわよ！",
+    "tr": "Ayo, berangkat!"
+   },
+   {
+    "ja": "マカロン食べる？",
+    "tr": "Mau makaron?"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/navia/idle.svg",
+   "happy": "/chibi/navia/happy.svg",
+   "sad": "/chibi/navia/sad.svg",
+   "sleep": "/chibi/navia/sleep.svg"
+  }
+ },
+ {
+  "id": "mavuika",
+  "name": "Mavuika",
+  "nameJa": "マーヴィカ",
+  "region": "natlan",
+  "element": "pyro",
+  "buff": {
+   "game": "weekly-boss",
+   "effect": "extraLife",
+   "value": 1,
+   "desc": "+1 nyawa melawan Weekly Boss"
+  },
+  "lines": [
+   {
+    "ja": "燃えあがれ！",
+    "tr": "Berkobarlah!"
+   },
+   {
+    "ja": "限界を超えろ！",
+    "tr": "Lampaui batasmu!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/mavuika/idle.svg",
+   "happy": "/chibi/mavuika/happy.svg",
+   "sad": "/chibi/mavuika/sad.svg",
+   "sleep": "/chibi/mavuika/sleep.svg"
+  }
+ },
+ {
+  "id": "kinich",
+  "name": "Kinich",
+  "nameJa": "キィニチ",
+  "region": "natlan",
+  "element": "dendro",
+  "buff": {
+   "game": "speed-speak",
+   "effect": "comboMult",
+   "value": 1.2,
+   "desc": "Combo ×1.2 di Speed Speak"
+  },
+  "lines": [
+   {
+    "ja": "仕事は仕事だ。",
+    "tr": "Kerja ya kerja."
+   },
+   {
+    "ja": "報酬は？",
+    "tr": "Bayarannya?"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/kinich/idle.svg",
+   "happy": "/chibi/kinich/happy.svg",
+   "sad": "/chibi/kinich/sad.svg",
+   "sleep": "/chibi/kinich/sleep.svg"
+  }
+ },
+ {
+  "id": "mualani",
+  "name": "Mualani",
+  "nameJa": "ムアラニ",
+  "region": "natlan",
+  "element": "hydro",
+  "buff": {
+   "game": "all",
+   "effect": "streakBonus",
+   "value": 1,
+   "desc": "Bonus Kirameki saat streak 7 hari"
+  },
+  "lines": [
+   {
+    "ja": "波に乗ろう！",
+    "tr": "Ayo naik ombak!"
+   },
+   {
+    "ja": "ナイス！",
+    "tr": "Mantap!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/mualani/idle.svg",
+   "happy": "/chibi/mualani/happy.svg",
+   "sad": "/chibi/mualani/sad.svg",
+   "sleep": "/chibi/mualani/sleep.svg"
+  }
+ }
+]
