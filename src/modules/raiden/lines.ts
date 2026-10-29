@@ -22,6 +22,12 @@ const PROMISED: Said[] = [
   { ja: 'おかえり。今日のこと、聞かせてください。', tr: 'Selamat datang. Ceritakan harimu padaku.' },
   { ja: 'おやすみ。夢でも会いましょうね。', tr: 'Selamat tidur. Sampai bertemu di mimpi, ya.' },
 ]
+const VOWED: Said[] = [
+  { ja: 'おはようございます、あなた。今日も一緒に頑張りましょう。', tr: 'Selamat pagi, anata. Hari ini pun ayo berusaha bersama.' },
+  { ja: 'お昼はお団子にしませんか。……ふふ、冗談です。', tr: 'Makan siang dango saja, yuk? …Hehe, bercanda.' },
+  { ja: 'おかえりなさい、あなた。今日もお疲れさまでした。', tr: 'Selamat datang kembali, anata. Terima kasih atas kerja kerasmu hari ini.' },
+  { ja: 'おやすみなさい。明日も、その先も、ずっと一緒です。', tr: 'Selamat tidur. Besok dan seterusnya, kita selalu bersama.' },
+]
 export const EI_LINES: Said[] = [
   { ja: '影と呼んでください。', tr: 'Panggil aku Ei.' },
   { ja: '甘いものは、心を穏やかにします。', tr: 'Makanan manis menenangkan hati.' },
@@ -32,12 +38,13 @@ export const EI_LINES: Said[] = [
 export function greetingFor(p?: Profile, hour = new Date().getHours()): Said | undefined {
   const r = p?.raiden
   if (p?.companionId !== 'raiden' || !r?.trial || bondLevel(r.bond) < 2) return
-  const set = bondLevel(r.bond) >= 10 ? PROMISED : r.ei ? EI : SHOGUN
+  const set = r.vow ? VOWED : bondLevel(r.bond) >= 10 ? PROMISED : r.ei ? EI : SHOGUN
   return set[BY_HOUR(hour)]
 }
 
 /** Who your companion is right now: the Raiden Shogun becomes Ei once you have met her. */
 export function companionVoice(p: Profile | undefined, c: { id: string; name: string; lines: Said[] }) {
+  if (c.id === 'raiden' && p?.raiden?.vow) return { name: 'Ei · 影', lines: [...VOWED, ...PROMISED] }
   if (c.id === 'raiden' && p?.raiden?.ei) return { name: bondLevel(p.raiden.bond) >= 10 ? 'Ei · 影' : 'Ei', lines: [...EI_LINES, ...(bondLevel(p.raiden.bond) >= 10 ? PROMISED : [])] }
   return { name: c.name, lines: c.lines }
 }

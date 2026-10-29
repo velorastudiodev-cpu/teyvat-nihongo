@@ -61,7 +61,7 @@ export function SkillMap() {
                   </svg>
                   <div className="absolute inset-0 bg-gradient-to-t from-night/80 via-night/20 to-transparent" />
                   <div className="absolute right-4 bottom-3 left-4 flex items-end justify-between gap-3 text-white">
-                    <div>
+                    <div className="min-w-0">
                       <p className="font-title text-2xl font-bold tracking-[.2em]">{realm.name.toUpperCase()}</p>
                       <p className="text-xs opacity-85"><span lang="ja">{realm.nameJa}</span> · {realm.title} · {r.level}</p>
                     </div>

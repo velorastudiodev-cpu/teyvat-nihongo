@@ -52,6 +52,11 @@
   --r-primary: #c4512a; --r-accent: #f08a45; --r-deep: #5e1d14; --r-soft: #fbe2d1; --r-glow: #ffc79a;
   --r-sky-1: #f0a26c; --r-sky-2: #fcebdc;
 }
+/* the Grand Narukami Shrine by night, opened by the last secret of the Raiden questline */
+:root[data-region="narukami"], [data-region="narukami"] {
+  --r-primary: #b0447c; --r-accent: #f29ac2; --r-deep: #2a1638; --r-soft: #f8e3ef; --r-glow: #ffd1e6;
+  --r-sky-1: #23193f; --r-sky-2: #c99ac4;
+}
 /* the Plane of Euthymia, opened by the Raiden Shogun's bond */
 :root[data-region="euthymia"], [data-region="euthymia"] {
   --r-primary: #6a43b8; --r-accent: #b48cf0; --r-deep: #1d1438; --r-soft: #e7dcf8; --r-glow: #e3d0ff;

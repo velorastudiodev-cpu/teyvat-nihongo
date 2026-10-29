@@ -9,7 +9,8 @@ import { today } from './srs/srs'
  * The Raiden Shogun questline.
  *   hidden → letter (reach Inazuma, or the secret: a 7-day streak and three taps on Inazuma's sigil)
  *   → trial (pass the Musou trial: she joins you) → bond levels 1–10 through daily talks and gifts
- *   → level 5 opens the Plane of Euthymia, where you meet Ei; level 10 is the promise of eternity.
+ *   → level 5 opens the Plane of Euthymia, where you meet Ei; level 10 is the promise of eternity
+ *   → the last secret: reaching N1 (or passing the N1 mock) after the promise opens 永遠の契り.
  */
 
 export const BOND_LEVELS = [0, 30, 80, 150, 240, 350, 480, 640, 830, 1050]
@@ -24,6 +25,7 @@ export const DANGO_PRICE = 60
 export const DANGO_BOND = 25
 export const TALK_BOND = 10          // per good answer, plus the same for finishing
 export const STUDY_BOND_MAX = 20     // studying with her as companion, credited at the day's talk
+export const VOW_REWARD = 1000
 
 export const REWARDS: { level: number; title: string; desc: string }[] = [
   { level: 1, title: 'Pengikut Shogun', desc: 'Raiden Shogun bergabung, bisa jadi companion, dan +300 Kirameki' },
@@ -37,7 +39,20 @@ export const REWARDS: { level: number; title: string; desc: string }[] = [
 export type RaidenPhase = 'hidden' | 'letter' | 'bond'
 export const phaseOf = (r?: RaidenBond): RaidenPhase => (!r?.letter ? 'hidden' : !r.trial ? 'letter' : 'bond')
 export const metEi = (p?: Profile) => !!p?.raiden?.ei
-export const titleOf = (r?: RaidenBond) => [...REWARDS].reverse().find((x) => r?.trial && bondLevel(r.bond) >= x.level)?.title
+export const VOW_TITLE = '永遠の契り · Ikrar Keabadian'
+export const titleOf = (r?: RaidenBond) => (r?.vow ? VOW_TITLE : [...REWARDS].reverse().find((x) => r?.trial && bondLevel(r.bond) >= x.level)?.title)
+
+/** The last secret opens once you have met Ei, made the Lv 10 promise, and your journey reached N1 (or passed its mock). */
+export const vowReady = (p: Profile | undefined, n1Passed: boolean) =>
+  !!p?.raiden?.ei && !p.raiden.vow && p.raiden.talks.includes('promise') && (p.stage === 'N1' || n1Passed)
+export const passedN1 = async () => (await db.exams.where('level').equals('N1').filter((x) => x.kind === 'mock' && x.passed).count()) > 0
+
+export async function takeVow() {
+  const p = await db.profile.get('me')
+  if (p?.raiden?.vow) return
+  await patch(() => ({ vow: Date.now() }))
+  await earn(VOW_REWARD)
+}
 
 const fresh = (): RaidenBond => ({ bond: 0, talks: [] })
 async function patch(f: (r: RaidenBond) => Partial<RaidenBond>) {

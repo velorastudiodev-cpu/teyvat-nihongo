@@ -367,7 +367,60 @@ function Euthymia() {
   )
 }
 
-const SCENES = { mondstadt: Mondstadt, liyue: Liyue, inazuma: Inazuma, sumeru: Sumeru, fontaine: Fontaine, natlan: Natlan, euthymia: Euthymia }
+/* ── Grand Narukami Shrine by night: the Sacred Sakura aglow, torii up the path, lanterns lit ─── */
+function Narukami() {
+  return (
+    <>
+      <circle cx={1150} cy={150} r={70} fill="#fff4f8" opacity={0.9} />
+      <g fill="#ffffff">{[[140, 90], [300, 180], [520, 70], [880, 120], [1300, 260], [1000, 220], [640, 200], [210, 300]].map(([x, yy], i) => <circle key={i} cx={x} cy={yy} r={1.5 + (i % 3)} className="anim-glint" style={{ animationDuration: `${2.5 + i * 0.4}s` }} />)}</g>
+      {/* Mt. Yougou */}
+      <path d="M0 640 C220 520 420 430 720 380 C1020 430 1220 520 1440 640 V900 H0z" fill="#3a2650" />
+      {/* the Sacred Sakura, glowing */}
+      <g transform="translate(720 420)">
+        <circle cx={0} cy={-170} r={260} fill="#ffc9df" opacity={0.16} />
+        <path d="M-16 0 C-22 -60 -50 -100 -90 -130 M16 0 C24 -70 60 -100 100 -120 M0 0 V-140" stroke="#2a1a33" strokeWidth={16} fill="none" strokeLinecap="round" />
+        <g fill="#f7b6cf"><circle cx={0} cy={-200} r={110} /><circle cx={-120} cy={-150} r={78} /><circle cx={124} cy={-160} r={80} /><circle cx={-60} cy={-260} r={60} /><circle cx={70} cy={-255} r={62} /></g>
+        <g fill="#ffe0ec" opacity={0.9}><circle cx={-30} cy={-230} r={50} /><circle cx={60} cy={-190} r={40} /><circle cx={-110} cy={-170} r={32} /></g>
+      </g>
+      {/* the shrine hall under the tree */}
+      <g transform="translate(720 470)">
+        <rect x={-110} y={-40} width={220} height={50} fill="#7a2c2a" />
+        <path d="M-150 -38 q150 -50 300 0 l-24 -24 q-126 -36 -252 0z" fill="#2a1a33" />
+        <rect x={-30} y={-30} width={60} height={40} fill="#f3d57a" opacity={0.85} />
+        <path d="M-110 -18 h220" stroke="#f3d57a" strokeWidth={3} />
+      </g>
+      {/* torii climbing the path */}
+      {[{ x: 720, y: 760, s: 1 }, { x: 720, y: 640, s: 0.72 }, { x: 720, y: 560, s: 0.52 }].map((t, i) => (
+        <g key={i} transform={`translate(${t.x} ${t.y}) scale(${t.s})`}>
+          <path d="M-130 -200 q130 22 260 0 l-10 20 h-240z" fill="#d23a35" />
+          <rect x={-124} y={-200} width={248} height={12} fill="#1c1220" />
+          <rect x={-104} y={-160} width={208} height={14} fill="#d23a35" />
+          <rect x={-86} y={-182} width={18} height={182} fill="#d23a35" /><rect x={68} y={-182} width={18} height={182} fill="#d23a35" />
+        </g>
+      ))}
+      {/* stone lanterns along the path */}
+      {[460, 600, 840, 980].map((x, i) => (
+        <g key={x} transform={`translate(${x} ${820 - (i % 2) * 6}) scale(${i === 1 || i === 2 ? 0.8 : 1})`} fill="#8b85a8">
+          <rect x={-10} y={-40} width={20} height={40} /><rect x={-26} y={-48} width={52} height={10} /><rect x={-18} y={-76} width={36} height={28} />
+          <path d="M-32 -76 h64 l-32 -22z" /><rect x={-9} y={-70} width={18} height={14} fill="#ffd98a" />
+          <circle cx={0} cy={-63} r={26} fill="#ffd98a" opacity={0.18} className="anim-glint" style={{ animationDuration: '3s' }} />
+        </g>
+      ))}
+      {/* a string of paper lanterns */}
+      <path d="M80 300 Q420 380 720 330 T1360 300" fill="none" stroke="#2a1a33" strokeWidth={3} />
+      {[160, 300, 440, 580, 860, 1000, 1140, 1280].map((x, i) => (
+        <g key={x} transform={`translate(${x} ${322 + Math.sin(i) * 14})`}>
+          <path d="M0 -6 v8" stroke="#2a1a33" strokeWidth={2} />
+          <rect x={-12} y={2} width={24} height={30} rx={10} fill={i % 2 ? '#ffd98a' : '#ff9aa8'} />
+          <rect x={-8} y={0} width={16} height={4} fill="#2a1a33" /><rect x={-8} y={30} width={16} height={4} fill="#2a1a33" />
+        </g>
+      ))}
+      <path d="M0 860 C360 840 720 870 1080 850 S1360 846 1440 850 V900 H0z" fill="#21142e" />
+    </>
+  )
+}
+
+const SCENES = { narukami: Narukami, mondstadt: Mondstadt, liyue: Liyue, inazuma: Inazuma, sumeru: Sumeru, fontaine: Fontaine, natlan: Natlan, euthymia: Euthymia }
 
 export function RegionScene({ region }: { region: keyof typeof SCENES }) {
   const Scene = SCENES[region]

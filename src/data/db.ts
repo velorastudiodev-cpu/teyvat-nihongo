@@ -35,6 +35,7 @@ export interface RaidenBond {
   ei?: number                // when Ei was met in the Plane of Euthymia
   taps?: number              // secret: taps on the Inazuma sigil
   dango?: number             // dango given
+  vow?: number               // the last secret: the shrine ceremony with Ei
 }
 
 /** One SRS item: a kana, kanji, word or grammar pattern. */

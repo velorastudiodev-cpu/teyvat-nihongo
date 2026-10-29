@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { db } from '../../data/db'
 import {
   BOND_LEVELS, DANGO_PRICE, EUTHYMIA_LEVEL, REWARDS, SECRET_STREAK, TRIAL, TRIAL_PASS, TRIAL_SIZE, TRIAL_REWARD,
-  bondLevel, finishTalk, giveDango, passTrial, phaseOf, talkFor, titleOf,
+  VOW_REWARD, VOW_TITLE, bondLevel, finishTalk, giveDango, passTrial, passedN1, phaseOf, takeVow, talkFor, titleOf, vowReady,
 } from '../../engine/raiden'
 import { today } from '../../engine/srs/srs'
 import { Chibi } from '../../characters/Chibi'
@@ -17,14 +17,15 @@ import { toast } from '../../ui/toastBus'
 import { useDeadline } from '../../ui/useDeadline'
 import { setRealmOverride } from '../../ui/region/override'
 import { Scene } from './Scene'
-import { LETTER, TALKS, type Talk } from './talks'
+import { LETTER, TALKS, VOW, type Talk } from './talks'
+import type { Realm } from '../../ui/region/regions'
 
-/** While a Raiden page is open the backdrop moves to Inazuma, or to the Plane of Euthymia once Ei is met. */
-function useRaidenRealm(euthymia: boolean) {
+/** While a Raiden page is open the backdrop moves to Inazuma, the Plane of Euthymia once Ei is met, or the shrine. */
+function useRaidenRealm(euthymia: boolean, realm?: Realm) {
   useEffect(() => {
-    setRealmOverride(euthymia ? 'euthymia' : 'inazuma')
+    setRealmOverride(realm ?? (euthymia ? 'euthymia' : 'inazuma'))
     return () => setRealmOverride(undefined)
-  }, [euthymia])
+  }, [euthymia, realm])
 }
 
 function TomoeMeter({ bond }: { bond: number }) {
@@ -50,7 +51,8 @@ function TomoeMeter({ bond }: { bond: number }) {
 export function RaidenPage() {
   const profile = useLiveQuery(() => db.profile.get('me'))
   const r = profile?.raiden
-  useRaidenRealm(!!r?.ei)
+  const n1 = useLiveQuery(passedN1, []) ?? false
+  useRaidenRealm(!!r?.ei, r?.vow ? 'narukami' : undefined)
   if (!profile) return null
   const phase = phaseOf(r)
 
@@ -75,6 +77,7 @@ export function RaidenPage() {
 
   const level = bondLevel(r!.bond)
   const talk = talkFor(profile)
+  const invited = vowReady(profile, n1)
   const name = r!.ei ? 'Ei · 影' : 'Raiden Shogun · 雷電将軍'
   const dangoToday = r!.dango === Date.parse(today())
   return (
@@ -87,6 +90,15 @@ export function RaidenPage() {
           {titleOf(r) && <span className="ml-2 text-xs text-paper/70">«{titleOf(r)}»</span>}
         </div>
       </section>
+
+      {invited && (
+        <Link to="/raiden/vow" className="block rounded-[20px] border border-[#f29ac2]/70 bg-gradient-to-br from-[#2a1638] via-[#6b2f5e] to-[#b0447c] p-5 text-center text-white shadow-xl">
+          <Icon name="sakura" className="mx-auto h-10 w-10 text-[#ffd1e6]" />
+          <b className="mt-1 block font-display text-xl">Undangan dari Kuil Narukami</b>
+          <span className="block text-sm text-white/80">Petualanganmu sudah sampai puncak. Yae Miko menyiapkan sesuatu untukmu dan Ei.</span>
+          <span className="g-btn mt-3 bg-[#ffd1e6] text-[#2a1638]"><Icon name="ring" /> Datang ke kuil</span>
+        </Link>
+      )}
 
       <section className={`${card} space-y-4`}>
         <h2 className="g-heading text-sm tracking-widest uppercase">Ikatan Keabadian · Lv {level}</h2>
@@ -123,6 +135,13 @@ export function RaidenPage() {
               </li>
             )
           })}
+          <li className={`flex items-center gap-3 rounded-2xl px-3 py-2 ${r!.vow ? 'bg-gradient-to-r from-[#f8e3ef] to-soft' : 'opacity-60'}`}>
+            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${r!.vow ? 'bg-[#b0447c] text-white' : 'bg-paper-deep'}`}><Icon name={r!.vow ? 'ring' : 'lock'} className="h-4 w-4" /></span>
+            <span>
+              <b className="font-display">{r!.vow ? VOW_TITLE : '??? (rahasia terakhir)'}</b><br />
+              <span className="text-sm opacity-75">{r!.vow ? 'Ikrar di Kuil Narukami. Ei memanggilmu あなた, tema Kuil Narukami terbuka.' : 'Saat petualanganmu mencapai N1 dan janji Lv 10 sudah diucapkan…'}</span>
+            </span>
+          </li>
         </ul>
       </section>
 
@@ -130,7 +149,7 @@ export function RaidenPage() {
         <section className={card}>
           <h2 className="g-heading mb-3 text-sm tracking-widest uppercase">Kenangan</h2>
           <div className="flex flex-wrap gap-2">
-            {TALKS.filter((t) => r!.talks.includes(t.id)).map((t) => (
+            {[...TALKS, VOW].filter((t) => r!.talks.includes(t.id) || (t === VOW && r!.vow)).map((t) => (
               <Link key={t.id} to={`/raiden/talk?replay=${t.id}`} className={`${btn} bg-paper text-sm`}><Icon name="replay" className="h-4 w-4" /> {t.title}</Link>
             ))}
           </div>
@@ -147,6 +166,39 @@ export function RaidenLetter() {
   return <Scene beats={LETTER} onEnd={() => navigate('/raiden/trial')} />
 }
 
+/** /raiden/vow: the last secret, the ceremony at the Grand Narukami Shrine. */
+export function RaidenVow() {
+  const profile = useLiveQuery(() => db.profile.get('me'))
+  const n1 = useLiveQuery(passedN1, []) ?? false
+  const [done, setDone] = useState(false)
+  useRaidenRealm(true, 'narukami')
+  if (!profile) return null
+  if (done) return (
+    <main className="mx-auto mt-4 max-w-md space-y-4 text-center">
+      <div className="relative flex justify-center">
+        <div className="absolute top-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,#ffd1e6_0%,transparent_68%)]" />
+        <div className="relative"><Chibi id="raiden" expression="happy" size={240} /></div>
+      </div>
+      <Dialogue name="Ei · 影" ja="ずっと一緒ですよ、あなた。" tr="Kita akan selalu bersama, anata." />
+      <section className={`${card} space-y-2`}>
+        <Icon name="ring" className="mx-auto h-10 w-10 text-[#b0447c]" />
+        <p className="font-display text-2xl font-black">{VOW_TITLE}</p>
+        <p className="text-sm">+{VOW_REWARD} Kirameki · tema <b>Kuil Narukami</b> terbuka · Ei punya sapaan baru untukmu setiap hari.</p>
+        <Link to="/raiden" className={`${btn} w-full bg-primary text-white`}>Kembali bersama Ei</Link>
+      </section>
+    </main>
+  )
+  if (!profile.raiden?.vow && !vowReady(profile, n1)) return (
+    <main className={`${card} mx-auto mt-6 max-w-md space-y-3 text-center`}>
+      <Icon name="lock" className="mx-auto h-10 w-10 opacity-50" />
+      <p className="font-display text-xl font-black">Kuil masih sunyi</p>
+      <p className="text-sm">Rahasia ini terbuka saat petualanganmu mencapai N1 dan janji Lv 10 sudah diucapkan.</p>
+      <Link to="/raiden" className={`${btn} bg-primary text-white`}>Kembali</Link>
+    </main>
+  )
+  return <Scene beats={VOW.beats} onEnd={async () => { await takeVow(); sfx.win(); setDone(true) }} />
+}
+
 /** /raiden/talk: today's conversation (or a replay from the memories, which gives no bond). */
 export function RaidenTalk() {
   const profile = useLiveQuery(() => db.profile.get('me'))
@@ -155,7 +207,7 @@ export function RaidenTalk() {
   // the talk is pinned when it ends, since finishing it makes today's talk disappear
   const [pinned, setPinned] = useState<Talk>()
   const [done, setDone] = useState<{ gained: number; study: number; good: number; levelUp?: number }>()
-  const talk = pinned ?? (replay ? TALKS.find((x) => x.id === replay) : talkFor(profile))
+  const talk = pinned ?? (replay ? [...TALKS, VOW].find((x) => x.id === replay) : talkFor(profile))
   useRaidenRealm(!!profile?.raiden?.ei || !!talk?.euthymia)
   if (!profile) return null
   if (!talk) return (

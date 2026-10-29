@@ -39,7 +39,7 @@ npm run lint
 - Mau ganti dari aplikasi? Buka **Karakter**, pilih karakter, lalu buka **Ekspresi & gambar sendiri** → *Upload*. Gambar disimpan di perangkat dan selalu didahulukan; *Reset* mengembalikan gambar bawaan.
 - Urutan sumber gambar: upload → `public/chibi/<id>/` → SVG bawaan → siluet.
 
-**Rahasia Raiden Shogun:** surat dari Tenshukaku tiba saat kamu mencapai Inazuma (N3). Ada juga jalan pintas rahasia untuk yang rajin; petunjuknya ada di halaman Raiden pada menu Karakter.
+**Rahasia Raiden Shogun:** surat dari Tenshukaku tiba saat kamu mencapai Inazuma (N3). Ada juga jalan pintas rahasia untuk yang rajin; petunjuknya ada di halaman Raiden pada menu Karakter. Dan di puncak petualangan (N1)… masih ada satu rahasia lagi.
 
 **Membangun ulang data kanji/kosakata** (unduh KanjiVG, KANJIDIC2, daftar JLPT):
 

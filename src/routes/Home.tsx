@@ -22,7 +22,7 @@ export function Home() {
   const pct = plan && plan.total ? Math.round((plan.learned / plan.total) * 100) : 0
 
   return (
-    <div className="grid gap-5 py-4 md:grid-cols-[1fr_1.1fr] md:items-start md:gap-8 md:py-8">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5 py-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:items-start md:gap-8 md:py-8">
       <section className="md:sticky md:top-20">
         <Companion id={profile.companionId} outfit={profile.outfit} size={230} greeting={greetingFor(profile)} />
       </section>
@@ -43,6 +43,8 @@ export function Home() {
             <span className="flex items-center gap-1 text-sm font-bold text-primary">Peta <Icon name="chevronRight" className="h-4 w-4" /></span>
           </div>
         </Link>
+
+        <RaidenCard profile={profile} show="events" />
 
         {/* the one next step */}
         {plan && <NextStep step={plan.main} />}
@@ -67,7 +69,7 @@ export function Home() {
           </div>
         )}
 
-        <RaidenCard profile={profile} />
+        <RaidenCard profile={profile} show="routine" />
         <TodayStrip />
         <PaceLine />
       </section>

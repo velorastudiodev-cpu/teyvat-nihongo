@@ -44,7 +44,7 @@ import { Domain } from './modules/daily/Domain'
 import { Revenge } from './modules/daily/Revenge'
 import { GateExam, MockTest } from './modules/exam/ExamPages'
 import { Insight } from './modules/insight/Insight'
-import { RaidenLetter, RaidenPage, RaidenTalk, RaidenTrial } from './modules/raiden/RaidenPage'
+import { RaidenLetter, RaidenPage, RaidenTalk, RaidenTrial, RaidenVow } from './modules/raiden/RaidenPage'
 
 const router = createBrowserRouter([
   {
@@ -94,6 +94,7 @@ const router = createBrowserRouter([
       { path: '/raiden', element: <RaidenPage /> },
       { path: '/raiden/letter', element: <RaidenLetter /> },
       { path: '/raiden/talk', element: <RaidenTalk /> },
+      { path: '/raiden/vow', element: <RaidenVow /> },
       { path: '/raiden/trial', element: <RaidenTrial /> },
       { path: '*', element: <p className="g-panel mt-6 p-8 font-display text-2xl">Jalan ini belum dibuka… <span lang="ja">迷子？</span></p> },
     ],

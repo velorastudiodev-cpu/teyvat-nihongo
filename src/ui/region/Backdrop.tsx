@@ -30,6 +30,10 @@ const MOTES: Record<Realm, { kind: 'fall' | 'rise'; shapes: ReactNode[]; colors:
     <g key="ember"><circle r={2.6} fill="currentColor" /><circle r={6} fill="currentColor" opacity={0.25} /></g>,
     <path key="flame" d="M0 8 C-5 4 -4 -2 0 -8 C4 -2 5 4 0 8z" fill="currentColor" />,
   ] },
+  narukami: { kind: 'fall', colors: ['#f7b6cf', '#ffd6e6', '#ffe9a8'], shapes: [
+    <g key="petal" fill="currentColor">{PETAL}</g>,
+    <path key="glint" d="M0 -6 L1.5 -1.5 6 0 1.5 1.5 0 6 -1.5 1.5 -6 0 -1.5 -1.5z" fill="currentColor" />,
+  ] },
   euthymia: { kind: 'fall', colors: ['#e7b8ff', '#f6dcff', '#ffffff'], shapes: [
     <g key="petal" fill="currentColor">{PETAL}</g>,
     <path key="star" d="M0 -6 L1.5 -1.5 6 0 1.5 1.5 0 6 -1.5 1.5 -6 0 -1.5 -1.5z" fill="currentColor" />,

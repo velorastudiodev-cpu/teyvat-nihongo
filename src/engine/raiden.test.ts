@@ -3,10 +3,10 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../data/db'
 import { parse } from './sentence'
 import { today } from './srs/srs'
-import { DAILY, LETTER, TALKS, type Beat } from '../modules/raiden/talks'
+import { DAILY, LETTER, TALKS, VOW, type Beat } from '../modules/raiden/talks'
 import { greetingFor } from '../modules/raiden/lines'
 import {
-  BOND_LEVELS, TRIAL, bondLevel, checkLetter, finishTalk, giveDango, passTrial, phaseOf, talkFor, tapSigil,
+  BOND_LEVELS, TRIAL, VOW_TITLE, bondLevel, checkLetter, finishTalk, giveDango, passTrial, passedN1, phaseOf, takeVow, talkFor, tapSigil, titleOf, vowReady,
 } from './raiden'
 
 const profile = () => db.profile.get('me')
@@ -67,8 +67,26 @@ describe('raiden questline', () => {
     expect(greetingFor(await profile(), 8)?.ja).toContain('一緒')    // Ei's morning line
   })
 
+  it('the last secret opens only at N1 (or a passed N1 mock), after meeting Ei and the Lv 10 promise', async () => {
+    await db.profile.update('me', { stage: 'N3' }); await checkLetter(); await passTrial()
+    const r = (await profile())!.raiden!
+    await db.profile.update('me', { raiden: { ...r, ei: Date.now(), bond: BOND_LEVELS[9], talks: ['promise'] } })
+    expect(vowReady(await profile(), await passedN1())).toBe(false)            // still at N3
+    await db.exams.add({ kind: 'mock', level: 'N1', at: Date.now(), passed: true, sections: [], tags: {} })
+    expect(vowReady(await profile(), await passedN1())).toBe(true)             // the N1 mock counts
+    await db.exams.clear(); await db.profile.update('me', { stage: 'N1' })
+    expect(vowReady(await profile(), await passedN1())).toBe(true)             // so does reaching N1
+    const before = (await profile())!.kirameki!
+    await takeVow(); await takeVow()
+    expect((await profile())!.kirameki).toBe(before + 1000)
+    expect(titleOf((await profile())!.raiden)).toBe(VOW_TITLE)
+    expect(vowReady(await profile(), true)).toBe(false)                         // once only
+    await db.profile.update('me', { companionId: 'raiden' })
+    expect(greetingFor(await profile(), 20)?.ja).toContain('あなた')
+  })
+
   it('every line parses, every question has a good reply, every trial answer is a choice', () => {
-    const beats: Beat[] = [...LETTER, ...TALKS.flatMap((t) => t.beats), ...DAILY.flatMap((d) => d('ei').beats)]
+    const beats: Beat[] = [...LETTER, ...TALKS.flatMap((t) => t.beats), ...VOW.beats, ...DAILY.flatMap((d) => d('ei').beats)]
     for (const b of beats) {
       expect(parse(b.ja).length).toBeGreaterThan(0)
       if ('options' in b) {

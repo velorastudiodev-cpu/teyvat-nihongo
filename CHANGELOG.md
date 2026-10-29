@@ -239,3 +239,12 @@
   - Latar region mendapat layer kompositor sendiri, jadi tidak digambar ulang saat scroll. `background-attachment: fixed` dihapus.
 - **Efek visual Ringan/Penuh** (Profil). Ringan adalah default di APK dan di perangkat ≤4 core: latar diam dan partikel lebih sedikit.
 - **APK langsung dari GitHub:** setiap push ke `main` memasang APK di link tetap `releases/latest/download/teyvat-nihongo.apk` (rilis "apk-terbaru"). Tidak perlu lagi membuka zip artifact. Tombolnya juga ada di Profil → Versi Android terbaru. Build lama yang masih berjalan dibatalkan kalau ada push baru.
+
+## Layar pas di HP + rahasia terakhir Raiden
+- **Beranda tidak lagi bisa digeser ke samping:** di layar sempit atau dengan setelan teks besar Android, kolom grid Beranda melebar melewati layar (397 px di layar 320 px). Kolom sekarang `minmax(0, 1fr)`, dan seluruh halaman memakai `overflow-x: clip`. Diuji di lebar 320/360 px dengan teks 100/130/160%: tidak ada halaman yang melebar.
+- **Rahasia terakhir, 永遠の契り (Ikrar Keabadian):**
+  - **Kapan terbuka:** saat petualangan mencapai N1 (atau lulus Mock Test N1), sudah bertemu Ei, dan janji Lv 10 sudah diucapkan.
+  - **Isi:** undangan dari Kuil Narukami muncul di atas Beranda. Yae Miko memimpin upacara di bawah Sakura Suci: ikrar dan cawan san-san-kudo, dengan pilihan jawaban dalam bahasa Jepang.
+  - **Hadiah:** gelar 永遠の契り, +1000 Kirameki, tema baru **Kuil Narukami** (malam, lentera, torii), dan sapaan harian baru dari Ei.
+  - Upacaranya bisa diputar ulang di Kenangan.
+- 73 unit test (+1 untuk rahasia terakhir) dan e2e alur Raiden lulus.

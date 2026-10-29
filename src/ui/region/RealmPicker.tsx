@@ -14,9 +14,9 @@ export function RealmPicker({ profile }: { profile: Profile }) {
   const home = useHomeRegion(profile)
   const owned = useLiveQuery(() => db.unlocks.where('id').startsWith('cos:theme:').primaryKeys(), []) ?? []
   const reached = REGIONS.findIndex((r) => r.id === home)
-  const open = (r: Realm) => r === 'euthymia' ? !!profile.raiden?.ei : REGIONS.findIndex((x) => x.id === r) <= reached || owned.includes(`cos:theme:${r}`)
+  const open = (r: Realm) => r === 'euthymia' ? !!profile.raiden?.ei : r === 'narukami' ? !!profile.raiden?.vow : REGIONS.findIndex((x) => x.id === r) <= reached || owned.includes(`cos:theme:${r}`)
   const chosen = profile.realm ?? 'auto'
-  const all: Realm[] = [...REGIONS.map((r) => r.id), 'euthymia']
+  const all: Realm[] = [...REGIONS.map((r) => r.id), 'euthymia', 'narukami']
   const pick = (realm: Profile['realm']) => db.profile.update('me', { realm })
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -24,7 +24,7 @@ export function RealmPicker({ profile }: { profile: Profile }) {
         <Icon name="compass" className="h-6 w-6 text-primary" /> Otomatis
         <span className="text-[10px] font-normal opacity-70">ikut region: {REALMS[home].name}</span>
       </button>
-      {all.filter((r) => r !== 'euthymia' || open(r)).map((r) => {
+      {all.filter((r) => (r !== 'euthymia' && r !== 'narukami') || open(r)).map((r) => {
         const ok = open(r)
         return (
           <button key={r} data-region={r} disabled={!ok} onClick={() => pick(r)}

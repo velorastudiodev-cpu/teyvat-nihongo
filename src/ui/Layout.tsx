@@ -37,7 +37,8 @@ export function Layout() {
   const r = REALMS[realm]
 
   return (
-    <div className="min-h-dvh">
+    // overflow-x-clip: nothing may make the page wider than the phone, or Android lets you pan it sideways
+    <div className="min-h-dvh overflow-x-clip">
       <Backdrop realm={realm} />
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-night focus:px-4 focus:py-2 focus:text-paper">Lewati ke konten</a>
       <Toaster />

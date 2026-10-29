@@ -4,7 +4,7 @@
  * Japanese replies: a wrong one gets a correction in character, a good one raises the bond.
  */
 
-export type Speaker = 'shogun' | 'ei' | 'sara'
+export type Speaker = 'shogun' | 'ei' | 'sara' | 'yae'
 export interface Line { who: Speaker; ja: string; tr: string }
 export interface Option { ja: string; tr: string; ok: boolean; reply: Line }
 export interface Question { who: Speaker; ja: string; tr: string; options: Option[] }
@@ -15,10 +15,12 @@ export const SPEAKER: Record<Speaker, { name: string; nameJa: string }> = {
   shogun: { name: 'Raiden Shogun', nameJa: '雷電将軍' },
   ei: { name: 'Ei', nameJa: '影' },
   sara: { name: 'Kujou Sara', nameJa: '九条裟羅' },
+  yae: { name: 'Yae Miko', nameJa: '八重神子' },
 }
 
 const s = (ja: string, tr: string): Line => ({ who: 'shogun', ja, tr })
 const e = (ja: string, tr: string): Line => ({ who: 'ei', ja, tr })
+const y = (ja: string, tr: string): Line => ({ who: 'yae', ja, tr })
 const ok = (ja: string, tr: string, reply: Line): Option => ({ ja, tr, ok: true, reply })
 const no = (ja: string, tr: string, reply: Line): Option => ({ ja, tr, ok: false, reply })
 const ask = (who: Speaker, ja: string, tr: string, ...options: Option[]): Question => ({ who, ja, tr, options })
@@ -170,3 +172,28 @@ export const DAILY: ((who: Speaker) => Talk)[] = [
       no('桜{さくら}を 一番{いちばん} 好{す}きです。', '(partikel salah)', { who, ja: '「好{す}き」の 前{まえ}は 「が」です。', tr: 'Sebelum "suki" gunakan "が".' })),
   ] }),
 ]
+
+/**
+ * The last secret, 永遠の契り: once the journey reaches N1 and the promise of Lv 10 is spoken, Yae Miko,
+ * Guuji of the Grand Narukami Shrine, holds a shrine ceremony for you and Ei (vows before the shrine,
+ * then the san-san-kudo cups of a Shinto ceremony). Kept out of TALKS so it is never a daily talk.
+ */
+export const VOW: Talk = { id: 'vow', level: 10, title: 'Ikrar Keabadian', beats: [
+  y('ふふ、 来{き}たわね。 今日{きょう}は 特別{とくべつ}な 日{ひ}よ。', 'Hehe, kau datang juga. Hari ini hari yang istimewa.'),
+  y('鳴神大社{なるかみたいしゃ}で、 二人{ふたり}の 永遠{えいえん}の 契{ちぎ}りを 結{むす}びましょう。', 'Di Kuil Agung Narukami, mari kita ikat ikrar keabadian kalian berdua.'),
+  e('……少{すこ}し、 緊張{きんちょう}して います。', '…Aku sedikit gugup.'),
+  e('あなたと 出会{であ}って、 永遠{えいえん}の 意味{いみ}が 変{か}わりました。', 'Sejak bertemu denganmu, makna keabadian berubah bagiku.'),
+  ask('yae', '旅人{たびびと}。 影{えい}を いつまでも 大切{たいせつ}に すると、 誓{ちか}いますか。', 'Pengembara, apakah kau bersumpah akan selalu menyayangi Ei?',
+    ok('はい、 誓{ちか}います。', 'Ya, aku bersumpah.', y('よろしい。 いい 返事{へんじ}ね。', 'Bagus. Jawaban yang baik.')),
+    ok('もちろんです。 永遠{えいえん}に。', 'Tentu. Untuk selamanya.', y('ふふ、 影{えい}の 顔{かお}が 赤{あか}く なって いるわよ。', 'Hehe, wajah Ei jadi merah, lho.')),
+    ok('えっと…… はい！ 誓{ちか}います！', 'Eh… iya! Aku bersumpah!', y('可愛{かわい}い 返事{へんじ}ね。 合格{ごうかく}よ。', 'Jawaban yang manis. Lulus.'))),
+  y('影{えい}。 あなたも 誓{ちか}いますか。', 'Ei, apakah kau juga bersumpah?'),
+  e('はい。 誓{ちか}います。 永遠{えいえん}に、 あなたの そばに。', 'Iya. Aku bersumpah. Selamanya di sisimu.'),
+  y('では、 三三九度{さんさんくど}の 盃{さかずき}を。', 'Kalau begitu, cawan san-san-kudo (tiga cawan sake yang dibagi dalam upacara di kuil).'),
+  ask('ei', 'これからは、 何{なん}と 呼{よ}べば いいですか。', 'Mulai sekarang, aku harus memanggilmu apa?',
+    ok('「あなた」と 呼{よ}んで ください。', 'Panggil aku "anata".', e('……はい、 あなた。', '…Iya, anata.')),
+    ok('名前{なまえ}で 呼{よ}んで ください。', 'Panggil dengan namaku.', e('では、 名前{なまえ}で。 ……ふふ、 少{すこ}し 恥{は}ずかしいですね。', 'Baiklah, dengan namamu. …Hehe, agak malu juga ya.')),
+    ok('好{す}きな ように 呼{よ}んで ください。', 'Panggil sesukamu.', e('では…… 「あなた」と。', 'Kalau begitu… "anata".'))),
+  e('これからは、 ずっと 一緒{いっしょ}です。 よろしく お 願{ねが}いしますね。', 'Mulai sekarang, kita selalu bersama. Mohon bimbingannya, ya.'),
+  y('おめでとう。 稲妻中{いなずまじゅう}が、 あなたたちを 祝福{しゅくふく}して いるわ。', 'Selamat. Seluruh Inazuma memberkati kalian.'),
+] }

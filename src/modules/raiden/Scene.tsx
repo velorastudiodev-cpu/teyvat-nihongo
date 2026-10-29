@@ -51,7 +51,7 @@ export function Scene({ beats, onEnd }: { beats: Beat[]; onEnd: (good: number) =
       <div className="relative flex flex-1 items-end justify-center">
         <div className="absolute bottom-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,var(--r-glow)_0%,transparent_68%)] opacity-80" />
         {line.who !== 'sara'
-          ? <motion.div key={line.who} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="relative"><Chibi id="raiden" expression={mood} size={300} /></motion.div>
+          ? <motion.div key={line.who} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="relative"><Chibi id={line.who === 'yae' ? 'yae' : 'raiden'} expression={mood} size={300} /></motion.div>
           : <div className="relative mb-10 flex h-40 w-40 items-center justify-center rounded-full border border-[#e3d0ff]/50 bg-night/50 text-[#e3d0ff]"><Icon name="scroll" className="h-20 w-20" /></div>}
       </div>
 
