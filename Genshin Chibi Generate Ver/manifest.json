@@ -1,0 +1,430 @@
+{
+  "version": 1,
+  "status": "in_progress",
+  "notes": [
+    "Existing Paimon, Klee and Venti illustrations are preserved; legacy assets are not regenerated.",
+    "Visual reference mapping inspected from contact sheets; detailed reference inspection precedes each generation."
+  ],
+  "characters": [
+    {
+      "id": "paimon",
+      "name": "Paimon",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/2e9628eba7416443b76c69f7fd9223b9.jpg",
+        "Genshin Real References/4879ec2df03cd8b091ed45793ee6665a.jpg"
+      ],
+      "status": "existing_preserved",
+      "images": {}
+    },
+    {
+      "id": "klee",
+      "name": "Klee",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/bf2ac9fb48443d9eb0b85641c9b41433.jpg"
+      ],
+      "status": "existing_preserved",
+      "images": {}
+    },
+    {
+      "id": "venti",
+      "name": "Venti",
+      "category": "archon",
+      "references": [
+        "Genshin Real References/215970a4badd80899c5431e8e86a32ac.jpg",
+        "Genshin Real References/f7c551d00feebbea7324c3ad9c63d88b.jpg"
+      ],
+      "status": "existing_preserved",
+      "images": {}
+    },
+    {
+      "id": "amber",
+      "name": "Amber",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/b5b565f9786a97d2a3cf112838263bad.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "diluc",
+      "name": "Diluc",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/0d7f8bfe623d63eef6b703a95458ec84.jpg",
+        "Genshin Real References/4479267a2f3e135e4d1ebd1f9a73c308.jpg",
+        "Genshin Real References/4744a89d13624165c75d1b8b964e9d72.jpg"
+      ],
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Diluc_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1222981,
+          "sha256": "c2c18e462ec0645d5034036f06820b202ca4fe55cd968d090643d58fccd7dd94",
+          "status": "validated"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Diluc_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1521082,
+          "sha256": "cdc60cc6706d6708c884900bbd3a885213e8b6e712449332f7e4f8a8c059bd99",
+          "status": "validated"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Diluc_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1430481,
+          "sha256": "f25473d41206aa92abd52e68c203189d798d4fb04002ea8523da33188947a6cd",
+          "status": "validated"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Diluc_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1558352,
+          "sha256": "a62da5d37632a907f7a8292831d00dd608df80983635614caba506dfdc40a658",
+          "status": "validated"
+        }
+      }
+    },
+    {
+      "id": "jean",
+      "name": "Jean",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/37bcc8bac40cead1e83b9eec00113759.jpg",
+        "Genshin Real References/898dc043cf1a2caf5b323ca73b476d88.jpg",
+        "Genshin Real References/a0850f8922ceb899665f3399b2333032.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "barbara",
+      "name": "Barbara",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/0aa9900673614aedffaed1839425104d.jpg",
+        "Genshin Real References/af517d828ec3d2b36d67c23e4d50ca87.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "lisa",
+      "name": "Lisa",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/0173c8c7603085b20252420fbb7d46f9.jpg",
+        "Genshin Real References/f2e3b17b1801950346b243366677b6fb.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "kaeya",
+      "name": "Kaeya",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/14bf4c100b0370d7bd1fd303891ce080.jpg",
+        "Genshin Real References/d307b113bc3b4fd3b7f6642b29cf6827.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "mona",
+      "name": "Mona",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/2bb69fc5ea467ede12d255f72db150ab.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "sucrose",
+      "name": "Sucrose",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/7f5b0f00773fed66ad344fe7c359b7e9.jpg",
+        "Genshin Real References/a1bea84e9bb4234f9bf269b5d4b21034.jpg",
+        "Genshin Real References/a2be3509229b7decc4a00b116720f28a.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "zhongli",
+      "name": "Zhongli",
+      "category": "archon",
+      "references": [
+        "Genshin Real References/141e3ee96ecffc2503d4808d8dbb0b0f.jpg",
+        "Genshin Real References/79dd4693c665c6aa3c2f9b552319613c.jpg",
+        "Genshin Real References/8d6ff67f9ea760d098c437fecc807e03.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "xiangling",
+      "name": "Xiangling",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/600db4823f96099327dd34b897e0f736.jpg",
+        "Genshin Real References/d873dc30f5101e4e3fb05db772cff729.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "hutao",
+      "name": "Hu Tao",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/4cd49211ced49f956ae7441c8dd9000b.jpg",
+        "Genshin Real References/c8d7203f1faba972f816d0abf9dbbf01.jpg",
+        "Genshin Real References/e6cac704fb748ee71392019ac0e96f18.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "xiao",
+      "name": "Xiao",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/49f2c96d7ca8a63b83a3509df9eef9de.jpg",
+        "Genshin Real References/a96b7a1018b040f1a6514fe3307a73c9.jpg",
+        "Genshin Real References/a9a780145cb5b386fd2d23c1c6ecba0b.jpg",
+        "Genshin Real References/bb2d38db364d5570551d49b316730fb5.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "ganyu",
+      "name": "Ganyu",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/206c36437ffe99c9844cbb7c0c399213.jpg",
+        "Genshin Real References/bfb26a823e3db7bbe462d7d8a636a2d9.jpg",
+        "Genshin Real References/c663ef12261150792ea0207dd56c8ca6.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "keqing",
+      "name": "Keqing",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/4fda4b0e95859174521e454aaaf2ce65.jpg",
+        "Genshin Real References/dd6f68c7c13951e97168abe1e6fdab70.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "qiqi",
+      "name": "Qiqi",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/d02e7ce93982855ce9f1b390da62d379.jpg",
+        "Genshin Real References/f538db0aa8fd1dbea9695e5211fdaeee.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "raiden",
+      "name": "Raiden Shogun",
+      "category": "archon",
+      "references": [],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "yae",
+      "name": "Yae Miko",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/74fa7c42f43749249e5447fd1415738d.jpg",
+        "Genshin Real References/97f817575f0329298ce51ea017ad9efe.jpg",
+        "Genshin Real References/dfa27ec438dcfce72e3e5a4407ae3ce8.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "ayaka",
+      "name": "Kamisato Ayaka",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/7efa0670e57d53289c5af98773cb30c5.jpg",
+        "Genshin Real References/dcdad464fca8a380c5c784a97000e7e7.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "kazuha",
+      "name": "Kaedehara Kazuha",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/5e310e94f1be4c58b24cf0c44f589ba3.jpg",
+        "Genshin Real References/6aea7be954e99d8a9234944d7a728832.jpg",
+        "Genshin Real References/a890487cb80763009ef474cc5cf8dd29.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "yoimiya",
+      "name": "Yoimiya",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/5c910785d2e4ed726402e84b4bba8591.jpg",
+        "Genshin Real References/a244fe23de8bd6917019f56ea3c52197.jpg",
+        "Genshin Real References/a7d4b4ec2f68e49602b3e889de75c4b2.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "nahida",
+      "name": "Nahida",
+      "category": "archon",
+      "references": [
+        "Genshin Real References/12e984eb177c71725c1c475e70a2c1aa.jpg",
+        "Genshin Real References/268d462065f6fddf431665f519a65853.jpg",
+        "Genshin Real References/bf919fb497e5e364dab451d92e31a967.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "alhaitham",
+      "name": "Alhaitham",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/9f0b4d80faf7542a42406d4275503e8d.jpg",
+        "Genshin Real References/bb92fac6fcafa3fe183c7d94bee8b047.jpg",
+        "Genshin Real References/e733920608e217adc95b688cdc7ef911.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "tighnari",
+      "name": "Tighnari",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/25dafc4ddc93a794dba182bac3c23ea6.jpg",
+        "Genshin Real References/52d45c5291aae89b371128701a70a025.jpg",
+        "Genshin Real References/db2226757fcff7337f18196af97f900f.jpg",
+        "Genshin Real References/de3b796ef53a50ac33967a5d9c354b94.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "nilou",
+      "name": "Nilou",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/92d47a074af0ac9c6fcbf2e6c8611393.jpg",
+        "Genshin Real References/a57aa2626ff281c9f1eb36836afa93a3.jpg",
+        "Genshin Real References/d9701183782ba303c4bbbd7a582dbfe3.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "cyno",
+      "name": "Cyno",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/64d4fac1367d96afbe0df1476baf320d.jpg",
+        "Genshin Real References/89b0debc411cea40581aff3ecc5056fb.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "furina",
+      "name": "Furina",
+      "category": "archon",
+      "references": [
+        "Genshin Real References/557604c5ba6694250a03ec6731a863a0.jpg",
+        "Genshin Real References/5c3b702d31ddbdbeeb1e744681c4532c.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "neuvillette",
+      "name": "Neuvillette",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/404c9b8226b4b645ca60ea7c0b3faeb5.jpg",
+        "Genshin Real References/fb0e969afc060a3457d23e1ebfc562d6.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "navia",
+      "name": "Navia",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/3e6df87f7c14932e588c3a8106eec5c0.jpg",
+        "Genshin Real References/bd2974433c4fd2397dc1bc8929eea467.jpg",
+        "Genshin Real References/ffdc1ebef21402388701e710b9f118ab.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "mavuika",
+      "name": "Mavuika",
+      "category": "archon",
+      "references": [
+        "Genshin Real References/489aa5b59c05360fb6169b6ff48a05ac.jpg",
+        "Genshin Real References/a4580ab3c00299de33a610de32f6eb73.jpg",
+        "Genshin Real References/cacb356b3e1665aaa4ba1a81e8bd6a2e.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "kinich",
+      "name": "Kinich",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/2a0c02740041e972ed36aee6aae26051.jpg",
+        "Genshin Real References/9f1158f5e9357d1ef1ad35967ed1525c.jpg",
+        "Genshin Real References/cb37fc0fe3e563dbfa2498b17a1189b5.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    },
+    {
+      "id": "mualani",
+      "name": "Mualani",
+      "category": "chibi",
+      "references": [
+        "Genshin Real References/3137cb77880598baaf4fc7c5a45ba9d8.jpg",
+        "Genshin Real References/7543b3d9c24f49841246ceda5b909403.jpg"
+      ],
+      "status": "pending",
+      "images": {}
+    }
+  ]
+}
