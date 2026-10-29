@@ -36,7 +36,7 @@ export function Characters() {
           <div className="relative grid gap-2 p-5 sm:grid-cols-[auto_1fr] sm:items-end"
             style={{ background: `linear-gradient(135deg, ${ELEMENT_COLOR[selected.element]}33, transparent 60%)` }}>
             <div className="relative mx-auto">
-              <div className="absolute inset-6 rounded-full blur-2xl" style={{ background: `${ELEMENT_COLOR[selected.element]}66` }} />
+              <div className="absolute -inset-4 rounded-full" style={{ background: `radial-gradient(circle, ${ELEMENT_COLOR[selected.element]}66 0%, transparent 68%)` }} />
               <div className="relative"><Chibi id={selected.id} size={210} /></div>
             </div>
             <div className="space-y-2 text-center sm:text-left">

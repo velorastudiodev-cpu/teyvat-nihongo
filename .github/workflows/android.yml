@@ -1,7 +1,8 @@
 name: Android APK
 
-# Every push to main builds an installable APK (Actions → this run → Artifacts).
-# Pushing a tag like v1.2.0 also attaches the APK to a GitHub Release for easy download on a phone.
+# Every push to main builds the APK and publishes it at one fixed link that opens straight on a phone:
+#   https://github.com/<owner>/<repo>/releases/latest/download/teyvat-nihongo.apk
+# (also kept as an Actions artifact). Pushing a tag like v1.2.0 keeps a permanent release of that version.
 on:
   push:
     branches: [main]
@@ -11,6 +12,11 @@ on:
 
 permissions:
   contents: write
+
+# a newer push replaces a build still running, so the download link always ends on the newest commit
+concurrency:
+  group: apk-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   apk:
@@ -41,15 +47,26 @@ jobs:
         run: ./gradlew assembleDebug --no-daemon
 
       - name: Name the APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk teyvat-nihongo-${{ github.run_number }}.apk
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk teyvat-nihongo.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: teyvat-nihongo-apk
-          path: teyvat-nihongo-${{ github.run_number }}.apk
+          name: teyvat-nihongo-${{ github.run_number }}
+          path: teyvat-nihongo.apk
 
-      - name: Attach to release
+      - name: Publish the "latest" download
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete apk-terbaru --cleanup-tag --yes || true
+          gh release create apk-terbaru teyvat-nihongo.apk \
+            --target "$GITHUB_SHA" --latest \
+            --title "Teyvat Nihongo · build ${{ github.run_number }}" \
+            --notes "APK terbaru dari commit ${GITHUB_SHA::7}. Buka dari HP, unduh teyvat-nihongo.apk, lalu pasang (terpasang sebagai update, progres aman)."
+
+      - name: Keep a release for version tags
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: teyvat-nihongo-${{ github.run_number }}.apk
+          files: teyvat-nihongo.apk

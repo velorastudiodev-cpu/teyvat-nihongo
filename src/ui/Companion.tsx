@@ -43,7 +43,7 @@ export function Companion({ id, size = 220, outfit, greeting }: { id: string; si
   return (
     <div className="flex flex-col items-center">
       <motion.button whileTap={{ scale: .94 }} onClick={tap} aria-label={`Sapa ${c.name}`} className="relative cursor-pointer">
-        <span className="absolute inset-x-6 bottom-2 h-6 rounded-[50%] bg-black/20 blur-md" />
+        <span className="absolute inset-x-6 bottom-1 h-7 rounded-[50%] bg-[radial-gradient(circle,rgba(0,0,0,.28)_0%,transparent_68%)]" />
         <Chibi id={id} expression={expr} size={size} outfit={outfit} />
       </motion.button>
       <div className="-mt-3 w-full max-w-md">

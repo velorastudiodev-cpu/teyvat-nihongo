@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
 import type { Realm } from './regions'
 import { RegionScene } from './scenes'
+import { useFx } from '../fx'
 
 /* Particles per realm: what drifts through the air there. */
 const PETAL = <path d="M0 -9 C6 -6 7 2 0 9 C-7 2 -6 -6 0 -9z M0 -9 l-1.5 3 1.5 -1 1.5 1z" />
@@ -80,12 +81,14 @@ function usePortrait() {
 export function Backdrop({ realm }: { realm: Realm }) {
   // phones: a taller canvas so the scene sits in the lower half at a readable scale instead of a close crop
   const view = usePortrait() ? '0 -760 1440 1660' : '0 0 1440 900'
+  const fx = useFx()
+  // its own compositor layer, so scrolling the page never repaints the scenery
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden>
+    <div className="pointer-events-none fixed inset-0 -z-10 [contain:strict] [transform:translateZ(0)]" aria-hidden>
       <svg viewBox={view} preserveAspectRatio="xMidYMax slice" className="absolute inset-0 h-full w-full">
         <RegionScene region={realm} />
       </svg>
-      <Particles realm={realm} />
+      <Particles realm={realm} count={fx === 'lite' ? 6 : 16} />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-black/10" />
     </div>
   )

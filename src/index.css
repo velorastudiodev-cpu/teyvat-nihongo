@@ -58,9 +58,11 @@
   --r-sky-1: #3a2a6e; --r-sky-2: #cdbdf0;
 }
 
+/* no rubber-band or Android stretch: the page stays put when pulled past its ends */
+html, body { overscroll-behavior: none; }
+
 body {
   background: linear-gradient(180deg, var(--r-sky-1), var(--r-sky-2) 70%);
-  background-attachment: fixed;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
@@ -99,9 +101,13 @@ body {
 
   /* dark glass, for headers, the tab bar and dialogue boxes */
   .g-glass {
-    background: linear-gradient(180deg, rgba(28, 32, 48, .86), rgba(28, 32, 48, .78));
+    background: linear-gradient(180deg, rgba(28, 32, 48, .95), rgba(28, 32, 48, .9));
     border: 1px solid rgba(236, 220, 182, .28);
     color: #ece5d8;
+  }
+  /* the frosted look costs a repaint of everything behind it, so only with full effects */
+  [data-fx="full"] .g-glass {
+    background: linear-gradient(180deg, rgba(28, 32, 48, .86), rgba(28, 32, 48, .78));
     backdrop-filter: blur(10px);
   }
 
@@ -183,8 +189,10 @@ body {
 @keyframes glint { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
 @keyframes flash { 0%, 91%, 100% { opacity: 0; } 92% { opacity: .9; } 94% { opacity: .1; } 96% { opacity: .7; } }
 @keyframes shimmer { to { background-position: 200% 0; } }
-.anim-fall { animation: fall linear infinite; }
-.anim-rise { animation: rise linear infinite; }
+.anim-fall { animation: fall linear infinite; will-change: transform; }
+.anim-rise { animation: rise linear infinite; will-change: transform, opacity; }
+/* lite effects: the scenery and small chibi hold still */
+[data-fx="lite"] :is(.anim-spin, .anim-glint, .anim-flash, .anim-sway) { animation: none !important; }
 .anim-sway { animation: sway ease-in-out infinite; }
 .anim-spin { animation: spin linear infinite; transform-box: fill-box; transform-origin: center; }
 .anim-glint { animation: glint ease-in-out infinite; }

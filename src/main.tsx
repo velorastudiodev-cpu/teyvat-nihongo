@@ -8,6 +8,7 @@ import '@fontsource/nunito/900.css'
 import '@fontsource/cinzel/700.css'
 import './index.css'
 import './native'
+import { applyFx } from './ui/fx'
 import { Layout } from './ui/Layout'
 import { Home } from './routes/Home'
 import { Characters } from './routes/Characters'
@@ -98,6 +99,8 @@ const router = createBrowserRouter([
     ],
   },
 ])
+
+applyFx()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

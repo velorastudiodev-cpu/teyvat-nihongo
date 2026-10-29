@@ -20,21 +20,22 @@ export interface Design {
 const failed = new Set<string>()
 
 /** Uploaded art (this expression, else idle) → public/chibi/<id>/ file → built-in SVG → silhouette. */
-export function Chibi({ id, expression = 'idle', size = 160, outfit }: { id: string; expression?: Expression; size?: number; outfit?: string }) {
+/** Small chibi (grids, badges) hold still unless `still={false}`: dozens of looping animations stutter on phones. */
+export function Chibi({ id, expression = 'idle', size = 160, outfit, still = size < 120 }: { id: string; expression?: Expression; size?: number; outfit?: string; still?: boolean }) {
   const c = getCharacter(id)
   const uploads = useLiveQuery(() => db.art.bulkGet([`${id}:${expression}`, `${id}:idle`]), [id, expression])
   const url = artUrl(uploads?.[0] ?? uploads?.[1])
   const src = c?.assets[expression]
   const [, rerender] = useState(0)
   if (!uploads) return <div style={{ width: size, height: size }} />
-  if (url) return <Picture src={url} expression={expression} size={size} alt={c?.name ?? id} outfit={outfit} />
+  if (url) return <Picture src={url} expression={expression} size={size} alt={c?.name ?? id} outfit={outfit} still={still} />
   if (src && !failed.has(src)) {
-    return <Picture src={src} expression={expression} size={size} alt={c?.name ?? id} outfit={outfit}
+    return <Picture src={src} expression={expression} size={size} alt={c?.name ?? id} outfit={outfit} still={still}
       onError={() => { failed.add(src); rerender((n) => n + 1) }} />
   }
   const design = DESIGNS[id]
   return design
-    ? <ChibiSvg design={design} element={c?.element ?? 'none'} expression={expression} size={size} title={c?.name ?? id} outfit={outfit} />
+    ? <ChibiSvg design={design} element={c?.element ?? 'none'} expression={expression} size={size} title={c?.name ?? id} outfit={outfit} still={still} />
     : <Silhouette element={c?.element ?? 'none'} size={size} title={c?.name ?? id} />
 }
 
@@ -55,28 +56,28 @@ function artUrl(art?: Art) {
 }
 
 /** Picture art (uploads and the bundled illustrations) gets the same motion as the SVGs, plus a drawn mood mark. */
-function Picture({ src, expression, size, alt, outfit, onError }: { src: string; expression: Expression; size: number; alt: string; outfit?: string; onError?: () => void }) {
-  const motion = expression === 'happy' ? 'chibi-hop' : expression === 'sleep' ? 'chibi-doze' : 'chibi-breathe'
+function Picture({ src, expression, size, alt, outfit, still, onError }: { src: string; expression: Expression; size: number; alt: string; outfit?: string; still?: boolean; onError?: () => void }) {
+  const motion = still ? '' : expression === 'happy' ? 'chibi-hop' : expression === 'sleep' ? 'chibi-doze' : 'chibi-breathe'
   return (
     <div className="relative" style={{ width: size, height: size }}>
-      <img src={src} alt={`${alt} (${expression})`} onError={onError} draggable={false}
-        className={`h-full w-full object-contain drop-shadow-[0_6px_10px_rgba(28,32,48,.25)] ${motion} ${expression === 'sleep' ? 'opacity-85' : ''}`} />
+      <img src={src} alt={`${alt} (${expression})`} onError={onError} draggable={false} decoding="async" loading="lazy" width={size} height={size}
+        className={`h-full w-full object-contain ${motion} ${expression === 'sleep' ? 'opacity-85' : ''}`} />
       {outfit && <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full">{OUTFIT_ART[outfit]}</svg>}
       {expression !== 'idle' && <svg viewBox="0 0 200 200" className="pointer-events-none absolute inset-0 h-full w-full"><Fx expression={expression} /></svg>}
     </div>
   )
 }
 
-function ChibiSvg({ design, element, expression, size, title, outfit }: { design: Design; element: Element; expression: Expression; size: number; title: string; outfit?: string }) {
-  const motion = expression === 'happy' ? 'chibi-hop' : expression === 'sleep' ? 'chibi-doze' : design.float ? 'chibi-float' : ''
+function ChibiSvg({ design, element, expression, size, title, outfit, still }: { design: Design; element: Element; expression: Expression; size: number; title: string; outfit?: string; still?: boolean }) {
+  const motion = still ? '' : expression === 'happy' ? 'chibi-hop' : expression === 'sleep' ? 'chibi-doze' : design.float ? 'chibi-float' : ''
   return (
     <svg viewBox="0 0 200 200" width={size} height={size} className="chibi" role="img" aria-label={`${title} (${expression})`}>
       <g className={motion}>
         <g stroke={INK} strokeWidth={4} strokeLinejoin="round" strokeLinecap="round">
           {design.back}
-          <g className={expression === 'sleep' ? '' : 'chibi-breathe'}>{design.body}</g>
+          <g className={expression === 'sleep' || still ? '' : 'chibi-breathe'}>{design.body}</g>
           <ellipse cx={100} cy={80} rx={54} ry={50} fill={design.skin ?? '#fde3cf'} />
-          <Face expression={expression} eye={design.eye} />
+          <Face expression={expression} eye={design.eye} still={still} />
           {design.front}
           {design.top}
           {outfit && OUTFIT_ART[outfit]}
@@ -88,7 +89,7 @@ function ChibiSvg({ design, element, expression, size, title, outfit }: { design
   )
 }
 
-function Face({ expression, eye }: { expression: Expression; eye: string }) {
+function Face({ expression, eye, still }: { expression: Expression; eye: string; still?: boolean }) {
   const openEyes = (small = false) => [80, 120].map((x) => (
     <g key={x}>
       <ellipse cx={x} cy={90} rx={small ? 8 : 9.5} ry={small ? 10 : 12.5} fill={eye} strokeWidth={3} />
@@ -102,7 +103,7 @@ function Face({ expression, eye }: { expression: Expression; eye: string }) {
       <ellipse cx={68} cy={106} rx={8} ry={4.5} fill="#f59a8f" stroke="none" opacity={0.55} />
       <ellipse cx={132} cy={106} rx={8} ry={4.5} fill="#f59a8f" stroke="none" opacity={0.55} />
       {expression === 'idle' && <>
-        <g className="chibi-blink">{openEyes()}</g>
+        <g className={still ? '' : 'chibi-blink'}>{openEyes()}</g>
         <path d="M94 108 Q100 113 106 108" strokeWidth={3} />
       </>}
       {expression === 'happy' && <>

@@ -7,12 +7,12 @@ Aplikasi belajar bahasa Jepang N5 → N1 bergaya game. Hanya untuk penggunaan pr
 ## Install
 
 ### Android (APK)
+**Unduh langsung dari HP:** https://github.com/velorastudiodev-cpu/teyvat-nihongo/releases/latest/download/teyvat-nihongo.apk
 
-1. Setiap push ke `main` menjalankan GitHub Actions (**Android APK**). Ini menjalankan lint, test, build, lalu menghasilkan APK.
-2. Buka tab **Actions** → run terbaru → bagian **Artifacts** → unduh `teyvat-nihongo-apk` (zip berisi `.apk`).
-   Kalau push tag `v1.0.0`, APK juga dilampirkan ke halaman **Releases**, jadi lebih mudah diunduh langsung dari HP.
-3. Di HP: buka file `.apk` → izinkan "Instal aplikasi tidak dikenal" untuk browser/Files → **Instal**.
-4. Saat pertama memakai latihan bicara, izinkan **mikrofon**. Suara Jepang memakai mesin TTS sistem. Kalau tidak bersuara, pasang data suara Jepang di *Setelan → Bahasa → Output teks-ke-ucapan* (Google TTS).
+1. Setiap push ke `main` menjalankan GitHub Actions (**Android APK**): lint, test, build, lalu APK-nya dipasang di link tetap di atas, yaitu rilis **apk-terbaru**. Build makan waktu ±5–8 menit; progresnya bisa dilihat di tab **Actions**.
+2. Buka link itu di HP → unduh `teyvat-nihongo.apk` → izinkan "Instal aplikasi tidak dikenal" untuk browser/Files → **Instal**. Di aplikasi, tombol yang sama ada di **Profil → Versi Android terbaru**.
+3. Saat pertama memakai latihan bicara, izinkan **mikrofon**. Suara Jepang memakai mesin TTS sistem. Kalau tidak bersuara, pasang data suara Jepang di *Setelan → Bahasa → Output teks-ke-ucapan* (Google TTS).
+4. Kalau HP terasa berat, atur **Profil → Efek visual → Ringan** (default di APK).
 
 Semua APK ditandatangani dengan kunci yang sama (`android/app/debug.keystore`). APK baru langsung terpasang sebagai update dan progres belajar tetap aman. Progres disimpan di HP; pindahkan antar-perangkat lewat **Export/Import JSON** di Profil.
 

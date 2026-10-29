@@ -5,6 +5,9 @@ import { btn, card } from '../../ui/kit'
 import { disableReminder, enableReminder, reminderHour } from '../../ui/reminder'
 import { toast } from '../../ui/toastBus'
 import { pref, setPref } from '../../ui/speak'
+import { setFx, useFx } from '../../ui/fx'
+
+const APK_URL = 'https://github.com/velorastudiodev-cpu/teyvat-nihongo/releases/latest/download/teyvat-nihongo.apk'
 
 /** Backup/restore and reminders. */
 export function Settings() {
@@ -13,6 +16,7 @@ export function Settings() {
   const [pick, setPick] = useState(hour >= 0 ? hour : 19)
   const [msg, setMsg] = useState<string>()
   const [sfxOn, setSfxOn] = useState(pref<string>('sfx', 'on') !== 'off')
+  const fx = useFx()
 
   const download = async () => {
     const data = await exportAll()
@@ -52,6 +56,21 @@ export function Settings() {
         <input type="checkbox" checked={sfxOn} onChange={(e) => { setPref('sfx', e.target.checked ? 'on' : 'off'); setSfxOn(e.target.checked) }} className="h-5 w-5 accent-[var(--color-anemo)]" />
         <Icon name="speaker" className="mr-1 h-4 w-4" />Efek suara (SFX) jawaban
       </label>
+      <div className="space-y-1">
+        <p className="font-bold"><Icon name="download" className="mr-1 h-4 w-4 text-primary" />Versi Android terbaru</p>
+        <p className="text-sm opacity-70">Setiap update di GitHub otomatis jadi APK baru. Pasang di atas versi lama; progres tetap aman.</p>
+        <a href={APK_URL} target="_blank" rel="noopener" className={`${btn} bg-deep text-white`}><Icon name="download" /> Unduh APK terbaru</a>
+      </div>
+      <div className="space-y-2">
+        <p className="font-bold"><Icon name="sparkle" className="mr-1 h-4 w-4 text-primary" />Efek visual</p>
+        <div className="flex flex-wrap gap-2">
+          {([['lite', 'Ringan', 'Paling lancar di HP: latar diam, partikel sedikit'], ['full', 'Penuh', 'Kincir berputar, kilat, kaca buram, lebih banyak partikel']] as const).map(([id, name, desc]) => (
+            <button key={id} onClick={() => setFx(id)} className={`${btn} flex-col items-start text-left ${fx === id ? 'bg-primary text-white' : 'bg-paper'}`}>
+              <span>{name}</span><span className="text-xs font-normal opacity-80">{desc}</span>
+            </button>
+          ))}
+        </div>
+      </div>
       <div className="space-y-2">
         <p className="font-bold"><Icon name="bell" className="mr-1 h-4 w-4 text-primary" />Pengingat dari companion</p>
         <p className="text-sm opacity-70">Notifikasi sekali sehari setelah jam pilihanmu kalau belum belajar. Karena tanpa server, pengingat hanya muncul selama aplikasi (atau PWA yang di-install) masih terbuka atau berjalan di latar belakang.</p>

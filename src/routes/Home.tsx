@@ -78,7 +78,7 @@ export function Home() {
 function NextStep({ step }: { step: Step }) {
   return (
     <Link to={step.to} className="group g-panel relative block overflow-hidden p-5">
-      <div className="pointer-events-none absolute -top-10 -right-8 h-36 w-36 rounded-full bg-glow/50 blur-2xl" />
+      <div className="pointer-events-none absolute -top-12 -right-10 h-44 w-44 rounded-full bg-[radial-gradient(circle,var(--r-glow)_0%,transparent_68%)]" />
       <p className="font-display text-xs font-extrabold tracking-widest text-primary uppercase">Lanjutkan petualangan</p>
       <div className="mt-2 flex items-center gap-4">
         <span className="g-chip h-14 w-14 shrink-0"><Icon name={step.icon} className="h-7 w-7" /></span>
@@ -120,7 +120,7 @@ function PaceLine() {
   const p = usePacePlan(profile)
   if (!p || !profile) return null
   return (
-    <Link to="/insight" className="flex items-center justify-between gap-3 rounded-2xl bg-night/55 px-4 py-2.5 text-sm text-paper backdrop-blur">
+    <Link to="/insight" className="flex items-center justify-between gap-3 rounded-2xl bg-night/80 px-4 py-2.5 text-sm text-paper">
       <span className="flex items-center gap-2"><Icon name="calendar" className="h-4.5 w-4.5 text-gold-soft" /> Estimasi lulus {profile.target}</span>
       <b className="font-display">{p.finish.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</b>
     </Link>

@@ -80,7 +80,7 @@ export function RaidenPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-4 py-4">
       <section className="relative flex flex-col items-center">
-        <div className="absolute top-10 h-56 w-56 rounded-full bg-glow/50 blur-3xl" />
+        <div className="absolute top-4 h-72 w-72 rounded-full bg-[radial-gradient(circle,var(--r-glow)_0%,transparent_68%)]" />
         <div className="relative"><Chibi id="raiden" expression={talk ? 'happy' : 'idle'} size={240} /></div>
         <div className="g-glass -mt-4 rounded-full px-5 py-1.5 text-center">
           <b className="font-display text-[#f2cf7a]">{name}</b>

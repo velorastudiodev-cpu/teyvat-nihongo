@@ -229,3 +229,13 @@
   - **Lv 5, Alam Euthymia:** bertemu Ei (影). Tema Alam Euthymia terbuka, dan companion berubah menjadi Ei dengan sapaan yang lebih hangat.
   - **Lv 10, Janji Keabadian:** gelar dan sapaan khusus sesuai waktu (pagi, siang, malam).
 - **Tes:** 72 unit test (+6 untuk alur Raiden dan validasi semua dialog). E2E M2–M8 dan alur Raiden (rahasia → surat → ujian → percakapan → Euthymia → Ei jadi companion) lulus.
+
+## Lebih lancar di HP + link APK langsung
+- **Layar tidak lagi "ketarik":** efek stretch Android 12+ saat menarik melewati ujung halaman dimatikan (`overscroll-behavior: none` dan `OVER_SCROLL_NEVER` di WebView).
+- **Lebih ringan:** diukur di Chromium dengan CPU diperlambat 6×. Halaman Karakter sebelumnya 22–25 fps, sekarang 60 fps; Beranda dan Peta tetap 60 fps.
+  - Chibi kecil (grid, kartu) tidak lagi beranimasi; filter bayangan pada gambar dihapus.
+  - Efek kaca buram (`backdrop-filter`) hanya aktif di mode Penuh.
+  - Glow besar diganti gradien biasa, bukan blur.
+  - Latar region mendapat layer kompositor sendiri, jadi tidak digambar ulang saat scroll. `background-attachment: fixed` dihapus.
+- **Efek visual Ringan/Penuh** (Profil). Ringan adalah default di APK dan di perangkat ≤4 core: latar diam dan partikel lebih sedikit.
+- **APK langsung dari GitHub:** setiap push ke `main` memasang APK di link tetap `releases/latest/download/teyvat-nihongo.apk` (rilis "apk-terbaru"). Tidak perlu lagi membuka zip artifact. Tombolnya juga ada di Profil → Versi Android terbaru. Build lama yang masih berjalan dibatalkan kalau ada push baru.
