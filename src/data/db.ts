@@ -44,7 +44,7 @@ export interface ExamResult {
 }
 export interface Score { id: string; best: number; at: number }   // id = "<game>:<mode>"
 /** User-uploaded chibi art, id = "<charId>:<expression>". */
-export interface Art { id: `${string}:${Expression}`; blob: Blob }
+export interface Art { id: `${string}:${Expression}`; blob: Blob; at?: number }   // at = upload time
 
 export const db = new Dexie('teyvat-nihongo') as Dexie & {
   profile: EntityTable<Profile, 'id'>

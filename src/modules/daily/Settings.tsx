@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { exportAll, importAll } from '../../engine/backup'
 import { btn, card } from '../../ui/kit'
 import { disableReminder, enableReminder, reminderHour } from '../../ui/reminder'
-import { toast } from '../../ui/toast'
+import { toast } from '../../ui/toastBus'
 import { pref, setPref } from '../../ui/speak'
 
 /** Backup/restore and reminders. */

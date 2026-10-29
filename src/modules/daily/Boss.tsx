@@ -10,9 +10,9 @@ import { getCharacter } from '../../characters'
 import { Buddy } from '../../ui/Buddy'
 import { btn, card } from '../../ui/kit'
 import { sfx } from '../../ui/sfx'
-import { useGameEnd } from '../../games/common'
+import { useGameEnd } from '../../games/hooks'
 import { ItemQuestion } from '../Review'
-import { weeklyBoss } from './Daily'
+import { weeklyBoss } from '../../engine/game/weekly'
 import { weekPool, type Q } from './pools'
 
 const BOSS_HP = 300
@@ -36,7 +36,6 @@ export function Boss() {
   const maxLives = 3 + (buff?.game === 'weekly-boss' && buff.effect === 'extraLife' ? buff.value : 0)
   const over = lives !== undefined && (hp <= 0 || lives <= 0)
   useGameEnd('weekly-boss:endless', over, BOSS_HP - Math.max(0, hp))
-  useEffect(() => { if (over && hp <= 0) claim(`boss:${week}`, BOSS_REWARD).then(setReward) }, [over])
 
   if (!pool || !profile) return null
   if (lives === undefined) return (
@@ -69,7 +68,11 @@ export function Boss() {
         </div>
       </div>
       <ItemQuestion key={n} item={pool[n % pool.length]} title={`Serangan ${n + 1}`} onDone={(right, ms) => {
-        if (right) { const dmg = Math.round((20 + Math.max(0, 10 - ms / 1000)) * dmgMult); setHp((h) => h - dmg); setHit(dmg); sfx.pop() }
+        if (right) {
+          const dmg = Math.round((20 + Math.max(0, 10 - ms / 1000)) * dmgMult)
+          setHp(hp - dmg); setHit(dmg); sfx.pop()
+          if (hp > 0 && hp - dmg <= 0) claim(`boss:${week}`, BOSS_REWARD).then(setReward)
+        }
         else { setLives((l) => (l ?? 1) - 1); setHit(undefined) }
         setN(n + 1)
       }} />

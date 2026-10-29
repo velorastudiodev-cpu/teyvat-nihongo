@@ -12,7 +12,8 @@ import { levelOpen } from '../kanji/content'
 import { LEVELS } from '../../data/kanji'
 import { btn, card } from '../../ui/kit'
 import { sfx } from '../../ui/sfx'
-import { ExamReport, ExamRunner, recordExam, type Answers } from './ExamRunner'
+import { ExamReport, ExamRunner } from './ExamRunner'
+import { recordExam, type Answers } from '../../engine/exam/record'
 
 export function MockTest() {
   const profile = useLiveQuery(() => db.profile.get('me'))

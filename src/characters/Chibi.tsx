@@ -1,11 +1,11 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../data/db'
 import { ELEMENT_COLOR, getCharacter, type Element, type Expression } from '.'
 import { DESIGNS } from './designs'
-import { OUTFIT_ART } from './parts'
-
-export const INK = '#3b2a24'
+import { OUTFIT_ART } from './outfits'
+import { INK } from './shapes'
+import type { Art } from '../data/db'
 
 export interface Design {
   skin?: string
@@ -23,7 +23,7 @@ const failed = new Set<string>()
 export function Chibi({ id, expression = 'idle', size = 160, outfit }: { id: string; expression?: Expression; size?: number; outfit?: string }) {
   const c = getCharacter(id)
   const uploads = useLiveQuery(() => db.art.bulkGet([`${id}:${expression}`, `${id}:idle`]), [id, expression])
-  const url = useObjectUrl(uploads?.[0]?.blob ?? uploads?.[1]?.blob)
+  const url = artUrl(uploads?.[0] ?? uploads?.[1])
   const src = c?.assets[expression]
   const [, rerender] = useState(0)
   if (!uploads) return <div style={{ width: size, height: size }} />
@@ -38,14 +38,19 @@ export function Chibi({ id, expression = 'idle', size = 160, outfit }: { id: str
     : <Silhouette element={c?.element ?? 'none'} size={size} title={c?.name ?? id} />
 }
 
-function useObjectUrl(blob?: Blob) {
-  const [url, setUrl] = useState<string>()
-  useEffect(() => {
-    if (!blob) return setUrl(undefined)
-    const u = URL.createObjectURL(blob)
-    setUrl(u)
-    return () => URL.revokeObjectURL(u)
-  }, [blob])
+/**
+ * One object URL per uploaded picture version. Live queries hand back a fresh Blob on every
+ * re-read, so URLs are keyed by art id + upload time; a replaced upload revokes the old URL.
+ */
+const urls = new Map<string, { at: number; url: string }>()
+function artUrl(art?: Art) {
+  if (!art) return undefined
+  const at = art.at ?? 0
+  const hit = urls.get(art.id)
+  if (hit?.at === at) return hit.url
+  if (hit) URL.revokeObjectURL(hit.url)
+  const url = URL.createObjectURL(art.blob)
+  urls.set(art.id, { at, url })
   return url
 }
 

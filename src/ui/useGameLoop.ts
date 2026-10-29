@@ -4,7 +4,7 @@ import { db } from '../data/db'
 import { THEMES } from '../data/cosmetics'
 import { dailyUpkeep } from '../engine/game/economy'
 import { checkAchievements } from '../engine/game/stats'
-import { toast } from './toast'
+import { toast } from './toastBus'
 import { maybeRemind } from './reminder'
 
 /** App-wide: daily upkeep once, achievements whenever progress changes, and the chosen UI theme. */

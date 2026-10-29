@@ -5,7 +5,7 @@ import { claim, earn } from '../../engine/game/economy'
 import { today } from '../../engine/srs/srs'
 import { Buddy } from '../../ui/Buddy'
 import { btn, card } from '../../ui/kit'
-import { toast } from '../../ui/toast'
+import { toast } from '../../ui/toastBus'
 import { ItemQuestion } from '../Review'
 import type { Q } from './pools'
 

@@ -8,7 +8,7 @@ import { featured, pull, type Reward } from '../../engine/game/gacha'
 import { HARD_PITY, PULL_COST, RATE_4, RATE_5 } from '../../engine/game/rules'
 import { btn, card } from '../../ui/kit'
 import { sfx } from '../../ui/sfx'
-import { toast } from '../../ui/toast'
+import { toast } from '../../ui/toastBus'
 
 const STAR = { 3: 'bg-[#8fb7d9]', 4: 'bg-[#b38be0]', 5: 'bg-geo' }
 

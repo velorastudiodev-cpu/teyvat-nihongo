@@ -7,8 +7,10 @@ import { today } from '../../engine/srs/srs'
 import { getCharacter } from '../../characters'
 import { btn, card, sample } from '../../ui/kit'
 import { sfx } from '../../ui/sfx'
-import { toast } from '../../ui/toast'
-import { GameOver, useGameEnd } from '../../games/common'
+import { toast } from '../../ui/toastBus'
+import { useDeadline } from '../../ui/useDeadline'
+import { GameOver } from '../../games/common'
+import { useGameEnd } from '../../games/hooks'
 import { ItemQuestion } from '../Review'
 import { learnedPool, type Q } from './pools'
 
@@ -20,6 +22,7 @@ const BLESSINGS: Blessing[] = [
   { id: 'time', name: '⏳ Waktu Electro', desc: '+5 detik per soal' },
 ]
 const REWARDED_RUNS = 3
+const limitAt = (floor: number, bonus: number) => Math.max(6, Math.round(15 - floor * 0.3)) + bonus
 
 export function Domain() {
   const profile = useLiveQuery(() => db.profile.get('me'))
@@ -39,45 +42,46 @@ function Run({ pool, buff, onExit }: { pool: (Q & { stability: number })[]; buff
   const [boostUntil, setBoostUntil] = useState(0)
   const [bonusTime, setBonusTime] = useState(0)
   const [choice, setChoice] = useState<Blessing[]>()
-  const [left, setLeft] = useState(15)
   const [reward, setReward] = useState<number>()
   const over = lives <= 0
   const { best, result } = useGameEnd('domain-run:endless', over, floor - 1)
-  const limit = Math.max(6, Math.round(15 - floor * 0.3)) + bonusTime
+  const limit = limitAt(floor, bonusTime)
+  const timer = useDeadline(limit, () => done(false))
+  const left = Math.ceil(timer.left)
 
   // later floors draw from the weakest items, early floors from anything
   const [item, setItem] = useState(() => pool[Math.floor(Math.random() * pool.length)])
-  useEffect(() => { if (over) (async () => {
-    for (let k = 0; k < REWARDED_RUNS; k++) { const got = await claim(`domain:${today()}:${k}`, Math.min(100, (floor - 1) * 4)); if (got) return setReward(got) }
+
+  async function payOut(floors: number) {
+    for (let k = 0; k < REWARDED_RUNS; k++) { const got = await claim(`domain:${today()}:${k}`, Math.min(100, floors * 4)); if (got) return setReward(got) }
     setReward(0)
-  })() }, [over])
-  useEffect(() => { setLeft(limit) }, [floor])
-  useEffect(() => {
-    if (over || choice) return
-    const t = setInterval(() => setLeft((s) => s - 1), 1000)
-    return () => clearInterval(t)
-  }, [floor, over, choice])
-  useEffect(() => { if (left <= 0 && !over && !choice) done(false) }, [left])
+  }
 
   function done(right: boolean) {
+    if (over || choice) return
+    timer.stop()
+    let livesAfter = lives
     if (right) {
       const mult = (floor <= boostUntil ? 1.5 : 1) * (mine?.effect === 'scoreMult' ? mine.value : 1)
       setScore((s) => s + Math.round(10 * floor ** 0.5 * mult))
     } else if (shield) { setShield(shield - 1); toast('Perisai menahan serangan!', '🛡️') }
-    else { setLives((l) => l - 1); sfx.bad() }
+    else { livesAfter--; sfx.bad() }
     const next = floor + 1
-    if (mine?.effect === 'heal' && next % 10 === 0) { setLives((l) => l + 1); toast('Barbara menyembuhkanmu!', '💧') }
+    if (mine?.effect === 'heal' && next % 10 === 0) { livesAfter++; toast('Barbara menyembuhkanmu!', '💧') }
+    setLives(livesAfter)
     const hardest = pool.slice(0, Math.max(5, Math.ceil(pool.length * Math.max(0.2, 1 - next / 40))))
     setItem(sample(next > 10 ? hardest : pool, 1)[0])
     setFloor(next)
-    if (next % 5 === 0 && lives > 0) setChoice(sample(BLESSINGS, 3))
+    if (livesAfter <= 0) payOut(floor)
+    else if (next % 5 === 0) setChoice(sample(BLESSINGS, 3))
+    else timer.start(limitAt(next, bonusTime))
   }
   const bless = (b: Blessing) => {
     if (b.id === 'life') setLives((l) => l + 1)
     if (b.id === 'shield') setShield((s) => s + 1)
     if (b.id === 'score') setBoostUntil(floor + 5)
     if (b.id === 'time') setBonusTime((t) => t + 5)
-    sfx.win(); setChoice(undefined); setLeft(limit + (b.id === 'time' ? 5 : 0))
+    sfx.win(); setChoice(undefined); timer.start(limit + (b.id === 'time' ? 5 : 0))
   }
 
   if (over) return result ? (

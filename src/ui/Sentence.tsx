@@ -1,22 +1,7 @@
-import { useState } from 'react'
-import { useLiveQuery } from 'dexie-react-hooks'
-import { db } from '../data/db'
-import { isMastered } from '../engine/srs/srs'
 import { textOf, type Token } from '../engine/sentence'
-import { pref, setPref } from './speak'
+import type { FuriganaMode } from './furigana'
 
-export type FuriganaMode = 'all' | 'auto' | 'none'
 const KANJI = /[一-龯々]/g
-
-/** Kanji whose SRS stability says you know them; "auto" furigana hides their readings. */
-export function useMasteredKanji() {
-  return useLiveQuery(async () => new Set((await db.items.where('kind').equals('kanji').toArray()).filter(isMastered).map((i) => i.id.slice(6))), []) ?? new Set<string>()
-}
-
-export function useFurigana() {
-  const [mode, setMode] = useState<FuriganaMode>(() => pref('furigana', 'auto'))
-  return [mode, (m: FuriganaMode) => { setPref('furigana', m); setMode(m) }] as const
-}
 
 export function Ruby({ token, mode = 'all', known }: { token: Token; mode?: FuriganaMode; known?: Set<string> }) {
   return <>{token.ruby.map(([base, reading], i) => {

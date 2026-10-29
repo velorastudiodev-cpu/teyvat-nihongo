@@ -20,7 +20,7 @@ export function Write() {
         <span className="ml-2 text-base font-normal">{k?.meaning ?? kana?.romaji}</span></h1>
       <div className="flex flex-wrap items-start justify-center gap-4">
         <div><StrokeOrder char={char} size={140} /><p className="text-xs opacity-60">tap untuk putar ulang</p></div>
-        <StrokePad key={`${round}${ghost}`} char={char} ghost={ghost} onDone={({ mistakes }) => { setResult(mistakes); speak(k?.on[0] ?? char) }} />
+        <StrokePad key={`${char}${round}${ghost}`} char={char} ghost={ghost} onDone={({ mistakes }) => { setResult(mistakes); speak(k?.on[0] ?? char) }} />
       </div>
       <div className="flex flex-wrap justify-center gap-2">
         <button className={`${btn} bg-paper`} onClick={() => setGhost(!ghost)}>{ghost ? 'Tanpa panduan' : 'Dengan panduan'}</button>

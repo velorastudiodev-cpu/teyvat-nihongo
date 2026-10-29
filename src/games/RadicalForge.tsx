@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
 import { db } from '../data/db'
@@ -9,7 +9,9 @@ import { Buddy } from '../ui/Buddy'
 import { btn, card, sample, shuffle } from '../ui/kit'
 import { sfx } from '../ui/sfx'
 import { speak } from '../ui/speak'
-import { useBest, type GameMode } from './common'
+import { useDeadline } from '../ui/useDeadline'
+import type { GameMode } from './common'
+import { useGameEnd } from './hooks'
 import { kanjiPool } from './kanjiPool'
 
 const DAILY_ROUNDS = 8
@@ -17,10 +19,11 @@ const SECONDS = 20
 const BARE_STROKES = new Set('丿丶丨乙亅乚㇒㇏𠂉')     // single strokes, not meaningful building blocks
 const forgeable = (k: Kanji) => k.parts.length >= 2 && !k.parts.some((p) => BARE_STROKES.has(p))
 const ALL_PARTS = [...new Set(KANJI.filter(forgeable).flatMap((k) => k.parts))]
+const partsFor = (k: Kanji) => shuffle([...k.parts, ...sample(ALL_PARTS.filter((p) => !k.parts.includes(p)), 6 - k.parts.length)])
 
 export function RadicalForge() {
-  const [game, setGame] = useState<{ mode: GameMode; pool: Kanji[]; due: Set<string> }>()
-  const start = async (mode: GameMode) => setGame({ mode, ...(await kanjiPool(mode, forgeable)) })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; pool: Kanji[]; due: Set<string> }>()
+  const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await kanjiPool(mode, forgeable)) })
   if (!game) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-4`}>
       <h1 className="font-display text-3xl font-extrabold">⚒️ Radical Forge</h1>
@@ -29,43 +32,42 @@ export function RadicalForge() {
       <button className={`${btn} w-full bg-anemo text-white`} onClick={() => start('endless')}>Endless · 3 nyawa</button>
     </main>
   )
-  return <Forge key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Forge key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function Forge({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due: Set<string>; onExit: () => void }) {
   const companion = useLiveQuery(() => db.profile.get('me').then((p) => p?.companionId))
   const buff = getCharacter(companion ?? '')?.buff
   const seconds = SECONDS + (buff?.game === 'radical-forge' && buff.effect === 'extraTime' ? buff.value : 0)
-  const { best, submit } = useBest(`radical-forge:${mode}`)
 
   const [round, setRound] = useState(0)
   const [score, setScore] = useState(0)
   const [lives, setLives] = useState(3)
-  const [left, setLeft] = useState(seconds)
   const [chosen, setChosen] = useState<string[]>([])
   const [result, setResult] = useState<boolean>()
   const [mood, setMood] = useState<Expression>('idle')
-  const [over, setOver] = useState<{ newBest: boolean }>()
+  const [options, setOptions] = useState(() => partsFor(pool[0]))
+  const timer = useDeadline(seconds, () => settle(false))
+  const left = Math.ceil(timer.left)
 
   const k = pool[round % pool.length]
-  const options = useMemo(() => shuffle([...k.parts, ...sample(ALL_PARTS.filter((p) => !k.parts.includes(p)), 6 - k.parts.length)]), [k, round])
   const finished = lives <= 0 || (mode === 'daily' && round >= DAILY_ROUNDS)
-
-  useEffect(() => {
-    if (finished) { if (!over) submit(score).then((newBest) => { setOver({ newBest }); if (newBest) sfx.win() }); return }
-    if (result !== undefined) return
-    const t = setInterval(() => setLeft((s) => s - 1), 1000)
-    return () => clearInterval(t)
-  }, [round, result, finished])
-  useEffect(() => { if (left <= 0 && result === undefined && !finished) settle(false) }, [left])
+  const { best, result: over } = useGameEnd(`radical-forge:${mode}`, finished, score)
 
   function settle(right: boolean) {
+    if (result !== undefined || finished) return
+    timer.stop()
     setResult(right)
     setMood(right ? 'happy' : 'sad')
     speak(mainReading(k))
     if (right) { sfx.win(); setScore((s) => s + 20 + left * 2) } else { sfx.bad(); setLives((l) => l - 1) }
     if (due.has(`kanji:${k.char}`)) answer(`kanji:${k.char}`, right, (seconds - left) * 1000, chosen.join('+'), k.parts.join('+'))
-    setTimeout(() => { setResult(undefined); setChosen([]); setLeft(seconds); setMood('idle'); setRound((r) => r + 1) }, 1500)
+    const ends = (!right && lives <= 1) || (mode === 'daily' && round + 1 >= DAILY_ROUNDS)
+    setTimeout(() => {
+      setResult(undefined); setChosen([]); setMood('idle')
+      setRound(round + 1); setOptions(partsFor(pool[(round + 1) % pool.length]))
+      if (!ends) timer.start(seconds)
+    }, 1500)
   }
   const forge = () => {
     if (result !== undefined || !chosen.length) return
@@ -111,7 +113,7 @@ function Forge({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due
         </div>
         <button className={`${btn} w-full bg-torii text-white`} disabled={!chosen.length || result !== undefined} onClick={forge}>Tempa! 🔨</button>
       </div>
-      <button className="text-sm underline opacity-60" onClick={() => setLives(0)}>Berhenti</button>
+      <button className="text-sm underline opacity-60" onClick={() => { timer.stop(); setLives(0) }}>Berhenti</button>
     </main>
   )
 }

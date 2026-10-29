@@ -1,22 +1,8 @@
-import type { ReactNode } from 'react'
 import type { Design } from './Chibi'
-import { Bangs, BOB, Body, Star } from './parts'
+import { Bangs, Body, Glasses, Star, WitchHat } from './pieces'
+import { BOB } from './shapes'
 
 // Mondstadt, part 2 — original drawings in the shared style.
-
-const Glasses = () => (
-  <g fill="#ffffff22" strokeWidth={3}>
-    <circle cx={80} cy={91} r={13} /><circle cx={120} cy={91} r={13} />
-    <path d="M93 90 Q100 86 107 90" fill="none" />
-  </g>
-)
-
-const WitchHat = ({ fill, band, children }: { fill: string; band: string; children?: ReactNode }) => <>
-  <ellipse cx={100} cy={48} rx={72} ry={12} fill={fill} />
-  <path d="M66 46 Q84 -4 136 2 Q120 18 134 46Z" fill={fill} />
-  <path d="M68 42 Q100 34 132 42" stroke={band} strokeWidth={5} fill="none" />
-  {children}
-</>
 
 export const MONDSTADT2: Record<string, Design> = {
   jean: {

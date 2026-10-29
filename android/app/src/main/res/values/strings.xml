@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Teyvat Nihongo</string>
+    <string name="title_activity_main">Teyvat Nihongo</string>
+    <string name="package_name">dev.velorastudio.teyvatnihongo</string>
+    <string name="custom_url_scheme">dev.velorastudio.teyvatnihongo</string>
+</resources>

@@ -2,7 +2,7 @@ import { GRAMMAR } from '../../data/grammar'
 import { READINGS } from '../../data/readings'
 import { KANJI, VOCAB, kanjiIn, levelIndex, type Level } from '../../data/kanji'
 import { parse, textOf } from '../sentence'
-import { blankOptions } from '../../modules/grammar/exercises'
+import { blankOptions } from '../../modules/grammar/blanks'
 import { seeded } from '../game/rules'
 
 export type Section = 'moji' | 'bunpou' | 'choukai'

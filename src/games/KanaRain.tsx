@@ -8,23 +8,23 @@ import { getCharacter, type Expression } from '../characters'
 import { Buddy } from '../ui/Buddy'
 import { btn, card } from '../ui/kit'
 import { sfx } from '../ui/sfx'
-import { GameSetup, kanaPool, useBest, type GameMode, type KanaSet } from './common'
+import { GameSetup, type GameMode, type KanaSet } from './common'
+import { kanaPool, useGameEnd } from './hooks'
 
 interface Drop { key: number; kana: Kana; x: number; y: number; born: number }
 const DAILY_DROPS = 30
 
 export function KanaRain() {
-  const [game, setGame] = useState<{ mode: GameMode; pool: Kana[]; due: Set<string> }>()
-  const start = async (mode: GameMode, set: KanaSet) => setGame({ mode, ...(await kanaPool(set)) })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; pool: Kana[]; due: Set<string> }>()
+  const start = async (mode: GameMode, set: KanaSet) => setGame({ run: Date.now(), mode, ...(await kanaPool(set)) })
   if (!game) return <GameSetup title="☔ Kana Rain" blurb="Kana berjatuhan! Ketik romaji-nya sebelum menyentuh tanah. Combo menaikkan skor." onStart={start} />
-  return <Rain key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Rain key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function Rain({ mode, pool, due, onExit }: { mode: GameMode; pool: Kana[]; due: Set<string>; onExit: () => void }) {
   const companion = useLiveQuery(() => db.profile.get('me').then((p) => p?.companionId))
   const buff = getCharacter(companion ?? '')?.buff
   const mult = buff?.game === 'kana-rain' && buff.effect === 'scoreMult' ? buff.value : 1
-  const { best, submit } = useBest(`kana-rain:${mode}`)
 
   const [drops, setDrops] = useState<Drop[]>([])
   const [score, setScore] = useState(0)
@@ -33,21 +33,18 @@ function Rain({ mode, pool, due, onExit }: { mode: GameMode; pool: Kana[]; due: 
   const [spawned, setSpawned] = useState(0)
   const [typed, setTyped] = useState('')
   const [mood, setMood] = useState<Expression>('idle')
-  const [over, setOver] = useState<{ newBest: boolean }>()
   const nextKey = useRef(0)
 
   const speed = 9 + Math.min(score / 60, 22)                  // % of height per second
   const spawnEvery = Math.max(650, 1700 - score * 2.5)
   const tune = useRef({ speed, spawnEvery })
-  tune.current = { speed, spawnEvery }
+  useEffect(() => { tune.current = { speed, spawnEvery } }, [speed, spawnEvery])
   const live = useRef<Drop[]>([])                             // the loop owns the drops; state only mirrors them for render
   const done = lives <= 0 || (mode === 'daily' && spawned >= DAILY_DROPS && drops.length === 0)
+  const { best, result: over } = useGameEnd(`kana-rain:${mode}`, done, score)
 
   useEffect(() => {
-    if (done) {
-      if (!over) submit(score).then((newBest) => { setOver({ newBest }); if (newBest) sfx.win() })
-      return
-    }
+    if (done) return
     let last = performance.now()
     let sinceSpawn = Infinity
     let raf = 0
@@ -76,7 +73,7 @@ function Rain({ mode, pool, due, onExit }: { mode: GameMode; pool: Kana[]; due: 
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [done])
+  }, [done, due, mode, pool])
 
   const type = (value: string) => {
     setTyped(value)

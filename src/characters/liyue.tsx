@@ -1,17 +1,8 @@
 import type { Design } from './Chibi'
-import { Bangs, BOB, Body } from './parts'
+import { Bangs, Body, Petals, Talisman } from './pieces'
+import { BOB } from './shapes'
 
 // Liyue chibi: original drawings, same grid and style as Mondstadt.
-
-const Petals = ({ x, y, r, fill }: { x: number; y: number; r: number; fill: string }) => <>
-  {[0, 72, 144, 216, 288].map((a) => <ellipse key={a} cx={x} cy={y - r} rx={r * .55} ry={r} fill={fill} strokeWidth={2.5} transform={`rotate(${a} ${x} ${y})`} />)}
-  <circle cx={x} cy={y} r={r * .45} fill="#f6c443" strokeWidth={2} />
-</>
-
-const Talisman = ({ x, y, w, h }: { x: number; y: number; w: number; h: number }) => <>
-  <rect x={x} y={y} width={w} height={h} rx={2} fill="#f5e6b8" strokeWidth={3} />
-  <path d={`M${x + w / 2} ${y + 5} v${h - 12} M${x + 3} ${y + h / 3} h${w - 6} M${x + 3} ${y + h / 2 + 4} q${w / 2 - 3} -6 ${w - 6} 0`} stroke="#c0392b" strokeWidth={2} fill="none" />
-</>
 
 export const LIYUE: Record<string, Design> = {
   zhongli: {

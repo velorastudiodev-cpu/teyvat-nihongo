@@ -1,15 +1,11 @@
 import type { Design } from './Chibi'
-import { Bangs, BOB, Body, SKIN, Star } from './parts'
+import { Bangs, BeadBraid, Body, Star } from './pieces'
+import { BOB, SKIN } from './shapes'
 import { LIYUE } from './liyue'
 import { MONDSTADT2 } from './mondstadt2'
 import { TEYVAT } from './teyvat'
 
 // All chibi are original drawings on a 200×200 grid. Head: ellipse (100,80) 54×50.
-
-const Braid = ({ x }: { x: number }) => <>
-  {[104, 114, 124, 134].map((y) => <circle key={y} cx={x} cy={y} r={6} fill="#2b2b3d" strokeWidth={3} />)}
-  <circle cx={x} cy={145} r={6} fill="#4fd1c5" strokeWidth={3} />
-</>
 
 export const DESIGNS: Record<string, Design> = {
   ...LIYUE,
@@ -82,7 +78,7 @@ export const DESIGNS: Record<string, Design> = {
     </Body>,
     front: <>
       <Bangs fill="#2b2b3d" shine="#4a4a63" />
-      <Braid x={50} /><Braid x={150} />
+      <BeadBraid x={50} /><BeadBraid x={150} />
     </>,
     top: <>
       <path d="M38 58 Q42 12 110 12 Q166 16 162 52 Q130 40 100 42 Q66 44 38 58Z" fill="#3e9a64" />

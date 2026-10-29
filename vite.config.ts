@@ -3,11 +3,14 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
-export default defineConfig({
+// `vite build --mode android` makes the bundle for the Capacitor APK: everything already ships
+// inside the app, so no service worker or install manifest.
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
+      disable: mode === 'android',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
@@ -45,4 +48,4 @@ export default defineConfig({
       },
     }),
   ],
-})
+}))

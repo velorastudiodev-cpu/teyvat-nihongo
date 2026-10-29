@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { isParticle, textOf } from '../engine/sentence'
 import { answer } from '../engine/srs/srs'
@@ -10,24 +10,25 @@ import { Sentence } from '../ui/Sentence'
 import { SpeakOrType } from '../ui/SpeakOrType'
 import { sfx } from '../ui/sfx'
 import { speak } from '../ui/speak'
-import { GameOver, ModePicker, useGameEnd, type GameMode } from './common'
+import { GameOver, ModePicker, type GameMode } from './common'
+import { useGameEnd } from './hooks'
 import { sentencePool, type Line } from './sentencePool'
 
 const DAILY = 8
 
 /** 1–3 blanks: always the grammar key, plus up to two content words. */
-export function pickBlanks(line: Line) {
+function pickBlanks(line: Line) {
   const key = line.tokens.findIndex((t) => t.key)
   const extra = shuffle(line.tokens.map((_, i) => i).filter((i) => i !== key && !isParticle(line.tokens[i]) && line.tokens[i].kana.length >= 2))
   return [key, ...extra.slice(0, Math.floor(Math.random() * 3))].sort((a, b) => a - b)
 }
 
 export function VoiceFill() {
-  const [game, setGame] = useState<{ mode: GameMode; lines: Line[]; due: Set<string> }>()
-  const start = async (mode: GameMode) => setGame({ mode, ...(await sentencePool(mode)) })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; lines: Line[]; due: Set<string> }>()
+  const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await sentencePool(mode)) })
   if (!game) return <ModePicker title="🎤 Voice Fill" blurb="Kalimat punya 1–3 bagian kosong. Ucapkan kalimat lengkapnya atau hanya kata yang hilang. Toleransi ±1 mora untuk kata panjang."
     daily={`${DAILY} kalimat`} onStart={start} />
-  return <Fill key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Fill key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function Fill({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due: Set<string>; onExit: () => void }) {
@@ -35,10 +36,10 @@ function Fill({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due
   const [score, setScore] = useState(0)
   const [lives, setLives] = useState(3)
   const [result, setResult] = useState<{ right: boolean[]; heard: string }>()
+  const [blanks, setBlanks] = useState(() => pickBlanks(lines[0]))
   const over = lives <= 0 || (mode === 'daily' && n >= DAILY)
   const { best, result: end } = useGameEnd(`voice-fill:${mode}`, over, score)
   const line = lines[n % lines.length]
-  const blanks = useMemo(() => pickBlanks(line), [n])
 
   const judge = (alts: string[]) => {
     if (result) return
@@ -50,7 +51,7 @@ function Fill({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due
     setScore((s) => s + 5 * r.right.filter(Boolean).length)
     if (due.has(`grammar:${line.pattern.id}`)) answer(`grammar:${line.pattern.id}`, r.right[blanks.indexOf(line.tokens.findIndex((t) => t.key))], 0, r.heard, line.ja)
   }
-  const next = () => { setResult(undefined); setN(n + 1) }
+  const next = () => { setResult(undefined); setN(n + 1); setBlanks(pickBlanks(lines[(n + 1) % lines.length])) }
   const mood: Expression = !result ? 'idle' : result.right.every(Boolean) ? 'happy' : 'sad'
 
   if (over) return end ? <GameOver score={score} newBest={end.newBest} best={best} onExit={onExit} /> : null

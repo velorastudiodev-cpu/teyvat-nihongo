@@ -1,14 +1,8 @@
 import type { Design } from './Chibi'
-import { Bangs, BOB, Body } from './parts'
+import { Bangs, Body, Braid, Ponytail } from './pieces'
+import { BOB, LONG } from './shapes'
 
 // Inazuma, Sumeru, Fontaine and Natlan — original drawings in the shared style.
-
-const LONG = 'M44 84 Q32 172 64 180 L136 180 Q168 172 156 84Z'
-const ponytail = (fill: string, side: 1 | -1 = 1) =>
-  <path d={side === 1 ? 'M120 40 Q176 52 166 112 Q160 146 148 166 Q150 120 128 84Z' : 'M80 40 Q24 52 34 112 Q40 146 52 166 Q50 120 72 84Z'} fill={fill} />
-const Braid = ({ x, fill, from = 110, to = 180 }: { x: number; fill: string; from?: number; to?: number }) => <>
-  {Array.from({ length: Math.floor((to - from) / 12) }, (_, i) => <ellipse key={i} cx={x} cy={from + i * 12} rx={8} ry={7} fill={fill} strokeWidth={3} />)}
-</>
 
 export const TEYVAT: Record<string, Design> = {
   // ── Inazuma ──
@@ -46,7 +40,7 @@ export const TEYVAT: Record<string, Design> = {
 
   ayaka: {
     eye: '#4a7bd6',
-    back: ponytail('#c9d6e8'),
+    back: <Ponytail fill="#c9d6e8" />,
     body: <Body coat="#2f5fa8" shade="#22477e" sleeve="#f2f2f7" legs="#2b2a33" shoes="#1b1a20">
       <path d="M86 120 L100 134 L114 120" fill="#f2f2f7" strokeWidth={3} />
       <path d="M66 150 L134 150" stroke="#c9a43a" strokeWidth={4} />
@@ -78,7 +72,7 @@ export const TEYVAT: Record<string, Design> = {
 
   yoimiya: {
     eye: '#e07a2a',
-    back: ponytail('#f0b35a'),
+    back: <Ponytail fill="#f0b35a" />,
     body: <Body coat="#e0663a" shade="#b84d28" sleeve="#f6e6d6" legs="#e0663a" shoes="#6b4a2e">
       <path d="M66 136 L134 136 L136 150 L64 150Z" fill="#fff6ea" strokeWidth={3} />
       <path d="M86 120 L100 132 L114 120" stroke="#f6c443" strokeWidth={4} fill="none" />

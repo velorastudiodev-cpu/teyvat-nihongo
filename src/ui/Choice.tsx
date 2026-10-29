@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import type { Expression } from '../characters'
 import { Buddy } from './Buddy'
@@ -22,19 +22,19 @@ export interface ChoiceProps {
 /** Multiple choice with sound + motion feedback; right answers advance on their own, wrong ones wait. */
 export function Choice({ title, ask, prompt, answer, wrong, lang, say, explain, onAnswer }: ChoiceProps) {
   const [choices] = useState(() => shuffle([answer, ...wrong]))   // parent keys this per question
-  const started = useRef(Date.now())
+  const [started] = useState(() => Date.now())
   const [given, setGiven] = useState<string>()
   const right = given === answer
 
   const pick = (c: string) => {
     if (given !== undefined) return
     setGiven(c)
-    const ms = Date.now() - started.current
+    const ms = Date.now() - started
     if (c === answer) sfx.good(); else sfx.bad()
     if (say) speak(say)
     if (c === answer) setTimeout(() => onAnswer(true, c, ms), 650)
   }
-  useChoiceKeys(choices.length, (i) => pick(choices[i]), given !== undefined && !right ? () => onAnswer(false, given, Date.now() - started.current) : undefined)
+  useChoiceKeys(choices.length, (i) => pick(choices[i]), given !== undefined && !right ? () => onAnswer(false, given, Date.now() - started) : undefined)
   const mood: Expression = given === undefined ? 'idle' : right ? 'happy' : 'sad'
 
   return (
@@ -58,7 +58,7 @@ export function Choice({ title, ask, prompt, answer, wrong, lang, say, explain, 
       {given !== undefined && !right && (
         <div className="space-y-2">
           {explain}
-          <button autoFocus onClick={() => onAnswer(false, given, Date.now() - started.current)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
+          <button autoFocus onClick={() => onAnswer(false, given, Date.now() - started)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
         </div>
       )}
     </main>

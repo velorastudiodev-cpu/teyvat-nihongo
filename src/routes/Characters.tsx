@@ -84,7 +84,7 @@ function ArtSlot({ id, uploaded }: { id: Art['id']; uploaded: boolean }) {
     if (!file) return
     if (!file.type.startsWith('image/')) return alert('File harus berupa gambar.')
     if (file.size > MAX_BYTES) return alert('Gambar maksimal 5 MB.')
-    db.art.put({ id, blob: file })
+    db.art.put({ id, blob: file, at: Date.now() })
   }
   return (
     <div className="mt-1 flex gap-1 text-xs font-bold">

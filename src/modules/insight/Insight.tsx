@@ -22,10 +22,10 @@ export function Insight() {
       db.items.toArray(), db.reviews.where('at').above(since).toArray(), db.days.toArray(),
       db.mistakes.toArray(), db.exams.orderBy('at').reverse().limit(5).toArray(), db.scores.where('id').startsWith('mock:').toArray(),
     ])
-    return { items, reviews, days, mistakes, exams, mocks }
+    return { items, reviews, days, mistakes, exams, mocks, now: Date.now() }
   }, [])
   if (!data || !profile) return null
-  const { items, reviews, days, mistakes, exams, mocks } = data
+  const { items, reviews, days, mistakes, exams, mocks, now } = data
 
   const acc = KINDS.map(([k, name]) => {
     const rs = reviews.filter((r) => r.itemId.startsWith(`${k}:`))
@@ -40,7 +40,7 @@ export function Insight() {
   const forgotten = items.map((i) => ({ id: i.id, kind: i.kind, score: i.card.lapses * 2 + (missCount.get(i.id) ?? 0) }))
     .filter((x) => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 10)
   const states = { baru: items.filter((i) => i.card.state === State.Learning || i.card.state === State.New).length, review: items.filter((i) => i.card.state === State.Review).length, ulang: items.filter((i) => i.card.state === State.Relearning).length }
-  const due = items.filter((i) => i.due <= Date.now()).length
+  const due = items.filter((i) => i.due <= now).length
 
   return (
     <main className="space-y-5 py-4">

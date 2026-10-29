@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { textOf } from '../engine/sentence'
 import { answer } from '../engine/srs/srs'
@@ -8,18 +8,21 @@ import { btn, card, shuffle } from '../ui/kit'
 import { Sentence } from '../ui/Sentence'
 import { sfx } from '../ui/sfx'
 import { speak } from '../ui/speak'
-import { blankOptions } from '../modules/grammar/exercises'
-import { GameOver, ModePicker, useCompanionBuff, useGameEnd, type GameMode } from './common'
+import { blankOptions } from '../modules/grammar/blanks'
+import { GameOver, ModePicker, type GameMode } from './common'
+import { useCompanionBuff, useGameEnd } from './hooks'
 import { sentencePool, type Line } from './sentencePool'
 
 const SECONDS = 60
+const blankOf = (line: Line) => line.tokens.findIndex((t) => t.key)
+const optionsFor = (line: Line) => { const t = line.tokens[blankOf(line)]; return shuffle([t.text, ...blankOptions(t, line.pattern.level)]) }
 
 export function FillBlankRush() {
-  const [game, setGame] = useState<{ mode: GameMode; lines: Line[]; due: Set<string> }>()
-  const start = async (mode: GameMode) => setGame({ mode, ...(await sentencePool(mode)) })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; lines: Line[]; due: Set<string> }>()
+  const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await sentencePool(mode)) })
   if (!game) return <ModePicker title="⚡ Fill-the-Blank Rush" blurb="60 detik! Isi bagian kosong secepat mungkin. Combo menaikkan multiplier, jawaban salah memotong 3 detik."
     daily="pola yang sudah dipelajari" endless="Endless · semua pola yang terbuka" onStart={start} />
-  return <Rush key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Rush key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function Rush({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due: Set<string>; onExit: () => void }) {
@@ -31,12 +34,12 @@ function Rush({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due
   const [left, setLeft] = useState(SECONDS)
   const [flash, setFlash] = useState<string>()
   const [mood, setMood] = useState<Expression>('idle')
+  const [options, setOptions] = useState(() => optionsFor(lines[0]))
   const over = left <= 0
   const { best, result } = useGameEnd(`fill-blank-rush:${mode}`, over, score)
 
   const line = lines[n % lines.length]
-  const blank = line.tokens.findIndex((t) => t.key)
-  const options = useMemo(() => shuffle([line.tokens[blank].text, ...blankOptions(line.tokens[blank], line.pattern.level)]), [n])
+  const blank = blankOf(line)
   const multiplier = Math.min(3, 1 + combo * 0.25) * comboBoost
 
   useEffect(() => {
@@ -53,7 +56,7 @@ function Rush({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due
     if (ok) { sfx.good(); setScore((s) => s + Math.round(10 * multiplier)); setCombo((c) => c + 1) }
     else { sfx.bad(); setCombo(0); setLeft((s) => s - 3); speak(textOf(line.tokens)) }
     if (due.has(`grammar:${line.pattern.id}`)) answer(`grammar:${line.pattern.id}`, ok, 0, o, line.tokens[blank].text)
-    setTimeout(() => { setFlash(undefined); setMood('idle'); setN((x) => x + 1) }, ok ? 350 : 1100)
+    setTimeout(() => { setFlash(undefined); setMood('idle'); setN(n + 1); setOptions(optionsFor(lines[(n + 1) % lines.length])) }, ok ? 350 : 1100)
   }
 
   if (over && result) return <GameOver score={score} newBest={result.newBest} best={best} onExit={onExit} />

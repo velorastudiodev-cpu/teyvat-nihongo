@@ -6,16 +6,18 @@ import { Buddy } from '../ui/Buddy'
 import { btn, card, shuffle } from '../ui/kit'
 import { sfx } from '../ui/sfx'
 import { speak } from '../ui/speak'
-import { GameSetup, kanaPool, useBest, type GameMode, type KanaSet } from './common'
+import { useDeadline } from '../ui/useDeadline'
+import { GameSetup, type GameMode, type KanaSet } from './common'
+import { kanaPool, useBest } from './hooks'
 
 const ENDLESS_SECONDS = 90
 interface Tile { id: string; pair: string; face: string; isKana: boolean }
 
 export function MemoryMatch() {
-  const [game, setGame] = useState<{ mode: GameMode; pool: Kana[] }>()
-  const start = async (mode: GameMode, set: KanaSet) => setGame({ mode, pool: (await kanaPool(set)).pool })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; pool: Kana[] }>()
+  const start = async (mode: GameMode, set: KanaSet) => setGame({ run: Date.now(), mode, pool: (await kanaPool(set)).pool })
   if (!game) return <GameSetup title="🃏 Memory Match" blurb="Balik kartu dan pasangkan kana dengan romaji-nya. Daily: 1 papan. Endless: sebanyak mungkin pasangan dalam 90 detik." onStart={start} />
-  return <Board key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Board key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function deal(pool: Kana[], pairs: number): Tile[] {
@@ -47,7 +49,7 @@ function Board({ mode, pool, onExit }: { mode: GameMode; pool: Kana[]; onExit: (
   }, [over])
 
   const finish = async (score: number) => setOver({ score, newBest: await submit(score) })
-  useEffect(() => { if (mode === 'endless' && time >= ENDLESS_SECONDS && !over) finish(found) }, [time])
+  const clock = useDeadline(mode === 'endless' ? ENDLESS_SECONDS : undefined, () => finish(found))
 
   const flip = (t: Tile) => {
     if (over || open.length === 2 || open.includes(t) || matched.has(t.pair)) return
@@ -88,7 +90,7 @@ function Board({ mode, pool, onExit }: { mode: GameMode; pool: Kana[]; onExit: (
   return (
     <main className="mx-auto mt-2 max-w-xl space-y-3">
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{mode === 'endless' ? `⏱ ${ENDLESS_SECONDS - time}s · ${found} pasangan` : `⏱ ${time}s · ${moves} langkah`}</span>
+        <span>{mode === 'endless' ? `⏱ ${Math.ceil(clock.left)}s · ${found} pasangan` : `⏱ ${time}s · ${moves} langkah`}</span>
         <Buddy mood={mood} size={64} />
       </div>
       <div className={`grid gap-2 ${grid}`}>

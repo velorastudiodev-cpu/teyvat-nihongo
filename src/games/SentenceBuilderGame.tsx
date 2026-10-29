@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react'
 import { answer } from '../engine/srs/srs'
 import { BuildExercise } from '../modules/grammar/exercises'
-import { GameOver, ModePicker, useGameEnd, type GameMode } from './common'
+import { GameOver, ModePicker, type GameMode } from './common'
+import { useGameEnd } from './hooks'
 import { sentencePool, type Line } from './sentencePool'
 
 const DAILY = 5
 const SECONDS = 120
 
 export function SentenceBuilderGame() {
-  const [game, setGame] = useState<{ mode: GameMode; lines: Line[]; due: Set<string> }>()
-  const start = async (mode: GameMode) => setGame({ mode, ...(await sentencePool(mode)) })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; lines: Line[]; due: Set<string> }>()
+  const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await sentencePool(mode)) })
   if (!game) return <ModePicker title="🧱 Sentence Builder" blurb="Susun blok kata menjadi kalimat yang benar. Kalimat panjang = poin lebih besar."
     daily={`${DAILY} kalimat`} endless={`Time attack · ${SECONDS} detik`} onStart={start} />
-  return <Builder key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Builder key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function Builder({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due: Set<string>; onExit: () => void }) {
@@ -26,7 +27,7 @@ function Builder({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; 
     if (mode === 'daily' || over) return
     const t = setInterval(() => setLeft((s) => s - 1), 1000)
     return () => clearInterval(t)
-  }, [over])
+  }, [mode, over])
 
   if (over) return result ? <GameOver score={score} newBest={result.newBest} best={best} onExit={onExit} /> : null
   const line = lines[n % lines.length]

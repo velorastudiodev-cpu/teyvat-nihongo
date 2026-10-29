@@ -1,6 +1,5 @@
-import { useLiveQuery } from 'dexie-react-hooks'
-import { db, type Profile } from '../data/db'
-import { plan, stagesToTarget } from '../engine/pace/pace'
+import type { Profile } from '../data/db'
+import { usePacePlan } from './usePacePlan'
 
 const fmt = (d: Date) => d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
 
@@ -9,18 +8,6 @@ const MESSAGE = {
   'on-track': 'Sesuai jadwal! Pertahankan ritmenya.',
   behind: 'Target tanggalnya ketat. Beban harian dinaikkan sedikit, tapi mungkin perlu menambah menit atau menggeser tanggal.',
   brake: 'Akurasi turun. Materi baru direm dulu supaya review-mu kuat.',
-}
-
-export function usePacePlan(profile?: Profile) {
-  const { stage, target, minutesPerDay, targetDate } = profile ?? {}
-  const data = useLiveQuery(async () => {
-    if (!stage || !target) return
-    const learned = await db.items.where('stage').anyOf(stagesToTarget(stage, target)).count()
-    const recent = await db.days.orderBy('date').reverse().limit(7).toArray()
-    return { learned, recent: recent.reverse() }
-  }, [stage, target])
-  if (!stage || !target || !minutesPerDay || !data) return
-  return plan({ stage, target, minutesPerDay, targetDate, ...data })
 }
 
 export function PaceCard({ profile }: { profile: Profile }) {

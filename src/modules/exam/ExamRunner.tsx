@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { READINGS } from '../../data/readings'
-import { db } from '../../data/db'
 import { parse } from '../../engine/sentence'
-import { grade, SECTION_NAME, TAG_LINK, TAG_NAME, type ExamSpec, type Question } from '../../engine/exam/exam'
+import { grade, SECTION_NAME, TAG_LINK, TAG_NAME, type ExamSpec } from '../../engine/exam/exam'
 import { Buddy } from '../../ui/Buddy'
 import { btn, card } from '../../ui/kit'
 import { Sentence } from '../../ui/Sentence'
 import { sfx } from '../../ui/sfx'
 import { speak } from '../../ui/speak'
 import { useChoiceKeys } from '../../ui/useChoiceKeys'
+import { useDeadline } from '../../ui/useDeadline'
+import type { Answers } from '../../engine/exam/record'
 
-export type Answers = Record<string, string>
 const MAX_PLAYS = 2
 
 /** Runs an exam section by section with a timer per section; no feedback until the end, like the real JLPT. */
@@ -22,30 +22,33 @@ export function ExamRunner({ spec, onDone }: { spec: ExamSpec; onDone: (answers:
   const [i, setI] = useState(0)
   const [answers, setAnswers] = useState<Answers>({})
   const [flags, setFlags] = useState<Set<string>>(new Set())
-  const [left, setLeft] = useState(spec.sections[0].minutes * 60)
   const [plays, setPlays] = useState<Record<string, number>>({})
   const section = spec.sections[sec]
+  const timer = useDeadline(undefined, () => finishSection())
+  const left = Math.ceil(timer.left)
 
-  const finishSection = () => {
+  function finishSection() {
     sfx.pop()
-    if (sec + 1 < spec.sections.length) { setSec(sec + 1); setI(0); setStarted(false); setLeft(spec.sections[sec + 1].minutes * 60) }
+    timer.stop()
+    if (sec + 1 < spec.sections.length) { setSec(sec + 1); setI(0); setStarted(false) }
     else onDone(answers)
   }
-  useEffect(() => {
-    if (!started) return
-    const t = setInterval(() => setLeft((s) => s - 1), 1000)
-    return () => clearInterval(t)
-  }, [started, sec])
-  useEffect(() => { if (started && left <= 0) finishSection() }, [left])
 
   const key = `${section.id}:${i}`
   const q = section.questions[i]
-  const play = (text: string) => {
-    if ((plays[key] ?? 0) >= MAX_PLAYS) return
-    setPlays({ ...plays, [key]: (plays[key] ?? 0) + 1 })
+  const play = (k: string, text: string) => {
+    if ((plays[k] ?? 0) >= MAX_PLAYS) return
+    setPlays({ ...plays, [k]: (plays[k] ?? 0) + 1 })
     speak(text)
   }
-  useEffect(() => { if (started && q.audio && !plays[key]) play(q.audio) }, [key, started])
+  // listening questions play once on arrival
+  const go = (j: number) => {
+    setI(j)
+    const next = section.questions[j]
+    const k = `${section.id}:${j}`
+    if (next.audio && !plays[k]) play(k, next.audio)
+  }
+  const begin = () => { setStarted(true); timer.start(section.minutes * 60); go(0) }
 
   useChoiceKeys(started ? section.questions[i].choices.length : 0, (n) => setAnswers((a) => ({ ...a, [`${section.id}:${i}`]: section.questions[i].choices[n] })))
   if (!started) return (
@@ -54,7 +57,7 @@ export function ExamRunner({ spec, onDone }: { spec: ExamSpec; onDone: (answers:
       <h1 lang="ja" className="font-display text-4xl font-extrabold">{SECTION_NAME[section.id]}</h1>
       <p>{section.questions.length} soal · {section.minutes} menit. Jawaban baru dinilai setelah ujian selesai. Soal yang ragu bisa ditandai 🚩.</p>
       {section.id === 'choukai' && <p className="text-sm opacity-70">Audio diputar otomatis dan boleh diulang maksimal {MAX_PLAYS}×. Teksnya tidak ditampilkan.</p>}
-      <button className={`${btn} bg-torii text-white`} onClick={() => setStarted(true)}>Mulai</button>
+      <button className={`${btn} bg-torii text-white`} onClick={begin}>Mulai</button>
     </main>
   )
 
@@ -69,7 +72,7 @@ export function ExamRunner({ spec, onDone }: { spec: ExamSpec; onDone: (answers:
       <div className="flex flex-wrap gap-1">
         {section.questions.map((_, j) => {
           const k = `${section.id}:${j}`
-          return <button key={j} onClick={() => setI(j)} aria-label={`soal ${j + 1}`}
+          return <button key={j} onClick={() => go(j)} aria-label={`soal ${j + 1}`}
             className={`h-8 w-8 cursor-pointer rounded-lg text-sm font-bold ${j === i ? 'bg-ink text-paper' : answers[k] ? 'bg-anemo/30' : 'bg-paper-deep'} ${flags.has(k) ? 'ring-2 ring-torii' : ''}`}>{j + 1}</button>
         })}
       </div>
@@ -85,7 +88,7 @@ export function ExamRunner({ spec, onDone }: { spec: ExamSpec; onDone: (answers:
             className={`cursor-pointer text-xl ${flags.has(key) ? '' : 'opacity-30'}`} aria-label="tandai">🚩</button>
         </div>
         {q.prompt && <p lang="ja" className="text-center text-4xl font-bold">{q.prompt}</p>}
-        {q.audio && <div className="text-center"><button onClick={() => play(q.audio!)} disabled={(plays[key] ?? 0) >= MAX_PLAYS} className={`${btn} bg-paper text-2xl`}>🔊 {MAX_PLAYS - (plays[key] ?? 0)}×</button></div>}
+        {q.audio && <div className="text-center"><button onClick={() => play(key, q.audio!)} disabled={(plays[key] ?? 0) >= MAX_PLAYS} className={`${btn} bg-paper text-2xl`}>🔊 {MAX_PLAYS - (plays[key] ?? 0)}×</button></div>}
         <div className="grid gap-2">
           {q.choices.map((c, n) => (
             <button key={c} lang={q.section === 'choukai' || q.tag === 'reading' || q.tag === 'kanji-meaning' ? undefined : 'ja'} onClick={() => setAnswers({ ...answers, [key]: c })}
@@ -96,9 +99,9 @@ export function ExamRunner({ spec, onDone }: { spec: ExamSpec; onDone: (answers:
         </div>
       </motion.div>
       <div className="flex justify-between gap-2">
-        <button disabled={i === 0} onClick={() => setI(i - 1)} className={`${btn} bg-paper`}>← Sebelumnya</button>
+        <button disabled={i === 0} onClick={() => go(i - 1)} className={`${btn} bg-paper`}>← Sebelumnya</button>
         {i + 1 < section.questions.length
-          ? <button onClick={() => setI(i + 1)} className={`${btn} bg-paper`}>Berikutnya →</button>
+          ? <button onClick={() => go(i + 1)} className={`${btn} bg-paper`}>Berikutnya →</button>
           : <button onClick={finishSection} className={`${btn} bg-torii text-white`}>Selesai bagian ini ✓</button>}
       </div>
     </main>
@@ -154,17 +157,4 @@ export function ExamReport({ spec, answers, extra }: { spec: ExamSpec; answers: 
       )}
     </main>
   )
-}
-
-/** Save the attempt and push wrong items into the Mistake Journal. */
-export async function recordExam(spec: ExamSpec, answers: Answers) {
-  const g = grade(spec, answers)
-  await db.exams.add({ kind: spec.kind, level: spec.level, at: Date.now(), passed: g.passed, sections: g.sections, tags: g.tags })
-  const wrong: Question[] = spec.sections.flatMap((s) => s.questions.filter((q, i) => answers[`${s.id}:${i}`] !== q.answer))
-  await db.mistakes.bulkAdd(wrong.filter((q) => q.itemId).map((q) => ({ itemId: q.itemId!, answer: '', expected: q.answer, at: Date.now(), fixed: false })))
-  if (spec.kind === 'mock') {
-    const pct = Math.round(g.ratio * 100), id = `mock:${spec.level}`
-    if (pct > ((await db.scores.get(id))?.best ?? -1)) await db.scores.put({ id, best: pct, at: Date.now() })
-  }
-  return g
 }

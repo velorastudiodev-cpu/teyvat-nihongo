@@ -7,7 +7,6 @@ import { PLACEMENT } from '../data/placement'
 import { nextStep, type Answer } from '../engine/placement/placement'
 import { Chibi } from '../characters/Chibi'
 import { REGIONS, type Expression } from '../characters'
-
 import { btn, card, shuffle } from '../ui/kit'
 
 const MINUTES = [10, 20, 30, 45, 60]
@@ -18,6 +17,7 @@ export function Onboarding() {
   const [minutes, setMinutes] = useState(20)
   const [phase, setPhase] = useState<'goal' | 'test' | 'result'>('goal')
   const [placement, setPlacement] = useState<Stage>('hiragana')
+  const [minDate] = useState(() => new Date().toISOString().slice(0, 10))
   const navigate = useNavigate()
 
   const finish = async () => {
@@ -53,7 +53,7 @@ export function Onboarding() {
       </fieldset>
       <label className="block">
         <span className="font-display font-bold">Target tanggal ujian (opsional)</span>
-        <input type="date" value={targetDate} min={new Date().toISOString().slice(0, 10)} onChange={(e) => setTargetDate(e.target.value)}
+        <input type="date" value={targetDate} min={minDate} onChange={(e) => setTargetDate(e.target.value)}
           className="mt-2 block rounded-xl border-[3px] border-ink bg-paper px-3 py-1.5" />
       </label>
       <div className="flex flex-wrap gap-3">

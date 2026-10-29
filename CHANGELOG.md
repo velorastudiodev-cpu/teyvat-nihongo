@@ -188,3 +188,19 @@
   - **Skill Map:** region N1 (tahap terakhir) sekarang menampilkan "🎓 Ujian akhir: JLPT N1 Mock Test", bukan Gate yang terkunci selamanya.
 - **Catatan ukuran:** bundle utama sekarang 2 MB (560 KB gzip) karena data kanji dan kosakata N5–N1 dibundel langsung. Untuk aplikasi offline yang di-cache sekali ini masih wajar. Kalau nanti terasa berat, data kosakata N3–N1 bisa dipisah dan dimuat saat dibutuhkan, seperti data goresan.
 - **Uji end-to-end:** lulus 4 Gate berturut-turut (semua region terbuka), menulis kanji N1 dengan data goresan N1, cek kartu kosakata N5 (Indonesia) dan N3 (label EN), menjawab grammar N1 dengan keyboard, tap kata di bacaan N1, dan Mock Test N1 100%. Tidak ada error di console.
+
+## Android APK + 0 warning lint
+- **Android (Capacitor 8):** folder `android/` siap build. APK berisi seluruh aplikasi, jadi tetap jalan offline tanpa service worker (`vite build --mode android`).
+  - **Suara di APK:** WebView Android tidak punya Web Speech API, jadi TTS memakai mesin suara sistem (`@capacitor-community/text-to-speech`) dan pengenalan suara memakai recognizer sistem (`@capacitor-community/speech-recognition`).
+  - Recognizer sistem dibungkus dengan bentuk yang sama seperti versi browser, sehingga semua latihan bicara dan game suara tidak perlu diubah. Mode kontinu (Speed Speak) otomatis menyala ulang setelah hening.
+  - **Izin mikrofon** diminta saat pertama dipakai. Kalau suara Jepang belum terpasang, aplikasi menawarkan installer TTS sekali.
+  - **Tombol back Android** mundur ke halaman sebelumnya, dan keluar dari halaman pertama. Ikon launcher (adaptive) dan splash memakai torii.
+  - Font Baloo 2 dibundel lokal (`@fontsource`), jadi judul tetap rapi saat offline.
+- **CI:** `.github/workflows/android.yml` menjalankan lint, test, dan build APK di setiap push. Hasilnya jadi artifact, dan tag `v*` melampirkannya ke Release. `versionCode` = nomor run, dan semua build ditandatangani dengan kunci debug yang sama, jadi APK baru selalu terpasang sebagai update.
+- **Lint: 81 → 0 warning.**
+  - Modul chibi, hook, dan helper dipisah dari file komponen (fast refresh).
+  - Semua timer game memakai `useDeadline` (berbasis tenggat; waktu habis dipicu dari callback timer, bukan dari effect).
+  - Soal/opsi ronde berikutnya dibuat saat pindah ronde, tidak lagi lewat `useMemo` dengan dependency yang tidak lengkap.
+  - `Math.random`/`Date.now` tidak lagi dipanggil saat render, dan `useSpeech` mengembalikan callback yang stabil.
+  - Hadiah Boss/Domain diklaim di handler jawaban terakhir. Audio ujian choukai diputar saat berpindah soal.
+- Uji e2e M2–M8 lulus ulang. Solver e2e diperbaiki untuk soal isian yang punya lebih dari satu jawaban benar (わたし（は/も）学生です).

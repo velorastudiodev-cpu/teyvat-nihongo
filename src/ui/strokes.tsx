@@ -1,13 +1,7 @@
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
-import { loadStrokes, type StrokeSet } from '../data/kanji'
+import { useRef, useState, type PointerEvent } from 'react'
 import { judgeStroke, REASON, type Pt } from '../engine/stroke/match'
 import { sfx } from './sfx'
-
-export function useStrokes(char: string) {
-  const [set, setSet] = useState<StrokeSet>()
-  useEffect(() => { loadStrokes(char).then(setSet) }, [char])
-  return set
-}
+import { useStrokes } from './useStrokes'
 
 const GRID = <g stroke="#e6d6b8" strokeWidth={0.6} strokeDasharray="2 2"><path d="M54.5 0V109M0 54.5H109" /></g>
 
@@ -49,9 +43,8 @@ export function StrokePad({ char, ghost = true, size = 260, onDone, onStroke }: 
   const [line, setLine] = useState<Pt[]>([])
   const [hint, setHint] = useState<{ index: number; text: string }>()
   const [mistakes, setMistakes] = useState(0)
-  const misses = useRef(0)       // misses on the current stroke; after 2 we show it outright
+  const [misses, setMisses] = useState(0)   // misses on the current stroke; after 2 we show it outright
 
-  useEffect(() => { setDone(0); setMistakes(0); setHint(undefined); misses.current = 0 }, [char])
   if (!set) return <div style={{ width: size, height: size }} className="rounded-3xl bg-paper" />
 
   const toPt = (e: PointerEvent): Pt => {
@@ -67,14 +60,14 @@ export function StrokePad({ char, ghost = true, size = 260, onDone, onStroke }: 
     onStroke?.(v.ok)
     if (v.ok) {
       sfx.pop()
-      misses.current = 0
+      setMisses(0)
       setHint(undefined)
       const next = done + 1
       setDone(next)
       if (next === set.d.length) { sfx.good(); onDone({ mistakes }) }
     } else {
       sfx.bad()
-      misses.current++
+      setMisses((m) => m + 1)
       setMistakes((m) => m + 1)
       setHint({ index: done, text: REASON[v.reason] })
     }
@@ -90,8 +83,8 @@ export function StrokePad({ char, ghost = true, size = 260, onDone, onStroke }: 
         {GRID}
         {ghost && set.d.map((d, i) => <path key={`g${i}`} d={d} stroke="#efe5d3" strokeWidth={4} />)}
         {set.d.slice(0, done).map((d, i) => <path key={i} d={d} stroke="#3b2a24" strokeWidth={4.5} />)}
-        {hint && (misses.current >= 2 || ghost) && (
-          <path key={`h${misses.current}`} d={set.d[hint.index]} stroke="#d1402f" strokeWidth={4.5} pathLength={1} strokeDasharray="1" strokeDashoffset="1"
+        {hint && (misses >= 2 || ghost) && (
+          <path key={`h${misses}`} d={set.d[hint.index]} stroke="#d1402f" strokeWidth={4.5} pathLength={1} strokeDasharray="1" strokeDashoffset="1"
             style={{ animation: 'draw .5s ease-out forwards' }} />
         )}
         {line.length > 1 && <polyline points={line.map((p) => p.join(',')).join(' ')} stroke="#3fae8f" strokeWidth={4} />}

@@ -2,13 +2,8 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { toKana } from 'wanakana'
 import { btn } from './kit'
-import { pref, setPref } from './speak'
 import { speechSupported, useSpeech } from './useSpeech'
-
-export function useInputMode() {
-  const [mode, setMode] = useState<'voice' | 'type'>(() => (speechSupported ? pref('input-mode', 'voice') : 'type'))
-  return [mode, (m: 'voice' | 'type') => { setPref('input-mode', m); setMode(m) }] as const
-}
+import { useInputMode } from './useInputMode'
 
 /** One answer, spoken (all recognizer alternatives) or typed (romaji becomes kana as you type). */
 export function SpeakOrType({ onAnswer, disabled, hint = 'Tekan lalu ucapkan' }: { onAnswer: (alternatives: string[]) => void; disabled?: boolean; hint?: string }) {

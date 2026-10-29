@@ -79,7 +79,7 @@ export function KanjiLesson() {
         {phase === 'see'
           ? <KanjiCard k={k} />
           : <><p className="mb-2 font-display font-bold">Tulis <span lang="ja">{k.char}</span> ({k.meaning}) mengikuti urutan goresan</p>
-              <div className="flex justify-center"><StrokePad char={k.char} onDone={() => setTimeout(next, 700)} /></div></>}
+              <div className="flex justify-center"><StrokePad key={k.char} char={k.char} onDone={() => setTimeout(next, 700)} /></div></>}
       </motion.div>
       {phase === 'see'
         ? <button className={`${btn} w-full bg-torii text-white`} onClick={() => setPhase('write')}>Tulis ✍️ →</button>

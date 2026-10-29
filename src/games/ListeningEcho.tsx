@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { textOf } from '../engine/sentence'
 import type { Expression } from '../characters'
@@ -7,23 +7,26 @@ import { card, sample, shuffle } from '../ui/kit'
 import { Sentence } from '../ui/Sentence'
 import { sfx } from '../ui/sfx'
 import { speak } from '../ui/speak'
+import { useDeadline } from '../ui/useDeadline'
 import { PlayButton, SpeedPicker } from '../modules/listening/Listening'
-import { GameOver, ModePicker, useCompanionBuff, useGameEnd, type GameMode } from './common'
+import { GameOver, ModePicker, type GameMode } from './common'
+import { useCompanionBuff, useGameEnd } from './hooks'
 import { sentencePool, type Line } from './sentencePool'
 
 const DAILY = 10
 const SECONDS = 12
+const optionsFor = (line: Line, all: Line[]) => shuffle([line, ...sample(all.filter((l) => l.ja !== line.ja), 3)])
 
 export function ListeningEcho() {
-  const [game, setGame] = useState<{ mode: GameMode; lines: Line[]; all: Line[] }>()
-  const start = async (mode: GameMode) => setGame({ mode, lines: (await sentencePool(mode)).lines, all: (await sentencePool('endless')).lines })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; lines: Line[]; all: Line[] }>()
+  const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, lines: (await sentencePool(mode)).lines, all: (await sentencePool('endless')).lines })
   if (!game) return (
     <div>
       <ModePicker title="🎧 Listening Echo" blurb="Dengarkan kalimatnya, lalu pilih kalimat Jepang yang cocok sebelum waktunya habis." daily={`${DAILY} kalimat`} onStart={start} />
       <div className="mt-3 flex justify-center"><SpeedPicker /></div>
     </div>
   )
-  return <Echo key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Echo key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function Echo({ mode, lines, all, onExit }: { mode: GameMode; lines: Line[]; all: Line[]; onExit: () => void }) {
@@ -31,28 +34,27 @@ function Echo({ mode, lines, all, onExit }: { mode: GameMode; lines: Line[]; all
   const [n, setN] = useState(0)
   const [score, setScore] = useState(0)
   const [lives, setLives] = useState(3)
-  const [left, setLeft] = useState(SECONDS)
   const [picked, setPicked] = useState<string>()
   const [mood, setMood] = useState<Expression>('idle')
+  const [options, setOptions] = useState(() => optionsFor(lines[0], all))
+  const timer = useDeadline(SECONDS, () => pick(''))
+  const left = Math.ceil(timer.left)
   const over = lives <= 0 || (mode === 'daily' && n >= DAILY)
   const { best, result } = useGameEnd(`listening-echo:${mode}`, over, score)
-
   const line = lines[n % lines.length]
-  const options = useMemo(() => shuffle([line, ...sample(all.filter((l) => l.ja !== line.ja), 3)]), [n])
-  useEffect(() => {
-    if (over || picked) return
-    const t = setInterval(() => setLeft((s) => s - 1), 1000)
-    return () => clearInterval(t)
-  }, [n, picked, over])
-  useEffect(() => { if (left <= 0 && !picked && !over) pick('') }, [left])
 
   function pick(ja: string) {
-    if (picked !== undefined) return
+    if (picked !== undefined || over) return
+    timer.stop()
     const ok = ja === line.ja
     setPicked(ja)
     setMood(ok ? 'happy' : 'sad')
     if (ok) { sfx.good(); setScore((s) => s + 10 + left) } else { sfx.bad(); setLives((l) => l - 1); speak(textOf(line.tokens)) }
-    setTimeout(() => { setPicked(undefined); setLeft(SECONDS); setMood('idle'); setN((x) => x + 1) }, ok ? 800 : 2000)
+    const ends = (!ok && lives <= 1) || (mode === 'daily' && n + 1 >= DAILY)
+    setTimeout(() => {
+      setPicked(undefined); setMood('idle'); setN(n + 1); setOptions(optionsFor(lines[(n + 1) % lines.length], all))
+      if (!ends) timer.start(SECONDS)
+    }, ok ? 800 : 2000)
   }
 
   if (over && result) return <GameOver score={score} newBest={result.newBest} best={best} onExit={onExit} />
@@ -76,7 +78,7 @@ function Echo({ mode, lines, all, onExit }: { mode: GameMode; lines: Line[]; all
         ))}
         {picked !== undefined && <p className="text-center text-sm">{line.tr}</p>}
       </motion.div>
-      <button className="text-sm underline opacity-60" onClick={() => setLives(0)}>Berhenti</button>
+      <button className="text-sm underline opacity-60" onClick={() => { timer.stop(); setLives(0) }}>Berhenti</button>
     </main>
   )
 }

@@ -1,8 +1,7 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { GRAMMAR } from '../../data/grammar'
 import type { Level } from '../../data/kanji'
-import { isParticle, parse, PARTICLES, textOf, type Token } from '../../engine/sentence'
+import { parse, textOf } from '../../engine/sentence'
 import type { Expression } from '../../characters'
 import { Buddy } from '../../ui/Buddy'
 import { Choice } from '../../ui/Choice'
@@ -10,18 +9,9 @@ import { btn, card, shuffle } from '../../ui/kit'
 import { Ruby, Sentence } from '../../ui/Sentence'
 import { sfx } from '../../ui/sfx'
 import { speak } from '../../ui/speak'
+import { blankOptions } from './blanks'
 
 export type OnAnswer = (right: boolean, given: string, ms: number) => void
-const COMMON_PARTICLES = PARTICLES.slice(0, 11)
-
-/** Wrong options for a blank: other particles for a particle, other grammar keys of the level otherwise. */
-export function blankOptions(t: Token, level: Level, n = 3, rand = Math.random) {
-  const draw = (xs: string[]) => xs.map((x) => [rand(), x] as const).sort((a, b) => a[0] - b[0]).slice(0, n).map(([, x]) => x)
-  if (isParticle(t)) return draw(COMMON_PARTICLES.filter((p) => p !== t.text))
-  const keys = GRAMMAR.filter((p) => p.level === level).flatMap((p) => p.sentences.map(([ja]) => parse(ja).find((x) => x.key)!.text))
-  return draw([...new Set(keys)].filter((k) => k !== t.text && !COMMON_PARTICLES.includes(k)))
-}
-
 export function BlankExercise({ ja, tr, level, title, blankAt, onAnswer }: { ja: string; tr: string; level: Level; title: string; blankAt?: number; onAnswer: OnAnswer }) {
   const tokens = parse(ja)
   const blank = blankAt ?? tokens.findIndex((t) => t.key)
@@ -36,7 +26,7 @@ export function BlankExercise({ ja, tr, level, title, blankAt, onAnswer }: { ja:
 /** Tap tiles into order. Only the canonical word order counts as right. */
 export function BuildExercise({ ja, tr, title, onAnswer }: { ja: string; tr: string; title: string; onAnswer: OnAnswer }) {
   const tokens = parse(ja)
-  const started = useRef(Date.now())
+  const [started] = useState(() => Date.now())
   const [pool, setPool] = useState(() => {
     let order = shuffle(tokens.map((_, i) => i))
     while (tokens.length > 1 && order.every((x, i) => tokens[x].text === tokens[i].text)) order = shuffle(order)
@@ -50,7 +40,7 @@ export function BuildExercise({ ja, tr, title, onAnswer }: { ja: string; tr: str
     setResult(right)
     if (right) sfx.good(); else sfx.bad()
     speak(textOf(tokens))
-    if (right) setTimeout(() => onAnswer(true, line.map((i) => tokens[i].text).join(''), Date.now() - started.current), 900)
+    if (right) setTimeout(() => onAnswer(true, line.map((i) => tokens[i].text).join(''), Date.now() - started), 900)
   }
   const tile = (i: number, from: 'pool' | 'line') => (
     <motion.button layout key={i} lang="ja" disabled={result !== undefined}
@@ -77,7 +67,7 @@ export function BuildExercise({ ja, tr, title, onAnswer }: { ja: string; tr: str
       {result === false && (
         <div className="space-y-2">
           <Sentence tokens={tokens} className="text-xl" />
-          <button autoFocus onClick={() => onAnswer(false, line.map((i) => tokens[i].text).join(''), Date.now() - started.current)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
+          <button autoFocus onClick={() => onAnswer(false, line.map((i) => tokens[i].text).join(''), Date.now() - started)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
         </div>
       )}
     </main>

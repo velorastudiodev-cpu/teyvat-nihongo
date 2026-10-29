@@ -15,7 +15,8 @@ export function Lesson() {
   const [kana, setKana] = useState<Kana[]>()
   const [phase, setPhase] = useState<'intro' | 'quiz' | 'done'>('intro')
   const [i, setI] = useState(0)
-  useEffect(() => { nextLesson(script).then(setKana) }, [script, phase === 'intro'])
+  const [batch, setBatch] = useState(0)
+  useEffect(() => { nextLesson(script).then(setKana) }, [script, batch])
 
   if (!kana) return null
   if (!kana.length) return (
@@ -33,7 +34,7 @@ export function Lesson() {
       <p lang="ja" className="text-3xl">{kana.map((k) => k.char).join(' ')}</p>
       <p>Masuk ke SRS. Kartu ini akan muncul lagi di review pada waktu yang pas.</p>
       <div className="flex justify-center gap-2">
-        <button className={`${btn} bg-torii text-white`} onClick={() => { setI(0); setPhase('intro') }}>Pelajaran berikutnya</button>
+        <button className={`${btn} bg-torii text-white`} onClick={() => { setI(0); setPhase('intro'); setBatch(batch + 1) }}>Pelajaran berikutnya</button>
         <Link to="/games/kana-rain" className={`${btn} bg-anemo text-white`}>Main Kana Rain</Link>
       </div>
     </main>

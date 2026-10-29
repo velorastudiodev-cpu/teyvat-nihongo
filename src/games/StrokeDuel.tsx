@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
 import { db } from '../data/db'
@@ -11,15 +11,17 @@ import { Buddy } from '../ui/Buddy'
 import { btn, card } from '../ui/kit'
 import { sfx } from '../ui/sfx'
 import { StrokePad } from '../ui/strokes'
-import { useBest, type GameMode } from './common'
+import { useDeadline } from '../ui/useDeadline'
+import type { GameMode } from './common'
+import { useGameEnd } from './hooks'
 import { kanjiPool } from './kanjiPool'
 
 const DAILY_ROUNDS = 5
 const SEC_PER_STROKE = 1.8
 
 export function StrokeDuel() {
-  const [game, setGame] = useState<{ mode: GameMode; pool: Kanji[]; due: Set<string> }>()
-  const start = async (mode: GameMode) => setGame({ mode, ...(await kanjiPool(mode)) })
+  const [game, setGame] = useState<{ run: number; mode: GameMode; pool: Kanji[]; due: Set<string> }>()
+  const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await kanjiPool(mode)) })
   if (!game) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-4`}>
       <h1 className="font-display text-3xl font-extrabold">✍️ Stroke Duel</h1>
@@ -28,7 +30,7 @@ export function StrokeDuel() {
       <button className={`${btn} w-full bg-anemo text-white`} onClick={() => start('endless')}>Endless · 3 nyawa</button>
     </main>
   )
-  return <Duel key={Math.random()} {...game} onExit={() => setGame(undefined)} />
+  return <Duel key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
 function Duel({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due: Set<string>; onExit: () => void }) {
@@ -36,38 +38,34 @@ function Duel({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due:
   const buff = getCharacter(companion ?? '')?.buff
   const bonus = buff?.game === 'stroke-duel' && buff.effect === 'extraTime' ? buff.value : 0
   const [rival] = useState(() => { const ids = Object.keys(DESIGNS); return ids[Math.floor(Math.random() * ids.length)] })
-  const { best, submit } = useBest(`stroke-duel:${mode}`)
+  const limitFor = (k: Kanji) => k.strokes * SEC_PER_STROKE + 3 + bonus
 
   const [round, setRound] = useState(0)
   const [score, setScore] = useState(0)
   const [lives, setLives] = useState(3)
-  const [elapsed, setElapsed] = useState(0)
   const [outcome, setOutcome] = useState<'win' | 'lose'>()
   const [mood, setMood] = useState<Expression>('idle')
-  const [over, setOver] = useState<{ newBest: boolean }>()
   const mistakes = useRef(0)
 
   const k = pool[round % pool.length]
-  const limit = k.strokes * SEC_PER_STROKE + 3 + bonus
+  const limit = limitFor(k)
+  const timer = useDeadline(limit, () => end(false))
+  const elapsed = limit - timer.left
   const finished = lives <= 0 || (mode === 'daily' && round >= DAILY_ROUNDS)
-
-  useEffect(() => {
-    if (finished) { if (!over) submit(score).then((newBest) => { setOver({ newBest }); if (newBest) sfx.win() }); return }
-    if (outcome) return
-    const t0 = performance.now()
-    const t = setInterval(() => setElapsed((performance.now() - t0) / 1000), 100)
-    return () => clearInterval(t)
-  }, [round, outcome, finished])
-
-  useEffect(() => { if (!outcome && !finished && elapsed >= limit) end(false) }, [elapsed])
+  const { best, result: over } = useGameEnd(`stroke-duel:${mode}`, finished, score)
 
   function end(won: boolean) {
-    if (outcome) return
+    if (outcome || finished) return
+    timer.stop()
     setOutcome(won ? 'win' : 'lose')
     setMood(won ? 'happy' : 'sad')
     if (won) { sfx.win(); setScore((s) => s + 10 * k.strokes + Math.round((limit - elapsed) * 5)) } else { sfx.bad(); setLives((l) => l - 1) }
     if (due.has(`kanji:${k.char}`)) answer(`kanji:${k.char}`, won && mistakes.current <= 1, elapsed * 1000, won ? k.char : '', k.char)
-    setTimeout(() => { mistakes.current = 0; setOutcome(undefined); setElapsed(0); setMood('idle'); setRound((r) => r + 1) }, 1300)
+    const ends = (!won && lives <= 1) || (mode === 'daily' && round + 1 >= DAILY_ROUNDS)
+    setTimeout(() => {
+      mistakes.current = 0; setOutcome(undefined); setMood('idle'); setRound(round + 1)
+      if (!ends) timer.start(limitFor(pool[(round + 1) % pool.length]))
+    }, 1300)
   }
 
   if (over) return (
@@ -106,7 +104,7 @@ function Duel({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due:
         </div>
         {outcome && <p className={`text-center font-display text-2xl font-extrabold ${outcome === 'win' ? 'text-anemo' : 'text-torii'}`}>{outcome === 'win' ? 'Menang! ⚔️' : 'Kalah cepat…'}</p>}
       </div>
-      <button className="text-sm underline opacity-60" onClick={() => setLives(0)}>Berhenti</button>
+      <button className="text-sm underline opacity-60" onClick={() => { timer.stop(); setLives(0) }}>Berhenti</button>
     </main>
   )
 }

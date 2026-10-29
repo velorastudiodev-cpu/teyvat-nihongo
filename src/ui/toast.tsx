@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { onToast, type Toast } from './toastBus'
 
-type Toast = { id: number; text: string; icon: string }
-let listeners: ((t: Toast) => void)[] = []
-let seq = 0
-export const toast = (text: string, icon = '✦') => listeners.forEach((l) => l({ id: ++seq, text, icon }))
 
 export function Toaster() {
   const [list, setList] = useState<Toast[]>([])
@@ -13,8 +10,7 @@ export function Toaster() {
       setList((xs) => [...xs, t])
       setTimeout(() => setList((xs) => xs.filter((x) => x.id !== t.id)), 3800)
     }
-    listeners.push(l)
-    return () => { listeners = listeners.filter((x) => x !== l) }
+    return onToast(l)
   }, [])
   return (
     <div className="pointer-events-none fixed inset-x-0 top-3 z-50 flex flex-col items-center gap-2" aria-live="polite">

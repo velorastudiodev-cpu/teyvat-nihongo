@@ -16,6 +16,7 @@ import { Sentence } from '../../ui/Sentence'
 import { SpeakOrType } from '../../ui/SpeakOrType'
 import { sfx } from '../../ui/sfx'
 import { speak } from '../../ui/speak'
+import { Capacitor } from '@capacitor/core'
 import { speechSupported } from '../../ui/useSpeech'
 
 export function SpeakingHub() {
@@ -29,7 +30,7 @@ export function SpeakingHub() {
     <main className="space-y-4 py-4">
       <h1 className="font-display text-3xl font-extrabold">Speaking</h1>
       <p className={`rounded-2xl p-3 text-sm font-bold ${speechSupported ? 'bg-anemo/15 text-anemo' : 'bg-torii/10 text-torii'}`}>
-        {speechSupported ? '✓ Browser ini mendukung pengenalan suara ja-JP. Izinkan mikrofon saat diminta.' : '✗ Browser ini tidak mendukung pengenalan suara (pakai Chrome/Edge). Semua latihan tetap bisa dikerjakan dengan mode ketik.'}
+        {Capacitor.isNativePlatform() ? '✓ Memakai pengenalan suara Android (ja-JP). Izinkan mikrofon saat diminta.' : speechSupported ? '✓ Browser ini mendukung pengenalan suara ja-JP. Izinkan mikrofon saat diminta.' : '✗ Browser ini tidak mendukung pengenalan suara (pakai Chrome/Edge). Semua latihan tetap bisa dikerjakan dengan mode ketik.'}
       </p>
       <div className="grid gap-3 sm:grid-cols-2">
         {items.map((i) => (

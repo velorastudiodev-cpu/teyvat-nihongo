@@ -2,18 +2,15 @@ import { Link } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
 import { db } from '../../data/db'
-import { BOSSES } from '../../data/cosmetics'
 import { claim, MAX_FREEZES, spend } from '../../engine/game/economy'
-import { COMMISSION_BONUS, COMMISSION_REWARD, commissionsFor, seeded, streak, weekId } from '../../engine/game/rules'
+import { COMMISSION_BONUS, COMMISSION_REWARD, commissionsFor, streak, weekId } from '../../engine/game/rules'
 import { today } from '../../engine/srs/srs'
 import { Buddy } from '../../ui/Buddy'
 import { btn, card } from '../../ui/kit'
-import { usePacePlan } from '../../ui/PaceCard'
+import { usePacePlan } from '../../ui/usePacePlan'
 import { sfx } from '../../ui/sfx'
-import { toast } from '../../ui/toast'
-
-export const FREEZE_PRICE = 200
-export const weeklyBoss = (date = today()) => BOSSES[Math.floor(seeded(weekId(date))() * BOSSES.length)]
+import { toast } from '../../ui/toastBus'
+import { FREEZE_PRICE, weeklyBoss } from '../../engine/game/weekly'
 
 export function Daily() {
   const date = today()

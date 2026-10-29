@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import type { SrsItem } from '../data/db'
@@ -85,7 +85,7 @@ export function ItemQuestion({ item, title, onDone }: { item: Pick<SrsItem, 'id'
 }
 
 function WriteQuestion({ k, title, onAnswer }: { k: Kanji; title: string; onAnswer: (right: boolean, given: string, ms: number) => void }) {
-  const started = useRef(Date.now())
+  const [started] = useState(() => Date.now())
   const [gaveUp, setGaveUp] = useState(false)
   return (
     <main className={`${card} mx-auto mt-4 max-w-lg space-y-3 text-center`}>
@@ -98,12 +98,12 @@ function WriteQuestion({ k, title, onAnswer }: { k: Kanji; title: string; onAnsw
       {gaveUp ? (
         <div className="space-y-2">
           <div className="flex justify-center"><StrokeOrder char={k.char} /></div>
-          <button autoFocus onClick={() => onAnswer(false, '', Date.now() - started.current)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
+          <button autoFocus onClick={() => onAnswer(false, '', Date.now() - started)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
         </div>
       ) : (
         <>
           <div className="flex justify-center">
-            <StrokePad char={k.char} ghost={false} onDone={({ mistakes }) => setTimeout(() => onAnswer(mistakes <= 1, mistakes ? 'salah goresan' : k.char, Date.now() - started.current), 700)} />
+            <StrokePad key={k.char} char={k.char} ghost={false} onDone={({ mistakes }) => setTimeout(() => onAnswer(mistakes <= 1, mistakes ? 'salah goresan' : k.char, Date.now() - started), 700)} />
           </div>
           <button onClick={() => { sfx.bad(); setGaveUp(true) }} className="text-sm underline opacity-60">Tidak ingat</button>
         </>
@@ -113,7 +113,7 @@ function WriteQuestion({ k, title, onAnswer }: { k: Kanji; title: string; onAnsw
 }
 
 function TypeReading({ w, title, onAnswer }: { w: Word; title: string; onAnswer: (right: boolean, given: string, ms: number) => void }) {
-  const started = useRef(Date.now())
+  const [started] = useState(() => Date.now())
   const [typed, setTyped] = useState('')
   const [result, setResult] = useState<boolean>()
   const submit = () => {
@@ -122,7 +122,7 @@ function TypeReading({ w, title, onAnswer }: { w: Word; title: string; onAnswer:
     setResult(right)
     if (right) sfx.good(); else sfx.bad()
     speak(w.reading)
-    if (right) setTimeout(() => onAnswer(true, typed, Date.now() - started.current), 650)
+    if (right) setTimeout(() => onAnswer(true, typed, Date.now() - started), 650)
   }
   return (
     <main className={`${card} mx-auto mt-4 max-w-lg space-y-4 text-center`}>
@@ -141,7 +141,7 @@ function TypeReading({ w, title, onAnswer }: { w: Word; title: string; onAnswer:
       {result === false && (
         <div className="space-y-2">
           <p lang="ja" className="text-xl">{w.word}（<b>{w.reading}</b>）</p>
-          <button autoFocus onClick={() => onAnswer(false, typed, Date.now() - started.current)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
+          <button autoFocus onClick={() => onAnswer(false, typed, Date.now() - started)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
         </div>
       )}
     </main>
@@ -150,7 +150,7 @@ function TypeReading({ w, title, onAnswer }: { w: Word; title: string; onAnswer:
 
 function KanaQuestion({ kana, left, title, onAnswer }: { kana: Kana; left: number; title?: string; onAnswer: (right: boolean, ms: number) => void }) {
   const mode = useMemo<Mode>(() => sample(['read', 'write', 'type', 'listen'] as const, 1)[0], [])
-  const started = useRef(Date.now())
+  const [started] = useState(() => Date.now())
   const [result, setResult] = useState<{ right: boolean; given: string }>()
   const [typed, setTyped] = useState('')
   const choices = useMemo(() => shuffle([kana, ...distractors(kana)]), [kana])
@@ -161,10 +161,10 @@ function KanaQuestion({ kana, left, title, onAnswer }: { kana: Kana; left: numbe
     setResult({ right, given })
     if (right) sfx.good(); else sfx.bad()
     speak(kana.char)
-    answer(`kana:${kana.char}`, right, Date.now() - started.current, given, kana.romaji)
-    if (right) setTimeout(() => onAnswer(true, Date.now() - started.current), 650)
+    answer(`kana:${kana.char}`, right, Date.now() - started, given, kana.romaji)
+    if (right) setTimeout(() => onAnswer(true, Date.now() - started), 650)
   }
-  useChoiceKeys(mode === 'type' ? 0 : choices.length, (i) => submit(choices[i] === kana, choices[i].romaji), result && !result.right ? () => onAnswer(false, Date.now() - started.current) : undefined)
+  useChoiceKeys(mode === 'type' ? 0 : choices.length, (i) => submit(choices[i] === kana, choices[i].romaji), result && !result.right ? () => onAnswer(false, Date.now() - started) : undefined)
   const mood: Expression = !result ? 'idle' : result.right ? 'happy' : 'sad'
   const label = (k: Kana) => (mode === 'read' ? k.romaji : k.char)
 
@@ -198,7 +198,7 @@ function KanaQuestion({ kana, left, title, onAnswer }: { kana: Kana; left: numbe
       {result && !result.right && (
         <div className="space-y-2">
           <p><span lang="ja" className="text-2xl font-bold">{kana.char}</span> = <b>{kana.romaji}</b>{kana.mnemonic && <> · 💡 {kana.mnemonic}</>}</p>
-          <button autoFocus onClick={() => onAnswer(false, Date.now() - started.current)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
+          <button autoFocus onClick={() => onAnswer(false, Date.now() - started)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
         </div>
       )}
     </main>
