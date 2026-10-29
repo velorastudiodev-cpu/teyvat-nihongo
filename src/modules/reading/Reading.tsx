@@ -49,7 +49,8 @@ function lookup(t: Token, gloss: Record<string, string>) {
 }
 
 export function ReadingText() {
-  const r = READINGS.find((x) => x.id === useParams().id)
+  const { id } = useParams()
+  const r = READINGS.find((x) => x.id === id)
   const [mode, setMode] = useFurigana()
   const known = useMasteredKanji()
   const [tapped, setTapped] = useState<{ t: Token; meaning?: string }>()
