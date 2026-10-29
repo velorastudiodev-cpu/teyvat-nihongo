@@ -8,8 +8,6 @@ Aplikasi belajar bahasa Jepang N5 → N1 bergaya game. Hanya untuk penggunaan pr
 
 ### Android (APK)
 
-**Aktivasi CI:** workflow disimpan di `docs/ci/android.yml.example` karena token upload belum memiliki izin `workflow`. Salin ke `.github/workflows/android.yml` menggunakan akses GitHub yang sesuai untuk mengaktifkan langkah otomatis berikut.
-
 1. Setiap push ke `main` menjalankan GitHub Actions (**Android APK**). Ini menjalankan lint, test, build, lalu menghasilkan APK.
 2. Buka tab **Actions** → run terbaru → bagian **Artifacts** → unduh `teyvat-nihongo-apk` (zip berisi `.apk`).
    Kalau push tag `v1.0.0`, APK juga dilampirkan ke halaman **Releases**, jadi lebih mudah diunduh langsung dari HP.
