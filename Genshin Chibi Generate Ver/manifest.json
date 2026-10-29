@@ -102,8 +102,41 @@
         "Genshin Real References/898dc043cf1a2caf5b323ca73b476d88.jpg",
         "Genshin Real References/a0850f8922ceb899665f3399b2333032.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Jean_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1168330,
+          "sha256": "29c4b37e1fe712711a0faaf368e5f21799074cd0a99f8c2de7673238245ebcac",
+          "status": "validated"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Jean_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1369676,
+          "sha256": "c41deadf0fbbd77b246122e1fa7ffd804b5f8f015347f6532cbf26f9a6b22b91",
+          "status": "validated"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Jean_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1120930,
+          "sha256": "a865283cdb45c681b5003e02bef77509b1dd5e8fb743020cc40ae3a768d8fa6e",
+          "status": "validated"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Jean_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1320305,
+          "sha256": "c070ea39feab5208eec070047682ab654015954f7db8ef218f01b83d38b414aa",
+          "status": "validated"
+        }
+      }
     },
     {
       "id": "barbara",
@@ -113,19 +146,60 @@
         "Genshin Real References/0aa9900673614aedffaed1839425104d.jpg",
         "Genshin Real References/af517d828ec3d2b36d67c23e4d50ca87.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Barbara_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1339953,
+          "sha256": "33cee45a639ea61e05bfbeebd68675f0331317cac76128b44ed105b19bd15e93",
+          "status": "validated"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Barbara_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1362007,
+          "sha256": "2940569bcc8e24ddf6376e48a683db42a2d71982a590d640d2bdf0d4bfce5e8a",
+          "status": "validated"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Barbara_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1234651,
+          "sha256": "ec15a70c0e8cfacf6ac4298d291e5855f14c9c142169ab3d15895a046b75619f",
+          "status": "validated"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Barbara_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1499645,
+          "sha256": "d46ca71097fcd22419d3b9f5bc211689782705f2a8b80236bce8dcd542566613",
+          "status": "validated"
+        }
+      }
     },
     {
       "id": "lisa",
       "name": "Lisa",
       "category": "chibi",
       "references": [
-        "Genshin Real References/0173c8c7603085b20252420fbb7d46f9.jpg",
         "Genshin Real References/f2e3b17b1801950346b243366677b6fb.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "in_progress",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Lisa_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1411908,
+          "sha256": "00ab3c3fd77fa973e2ee8b5d430ff01b88174552a3fe2e5e21ecd61466581a56",
+          "status": "validated"
+        }
+      }
     },
     {
       "id": "kaeya",
@@ -143,10 +217,44 @@
       "name": "Mona",
       "category": "chibi",
       "references": [
-        "Genshin Real References/2bb69fc5ea467ede12d255f72db150ab.jpg"
+        "Genshin Real References/2bb69fc5ea467ede12d255f72db150ab.jpg",
+        "Genshin Real References/0173c8c7603085b20252420fbb7d46f9.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Mona_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1178378,
+          "sha256": "437bf529319733a153b4efc502c2f8371ee0147a249be24991968446b6b1908a",
+          "status": "validated"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Mona_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1696732,
+          "sha256": "c14d88e72ad94e19007f1e7ade60b953bd0e973e3e83f6752984b63ccf838f03",
+          "status": "validated"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Mona_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1618610,
+          "sha256": "b4c133ebf20213df4d5e33035c1a3d89d8703729feb5a0b852691af8a49318b3",
+          "status": "validated"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Mona_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1669714,
+          "sha256": "f5dda16102b7662b05cf7ae8dd77e1b184751d370f0c102b23304c002576d052",
+          "status": "validated"
+        }
+      }
     },
     {
       "id": "sucrose",
@@ -169,8 +277,17 @@
         "Genshin Real References/79dd4693c665c6aa3c2f9b552319613c.jpg",
         "Genshin Real References/8d6ff67f9ea760d098c437fecc807e03.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "in_progress",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Zhongli_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1210044,
+          "sha256": "07c6aae5f386e914b7ea5c12857d205ad905afc7929d953b345834d120dd2a70",
+          "status": "validated"
+        }
+      }
     },
     {
       "id": "xiangling",
@@ -246,9 +363,27 @@
       "id": "raiden",
       "name": "Raiden Shogun",
       "category": "archon",
-      "references": [],
-      "status": "pending",
-      "images": {}
+      "references": [
+        "Genshin Real References/Raiden_Shogun_Official.png"
+      ],
+      "status": "in_progress",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Raiden_Shogun_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1924049,
+          "sha256": "64b00026f7c2d3a81b814315ccdf6226839ad61383cf2560e4d27544ec05a4ba",
+          "status": "needs_framing_review"
+        }
+      },
+      "reference_sources": [
+        {
+          "url": "https://act-webstatic.hoyoverse.com/upload/contentweb/2022/07/22/fdcbc9ef8859b7077d92ae38d925e15e_4430297517104014075.png",
+          "publisher": "HoYoverse",
+          "discovered_via": "https://genshin.hoyoverse.com/en/character/inazuma"
+        }
+      ]
     },
     {
       "id": "yae",
