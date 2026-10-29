@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Icon } from '../../ui/Icon'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
 import { db } from '../../data/db'
@@ -41,8 +42,8 @@ export function Daily() {
           <p className="opacity-70">Reset setiap tengah malam. Selesaikan keempatnya untuk bonus!</p>
         </div>
         <div className="flex gap-2 font-display font-bold">
-          <span className="rounded-full bg-torii px-4 py-1.5 text-white">🔥 {streak(days, date)} hari</span>
-          <span className="rounded-full bg-[#7cc6de] px-4 py-1.5" title="Streak Freeze">🧊 {profile.freezes ?? 0}</span>
+          <span className="rounded-full bg-primary px-4 py-1.5 text-white"><Icon name="flame" className="h-4 w-4" /> {streak(days, date)} hari</span>
+          <span className="rounded-full bg-[#7cc6de] px-4 py-1.5" title="Streak Freeze"><Icon name="snowflake" className="h-4 w-4" /> {profile.freezes ?? 0}</span>
         </div>
       </div>
 
@@ -53,8 +54,8 @@ export function Daily() {
           return (
             <div key={c.id} className={`${card} space-y-2`}>
               <div className="flex items-center justify-between gap-2">
-                <p className="font-display text-lg font-bold">{isClaimed(c.id) ? '✅ ' : ''}{c.title}</p>
-                <span className="font-display font-bold text-geo">✦ {COMMISSION_REWARD}</span>
+                <p className="font-display text-lg font-bold">{isClaimed(c.id) && <Icon name="check" className="mr-1 h-5 w-5 text-anemo" />}{c.title}</p>
+                <span className="font-display font-bold text-geo"><Icon name="gem" className="h-4 w-4" /> {COMMISSION_REWARD}</span>
               </div>
               <div className="h-3 overflow-hidden rounded-full bg-paper-deep">
                 <motion.div className="h-full bg-anemo" animate={{ width: `${(have / c.target) * 100}%` }} />
@@ -75,30 +76,30 @@ export function Daily() {
           <Buddy mood={allDone ? 'happy' : 'idle'} size={70} />
           <p className="font-display text-lg font-bold">Bonus harian: semua commission selesai</p>
         </div>
-        {isClaimed('bonus') ? <span className="font-bold opacity-60">✅ sudah diklaim</span>
-          : <button disabled={!allDone} onClick={() => get('bonus', COMMISSION_BONUS)} className={`${btn} bg-torii text-white`}>Klaim ✦ {COMMISSION_BONUS}</button>}
+        {isClaimed('bonus') ? <span className="font-bold opacity-60"><Icon name="check" className="h-4 w-4" /> sudah diklaim</span>
+          : <button disabled={!allDone} onClick={() => get('bonus', COMMISSION_BONUS)} className={`${btn} bg-primary text-white`}>Klaim <Icon name="gem" className="h-4 w-4" /> {COMMISSION_BONUS}</button>}
       </div>
 
       <div className="grid gap-3 md:grid-cols-3">
         <Link to="/revenge" className={`${card} transition-transform hover:-translate-y-1`}>
-          <p className="font-display text-xl font-bold">⚔️ Revenge Quest</p>
-          <p className="text-sm opacity-70">{grudges ? `${grudges} kesalahan menunggu balas dendam. Hadiah ✦ 2×!` : 'Belum ada kesalahan untuk dibalas. Hebat!'}</p>
+          <p className="font-display text-xl font-bold"><Icon name="swords" className="mr-1 h-5 w-5 text-primary" />Revenge Quest</p>
+          <p className="text-sm opacity-70">{grudges ? `${grudges} kesalahan menunggu balas dendam. Hadiah Kirameki 2×!` : 'Belum ada kesalahan untuk dibalas. Hebat!'}</p>
         </Link>
         <Link to="/boss" className={`${card} transition-transform hover:-translate-y-1`}>
-          <p className="font-display text-xl font-bold">{boss.emoji} Weekly Boss</p>
-          <p className="text-sm opacity-70">{boss.name} · {bossBeaten ? '✅ sudah dikalahkan minggu ini' : 'hadiah ✦ 300'}</p>
+          <p className="font-display text-xl font-bold"><Icon name="mask" className="mr-1 h-5 w-5 text-primary" />Weekly Boss</p>
+          <p className="text-sm opacity-70">{boss.name} · {bossBeaten ? 'sudah dikalahkan minggu ini' : 'hadiah 300 Kirameki'}</p>
         </Link>
         <Link to="/domain" className={`${card} transition-transform hover:-translate-y-1`}>
-          <p className="font-display text-xl font-bold">🌀 Domain Run</p>
+          <p className="font-display text-xl font-bold"><Icon name="spiral" className="mr-1 h-5 w-5 text-primary" />Domain Run</p>
           <p className="text-sm opacity-70">Roguelite tanpa akhir: soal campuran makin sulit, 3 nyawa, buff karakter.</p>
         </Link>
       </div>
 
       <div className={`${card} flex flex-wrap items-center justify-between gap-3`}>
-        <p><b className="font-display">🧊 Streak Freeze</b> <span className="text-sm opacity-70">menyelamatkan streak saat kamu absen sehari. 1 gratis setiap minggu (Jean: +1), maks. {MAX_FREEZES}.</span></p>
+        <p><b className="font-display"><Icon name="snowflake" className="mr-1 h-4 w-4 text-[#5aa9d6]" />Streak Freeze</b> <span className="text-sm opacity-70">menyelamatkan streak saat kamu absen sehari. 1 gratis setiap minggu (Jean: +1), maks. {MAX_FREEZES}.</span></p>
         <button disabled={(profile.freezes ?? 0) >= MAX_FREEZES || (profile.kirameki ?? 0) < FREEZE_PRICE} className={`${btn} bg-paper`}
-          onClick={async () => { if (await spend(FREEZE_PRICE)) { await db.profile.update('me', { freezes: (profile.freezes ?? 0) + 1 }); toast('Streak Freeze dibeli', '🧊') } }}>
-          Beli ✦ {FREEZE_PRICE}
+          onClick={async () => { if (await spend(FREEZE_PRICE)) { await db.profile.update('me', { freezes: (profile.freezes ?? 0) + 1 }); toast('Streak Freeze dibeli', 'snowflake') } }}>
+          Beli <Icon name="gem" className="h-4 w-4" /> {FREEZE_PRICE}
         </button>
       </div>
     </main>

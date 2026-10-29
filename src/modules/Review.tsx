@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Icon } from '../ui/Icon'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import type { SrsItem } from '../data/db'
@@ -34,10 +35,10 @@ export function Review() {
       <div className="flex justify-center"><Buddy mood={stats.total ? 'happy' : 'idle'} size={130} /></div>
       {stats.total
         ? <p className="font-display text-3xl font-extrabold">Review selesai! {Math.round((stats.right / stats.total) * 100)}% benar</p>
-        : <p className="font-display text-2xl font-extrabold">Belum ada kartu jatuh tempo ✨</p>}
+        : <p className="font-display text-2xl font-extrabold">Belum ada kartu jatuh tempo</p>}
       <div className="flex justify-center gap-2">
-        <Link to="/learn" className={`${btn} bg-torii text-white`}>Belajar baru</Link>
-        <Link to="/daily" className={`${btn} bg-anemo text-white`}>Commission harian</Link>
+        <Link to="/learn" className={`${btn} bg-primary text-white`}>Belajar baru</Link>
+        <Link to="/daily" className={`${btn} bg-deep text-white`}>Commission harian</Link>
       </div>
     </main>
   )
@@ -134,8 +135,8 @@ function TypeReading({ w, title, onAnswer }: { w: Word; title: string; onAnswer:
       <p lang="ja" className="text-5xl font-bold">{w.word}</p>
       <form onSubmit={(e) => { e.preventDefault(); submit() }} className="flex gap-2">
         <input autoFocus value={typed} onChange={(e) => setTyped(e.target.value)} disabled={result !== undefined} autoCapitalize="off" autoComplete="off"
-          className="min-w-0 flex-1 rounded-full border-[3px] border-ink bg-paper px-4 py-2 text-center text-xl" aria-label="bacaan" />
-        <button className={`${btn} bg-torii text-white`}>OK</button>
+          className="min-w-0 flex-1 rounded-full border-2 border-gold/70 bg-paper px-4 py-2 text-center text-xl" aria-label="bacaan" />
+        <button className={`${btn} bg-primary text-white`}>OK</button>
       </form>
       <p lang="ja" className="h-6 text-lg">{typed && toHiragana(typed, { IMEMode: true })}</p>
       {result === false && (
@@ -176,28 +177,28 @@ function KanaQuestion({ kana, left, title, onAnswer }: { kana: Kana; left: numbe
       </div>
       <p className="text-sm opacity-70">{{ read: 'Bagaimana dibacanya?', write: 'Pilih kana yang tepat', type: 'Ketik romaji-nya', listen: 'Dengarkan, lalu pilih' }[mode]}</p>
       {mode === 'listen'
-        ? <button onClick={() => speak(kana.char)} className={`${btn} bg-paper text-4xl`}>🔊</button>
+        ? <button onClick={() => speak(kana.char)} className={`${btn} bg-paper`} aria-label="Putar suara"><Icon name="speaker" className="h-9 w-9" /></button>
         : <p lang="ja" className="text-7xl font-bold">{mode === 'write' ? kana.romaji : kana.char}</p>}
 
       {mode === 'type' ? (
         <form onSubmit={(e) => { e.preventDefault(); submit(romajiMatches(typed, kana), typed) }} className="flex gap-2">
           <input autoFocus value={typed} onChange={(e) => setTyped(e.target.value)} disabled={!!result} autoCapitalize="off" autoComplete="off"
-            className="min-w-0 flex-1 rounded-full border-[3px] border-ink bg-paper px-4 py-2 text-center text-xl" aria-label="romaji" />
-          <button className={`${btn} bg-torii text-white`}>OK</button>
+            className="min-w-0 flex-1 rounded-full border-2 border-gold/70 bg-paper px-4 py-2 text-center text-xl" aria-label="romaji" />
+          <button className={`${btn} bg-primary text-white`}>OK</button>
         </form>
       ) : (
         <div className="grid grid-cols-2 gap-3">
           {choices.map((c) => (
             <motion.button key={c.char} whileTap={{ scale: .94 }} onClick={() => submit(c === kana, c.romaji)} lang="ja"
               animate={result && !result.right && result.given === c.romaji ? { x: [0, -6, 6, -4, 0] } : {}}
-              className={`${btn} text-2xl ${result && c === kana ? 'bg-anemo text-white' : result?.given === c.romaji ? 'bg-torii text-white' : 'bg-paper'}`}>{label(c)}</motion.button>
+              className={`${btn} text-2xl ${result && c === kana ? 'bg-deep text-white' : result?.given === c.romaji ? 'bg-primary text-white' : 'bg-paper'}`}>{label(c)}</motion.button>
           ))}
         </div>
       )}
 
       {result && !result.right && (
         <div className="space-y-2">
-          <p><span lang="ja" className="text-2xl font-bold">{kana.char}</span> = <b>{kana.romaji}</b>{kana.mnemonic && <> · 💡 {kana.mnemonic}</>}</p>
+          <p><span lang="ja" className="text-2xl font-bold">{kana.char}</span> = <b>{kana.romaji}</b>{kana.mnemonic && <> · <Icon name="bulb" className="h-4 w-4 text-geo" /> {kana.mnemonic}</>}</p>
           <button autoFocus onClick={() => onAnswer(false, Date.now() - started)} className={`${btn} bg-ink text-paper`}>Lanjut →</button>
         </div>
       )}

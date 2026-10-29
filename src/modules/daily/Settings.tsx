@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { exportAll, importAll } from '../../engine/backup'
 import { btn, card } from '../../ui/kit'
 import { disableReminder, enableReminder, reminderHour } from '../../ui/reminder'
@@ -19,7 +20,7 @@ export function Settings() {
     const a = Object.assign(document.createElement('a'), { href: url, download: `teyvat-nihongo-${data.exportedAt.slice(0, 10)}.json` })
     a.click()
     URL.revokeObjectURL(url)
-    toast('Backup diunduh', '💾')
+    toast('Backup diunduh', 'save')
   }
   const restore = async (f?: File) => {
     if (!f) return
@@ -28,7 +29,7 @@ export function Settings() {
       if (!confirm('Semua progres di perangkat ini akan diganti dengan isi backup. Lanjutkan?')) return
       const r = await importAll(data)
       setMsg(`Berhasil dipulihkan: ${r.items} item SRS.`)
-      toast('Progres dipulihkan', '💾')
+      toast('Progres dipulihkan', 'save')
     } catch (e) {
       setMsg(e instanceof SyntaxError ? 'File bukan JSON yang valid.' : (e as Error).message)
     }
@@ -38,10 +39,10 @@ export function Settings() {
     <section className={`${card} space-y-4`}>
       <h2 className="font-display text-xl font-extrabold">Data & pengaturan</h2>
       <div className="space-y-2">
-        <p className="font-bold">💾 Backup progres</p>
+        <p className="font-bold"><Icon name="save" className="mr-1 h-4 w-4 text-primary" />Backup progres</p>
         <p className="text-sm opacity-70">Semua data tersimpan di browser ini saja. Unduh backup JSON (termasuk chibi yang kamu upload) untuk dipindah ke perangkat lain.</p>
         <div className="flex flex-wrap gap-2">
-          <button onClick={download} className={`${btn} bg-anemo text-white`}>Export JSON</button>
+          <button onClick={download} className={`${btn} bg-deep text-white`}>Export JSON</button>
           <button onClick={() => file.current?.click()} className={`${btn} bg-paper`}>Import JSON…</button>
           <input ref={file} type="file" accept="application/json,.json" className="sr-only" aria-label="file backup" onChange={(e) => { restore(e.target.files?.[0]); e.target.value = '' }} />
         </div>
@@ -49,18 +50,18 @@ export function Settings() {
       </div>
       <label className="flex items-center gap-2 font-bold">
         <input type="checkbox" checked={sfxOn} onChange={(e) => { setPref('sfx', e.target.checked ? 'on' : 'off'); setSfxOn(e.target.checked) }} className="h-5 w-5 accent-[var(--color-anemo)]" />
-        🔊 Efek suara (SFX) jawaban
+        <Icon name="speaker" className="mr-1 h-4 w-4" />Efek suara (SFX) jawaban
       </label>
       <div className="space-y-2">
-        <p className="font-bold">🔔 Pengingat dari companion</p>
+        <p className="font-bold"><Icon name="bell" className="mr-1 h-4 w-4 text-primary" />Pengingat dari companion</p>
         <p className="text-sm opacity-70">Notifikasi sekali sehari setelah jam pilihanmu kalau belum belajar. Karena tanpa server, pengingat hanya muncul selama aplikasi (atau PWA yang di-install) masih terbuka atau berjalan di latar belakang.</p>
         <div className="flex flex-wrap items-center gap-2">
-          <select value={pick} onChange={(e) => setPick(Number(e.target.value))} className="rounded-full border-[3px] border-ink bg-paper px-3 py-1.5" aria-label="jam pengingat">
+          <select value={pick} onChange={(e) => setPick(Number(e.target.value))} className="rounded-full border-2 border-gold/70 bg-paper px-3 py-1.5" aria-label="jam pengingat">
             {Array.from({ length: 24 }, (_, h) => <option key={h} value={h}>{String(h).padStart(2, '0')}:00</option>)}
           </select>
-          <button className={`${btn} bg-torii text-white`} onClick={async () => {
+          <button className={`${btn} bg-primary text-white`} onClick={async () => {
             const r = await enableReminder(pick)
-            if (r === 'granted') { setHour(pick); toast(`Pengingat aktif jam ${pick}:00`, '🔔') }
+            if (r === 'granted') { setHour(pick); toast(`Pengingat aktif jam ${pick}:00`, 'bell') }
             else setMsg(r === 'unsupported' ? 'Browser ini tidak mendukung notifikasi.' : 'Izin notifikasi ditolak.')
           }}>{hour >= 0 ? 'Simpan jam' : 'Aktifkan'}</button>
           {hour >= 0 && <button className={`${btn} bg-paper`} onClick={() => { disableReminder(); setHour(-1) }}>Matikan</button>}

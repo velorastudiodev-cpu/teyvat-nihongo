@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Icon } from '../ui/Icon'
 import { motion } from 'framer-motion'
 import type { Kana } from '../data/kana'
 import type { Expression } from '../characters'
@@ -7,7 +8,7 @@ import { btn, card, shuffle } from '../ui/kit'
 import { sfx } from '../ui/sfx'
 import { speak } from '../ui/speak'
 import { useDeadline } from '../ui/useDeadline'
-import { GameSetup, type GameMode, type KanaSet } from './common'
+import { GameSetup, type GameMode, type KanaSet, NewBest } from './common'
 import { kanaPool, useBest } from './hooks'
 
 const ENDLESS_SECONDS = 90
@@ -16,7 +17,7 @@ interface Tile { id: string; pair: string; face: string; isKana: boolean }
 export function MemoryMatch() {
   const [game, setGame] = useState<{ run: number; mode: GameMode; pool: Kana[] }>()
   const start = async (mode: GameMode, set: KanaSet) => setGame({ run: Date.now(), mode, pool: (await kanaPool(set)).pool })
-  if (!game) return <GameSetup title="🃏 Memory Match" blurb="Balik kartu dan pasangkan kana dengan romaji-nya. Daily: 1 papan. Endless: sebanyak mungkin pasangan dalam 90 detik." onStart={start} />
+  if (!game) return <GameSetup title="Memory Match" icon="cards" blurb="Balik kartu dan pasangkan kana dengan romaji-nya. Daily: 1 papan. Endless: sebanyak mungkin pasangan dalam 90 detik." onStart={start} />
   return <Board key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
@@ -82,15 +83,15 @@ function Board({ mode, pool, onExit }: { mode: GameMode; pool: Kana[]; onExit: (
     <main className={`${card} mx-auto mt-6 max-w-md space-y-3 text-center`}>
       <div className="flex justify-center"><Buddy mood="happy" size={120} /></div>
       <p className="font-display text-4xl font-extrabold">{over.score} {mode === 'endless' ? 'pasangan' : 'poin'}</p>
-      <p>{over.newBest ? '🏆 Rekor baru!' : `Rekor: ${best}`}</p>
-      <button className={`${btn} bg-torii text-white`} onClick={onExit}>Main lagi</button>
+      <NewBest newBest={over.newBest} best={best} />
+      <button className={`${btn} bg-primary text-white`} onClick={onExit}>Main lagi</button>
     </main>
   )
 
   return (
     <main className="mx-auto mt-2 max-w-xl space-y-3">
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{mode === 'endless' ? `⏱ ${Math.ceil(clock.left)}s · ${found} pasangan` : `⏱ ${time}s · ${moves} langkah`}</span>
+        <span className="flex items-center gap-1"><Icon name="timer" className="h-4 w-4" /> {mode === 'endless' ? `${Math.ceil(clock.left)}s · ${found} pasangan` : `${time}s · ${moves} langkah`}</span>
         <Buddy mood={mood} size={64} />
       </div>
       <div className={`grid gap-2 ${grid}`}>
@@ -98,9 +99,9 @@ function Board({ mode, pool, onExit }: { mode: GameMode; pool: Kana[]; onExit: (
           const up = open.includes(t) || matched.has(t.pair)
           return (
             <motion.button key={t.id} onClick={() => flip(t)} animate={{ rotateY: up ? 0 : 180 }} transition={{ duration: .25 }}
-              className={`aspect-square cursor-pointer rounded-2xl border-[3px] border-ink text-3xl font-bold shadow-[3px_3px_0_var(--color-ink)] ${matched.has(t.pair) ? 'bg-anemo text-white' : up ? 'bg-white' : 'bg-torii'}`}>
+              className={`aspect-square cursor-pointer rounded-2xl border-2 border-gold/70 text-3xl font-bold shadow-md ${matched.has(t.pair) ? 'bg-anemo text-white' : up ? 'bg-white' : 'bg-primary'}`}>
               <span lang={t.isKana ? 'ja' : undefined} style={{ display: up ? 'inline' : 'none' }}>{t.face}</span>
-              {!up && <span className="text-paper">⛩</span>}
+              {!up && <Icon name="torii" className="h-8 w-8 text-paper" />}
             </motion.button>
           )
         })}

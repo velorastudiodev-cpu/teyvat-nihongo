@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { kanaId, type Kana, type Script } from '../../data/kana'
@@ -21,7 +22,7 @@ export function Lesson() {
   if (!kana) return null
   if (!kana.length) return (
     <main className={`${card} mx-auto mt-6 max-w-lg text-center`}>
-      <p className="font-display text-2xl font-extrabold">Semua {script} sudah dipelajari! 🎉</p>
+      <p className="font-display text-2xl font-extrabold">Semua {script} sudah dipelajari!</p>
       <Link to="/review" className={`${btn} mt-4 inline-block bg-geo`}>Review →</Link>
     </main>
   )
@@ -34,8 +35,8 @@ export function Lesson() {
       <p lang="ja" className="text-3xl">{kana.map((k) => k.char).join(' ')}</p>
       <p>Masuk ke SRS. Kartu ini akan muncul lagi di review pada waktu yang pas.</p>
       <div className="flex justify-center gap-2">
-        <button className={`${btn} bg-torii text-white`} onClick={() => { setI(0); setPhase('intro'); setBatch(batch + 1) }}>Pelajaran berikutnya</button>
-        <Link to="/games/kana-rain" className={`${btn} bg-anemo text-white`}>Main Kana Rain</Link>
+        <button className={`${btn} bg-primary text-white`} onClick={() => { setI(0); setPhase('intro'); setBatch(batch + 1) }}>Pelajaran berikutnya</button>
+        <Link to="/games/kana-rain" className={`${btn} bg-deep text-white`}>Main Kana Rain</Link>
       </div>
     </main>
   )
@@ -51,12 +52,12 @@ export function Lesson() {
         <motion.div key={k.char} initial={{ opacity: 0, rotateY: 90 }} animate={{ opacity: 1, rotateY: 0 }} exit={{ opacity: 0, rotateY: -90 }} transition={{ duration: .2 }}
           className={`${card} space-y-2 text-center`}>
           <button onClick={() => speak(k.char)} lang="ja" className="cursor-pointer text-8xl font-bold">{k.char}</button>
-          <p className="font-display text-3xl font-extrabold text-torii">{k.romaji}</p>
-          {k.mnemonic && <p className="rounded-2xl bg-paper p-3">💡 {k.mnemonic}</p>}
-          <p className="text-xs opacity-60">Tap hurufnya untuk mendengar · <Link to={`/write/${k.char}`} className="underline">✍️ latihan menulis</Link></p>
+          <p className="font-display text-3xl font-extrabold text-wrong">{k.romaji}</p>
+          {k.mnemonic && <p className="rounded-2xl bg-soft p-3"><Icon name="bulb" className="mr-1 h-4 w-4 text-geo" />{k.mnemonic}</p>}
+          <p className="text-xs opacity-60">Tap hurufnya untuk mendengar · <Link to={`/write/${k.char}`} className="underline"><Icon name="brush" className="h-3.5 w-3.5" /> latihan menulis</Link></p>
         </motion.div>
       </AnimatePresence>
-      <button className={`${btn} w-full bg-torii text-white`} onClick={() => {
+      <button className={`${btn} w-full bg-primary text-white`} onClick={() => {
         if (i + 1 < kana.length) { setI(i + 1); speak(kana[i + 1].char) } else setPhase('quiz')
       }}>{i + 1 < kana.length ? 'Berikutnya →' : 'Kuis cepat →'}</button>
     </main>
@@ -96,7 +97,7 @@ function LessonQuiz({ kana, onDone }: { kana: Kana[]; onDone: () => void }) {
       <div className="grid grid-cols-2 gap-3">
         {choices.map((c) => (
           <motion.button key={c.char} whileTap={{ scale: .94 }} onClick={() => pick(c)}
-            className={`${btn} text-xl ${picked && c === k ? 'bg-anemo text-white' : picked === c.char ? 'bg-torii text-white' : 'bg-paper'}`}>{c.romaji}</motion.button>
+            className={`${btn} text-xl ${picked && c === k ? 'bg-deep text-white' : picked === c.char ? 'bg-primary text-white' : 'bg-paper'}`}>{c.romaji}</motion.button>
         ))}
       </div>
     </main>

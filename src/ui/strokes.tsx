@@ -76,7 +76,7 @@ export function StrokePad({ char, ghost = true, size = 260, onDone, onStroke }: 
   return (
     <div className="flex flex-col items-center gap-1">
       <svg ref={svg} viewBox="0 0 109 109" width={size} height={size} fill="none" strokeLinecap="round" strokeLinejoin="round"
-        className={`touch-none rounded-3xl border-[3px] border-ink bg-white ${finished ? 'outline-4 outline-anemo' : ''}`}
+        className={`touch-none rounded-3xl border-2 border-gold/70 bg-white ${finished ? 'outline-4 outline-anemo' : ''}`}
         onPointerDown={(e) => { (e.target as Element).setPointerCapture?.(e.pointerId); setLine([toPt(e)]) }}
         onPointerMove={(e) => line.length && setLine((l) => [...l, toPt(e)])}
         onPointerUp={end} onPointerLeave={end}>
@@ -89,8 +89,8 @@ export function StrokePad({ char, ghost = true, size = 260, onDone, onStroke }: 
         )}
         {line.length > 1 && <polyline points={line.map((p) => p.join(',')).join(' ')} stroke="#3fae8f" strokeWidth={4} />}
       </svg>
-      <p className={`h-5 text-sm font-bold ${hint ? 'text-torii' : 'text-anemo'}`}>
-        {finished ? `Selesai! ${mistakes ? `${mistakes} kesalahan` : 'Sempurna ✨'}` : hint?.text ?? `Goresan ${done + 1} / ${set.d.length}`}
+      <p className={`h-5 text-sm font-bold ${hint ? 'text-wrong' : 'text-anemo'}`}>
+        {finished ? `Selesai! ${mistakes ? `${mistakes} kesalahan` : 'Sempurna'}` : hint?.text ?? `Goresan ${done + 1} / ${set.d.length}`}
       </p>
     </div>
   )

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Icon } from './Icon'
 import { onToast, type Toast } from './toastBus'
-
 
 export function Toaster() {
   const [list, setList] = useState<Toast[]>([])
@@ -13,12 +13,13 @@ export function Toaster() {
     return onToast(l)
   }, [])
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-3 z-50 flex flex-col items-center gap-2" aria-live="polite">
+    <div className="pointer-events-none fixed inset-x-0 top-16 z-50 flex flex-col items-center gap-2 px-4" aria-live="polite">
       <AnimatePresence>
         {list.map((t) => (
-          <motion.div key={t.id} initial={{ y: -30, opacity: 0, scale: .9 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ opacity: 0, y: -20 }}
-            className="rounded-full border-[3px] border-ink bg-geo px-5 py-2 font-display font-bold shadow-[3px_3px_0_var(--color-ink)]">
-            {t.icon} {t.text}
+          <motion.div key={t.id} initial={{ y: -24, opacity: 0, scale: .95 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ opacity: 0, y: -16 }}
+            className="g-glass flex items-center gap-2 rounded-full py-2 pr-5 pl-2 font-display font-bold shadow-lg">
+            <span className="g-chip h-8 w-8"><Icon name={t.icon} className="h-4.5 w-4.5" /></span>
+            {t.text}
           </motion.div>
         ))}
       </AnimatePresence>

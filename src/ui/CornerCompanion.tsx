@@ -4,6 +4,7 @@ import { getCharacter, type Expression } from '../characters'
 import { Chibi } from '../characters/Chibi'
 import type { Profile } from '../data/db'
 import { speak } from './speak'
+import { companionVoice } from '../modules/raiden/lines'
 
 const IDLE_MS = 60_000
 
@@ -19,10 +20,11 @@ export function CornerCompanion({ profile }: { profile: Profile }) {
     return () => { clearTimeout(t); window.removeEventListener('pointerdown', wake); window.removeEventListener('keydown', wake) }
   }, [])
   if (!c) return null
+  const voice = companionVoice(profile, c)
   return (
-    <div className="fixed bottom-3 left-3 z-40 hidden items-end gap-1 xl:flex">
+    <div className="fixed bottom-24 left-3 z-30 hidden items-end gap-1 xl:flex">
       <motion.button whileTap={{ scale: .9 }} aria-label={`Sapa ${c.name}`} className="cursor-pointer" onClick={() => {
-        const l = c.lines[Math.floor(Math.random() * c.lines.length)]
+        const l = voice.lines[Math.floor(Math.random() * voice.lines.length)]
         setLine(`${l.ja} · ${l.tr}`); setExpr('happy'); speak(l.ja)
         setTimeout(() => { setExpr('idle'); setLine(undefined) }, 2500)
       }}>
@@ -30,7 +32,7 @@ export function CornerCompanion({ profile }: { profile: Profile }) {
       </motion.button>
       <AnimatePresence>
         {line && <motion.p initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
-          className="mb-10 max-w-56 rounded-2xl border-[3px] border-ink bg-white px-3 py-1 text-sm shadow-[2px_2px_0_var(--color-ink)]">{line}</motion.p>}
+          className="g-glass mb-10 max-w-64 rounded-2xl px-3 py-1.5 text-sm shadow-md">{line}</motion.p>}
       </AnimatePresence>
     </div>
   )

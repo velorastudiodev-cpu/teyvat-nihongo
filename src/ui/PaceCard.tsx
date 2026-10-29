@@ -15,7 +15,7 @@ export function PaceCard({ profile }: { profile: Profile }) {
   const { target, minutesPerDay } = profile
   if (!p || !minutesPerDay) return null
   return (
-    <div className="rounded-3xl border-[3px] border-ink bg-white p-5 shadow-[4px_4px_0_var(--color-ink)]">
+    <div className="rounded-3xl border-2 border-gold/70 bg-white p-5 shadow-md">
       <p className="font-display text-sm font-bold uppercase tracking-widest text-anemo">Estimasi lulus {target}</p>
       <p className="font-display text-3xl font-extrabold">{fmt(p.finish)}</p>
       {p.finishActual && <p className="text-sm">Dari performa 7 hari terakhir: <b>{fmt(p.finishActual)}</b></p>}
@@ -27,7 +27,7 @@ export function PaceCard({ profile }: { profile: Profile }) {
       {p.requiredPerDay !== undefined && profile.targetDate && (
         <p className="mt-2 text-sm">Target {fmt(new Date(profile.targetDate))} butuh ±{p.requiredPerDay} item/hari.</p>
       )}
-      <p className={`mt-2 text-sm font-bold ${p.status === 'behind' || p.status === 'brake' ? 'text-torii' : 'text-anemo'}`}>{MESSAGE[p.status]}</p>
+      <p className={`mt-2 text-sm font-bold ${p.status === 'behind' || p.status === 'brake' ? 'text-wrong' : 'text-anemo'}`}>{MESSAGE[p.status]}</p>
     </div>
   )
 }

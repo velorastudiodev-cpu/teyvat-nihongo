@@ -34,7 +34,12 @@ npm test
 npm run lint
 ```
 
-**Ganti gambar chibi:** buka halaman Karakter, pilih karakter, lalu klik *Upload* di tiap ekspresi (tersimpan di browser). Cara lain: taruh `idle.svg`, `happy.svg`, `sad.svg`, dan `sleep.svg` di `public/chibi/<id>/`.
+**Gambar chibi:**
+- Ilustrasi di `Genshin Chibi Generate Ver/` (lihat `manifest.json`) dikonversi ke `public/chibi/<id>/{idle,happy,sad,sleep}.webp`, lalu dipakai otomatis. Pemetaan nama: Santai = idle, Senang = happy, Menyemangati = sad, Tidur = sleep. File aslinya tidak diubah.
+- Mau ganti dari aplikasi? Buka **Karakter**, pilih karakter, lalu buka **Ekspresi & gambar sendiri** → *Upload*. Gambar disimpan di perangkat dan selalu didahulukan; *Reset* mengembalikan gambar bawaan.
+- Urutan sumber gambar: upload → `public/chibi/<id>/` → SVG bawaan → siluet.
+
+**Rahasia Raiden Shogun:** surat dari Tenshukaku tiba saat kamu mencapai Inazuma (N3). Ada juga jalan pintas rahasia untuk yang rajin; petunjuknya ada di halaman Raiden pada menu Karakter.
 
 **Membangun ulang data kanji/kosakata** (unduh KanjiVG, KANJIDIC2, daftar JLPT):
 

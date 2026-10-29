@@ -2,9 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MotionConfig } from 'framer-motion'
-import '@fontsource/baloo-2/500.css'
-import '@fontsource/baloo-2/700.css'
-import '@fontsource/baloo-2/800.css'
+import '@fontsource/nunito/600.css'
+import '@fontsource/nunito/800.css'
+import '@fontsource/nunito/900.css'
+import '@fontsource/cinzel/700.css'
 import './index.css'
 import './native'
 import { Layout } from './ui/Layout'
@@ -42,6 +43,7 @@ import { Domain } from './modules/daily/Domain'
 import { Revenge } from './modules/daily/Revenge'
 import { GateExam, MockTest } from './modules/exam/ExamPages'
 import { Insight } from './modules/insight/Insight'
+import { RaidenLetter, RaidenPage, RaidenTalk, RaidenTrial } from './modules/raiden/RaidenPage'
 
 const router = createBrowserRouter([
   {
@@ -88,7 +90,11 @@ const router = createBrowserRouter([
       { path: '/games/kana-rain', element: <KanaRain /> },
       { path: '/games/memory-match', element: <MemoryMatch /> },
       { path: '/characters/:id?', element: <Characters /> },
-      { path: '*', element: <p className="p-8 font-display text-2xl">Jalan ini belum dibuka… 迷子？</p> },
+      { path: '/raiden', element: <RaidenPage /> },
+      { path: '/raiden/letter', element: <RaidenLetter /> },
+      { path: '/raiden/talk', element: <RaidenTalk /> },
+      { path: '/raiden/trial', element: <RaidenTrial /> },
+      { path: '*', element: <p className="g-panel mt-6 p-8 font-display text-2xl">Jalan ini belum dibuka… <span lang="ja">迷子？</span></p> },
     ],
   },
 ])

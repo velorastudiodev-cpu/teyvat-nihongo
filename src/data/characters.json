@@ -22,10 +22,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/paimon/idle.svg",
-   "happy": "/chibi/paimon/happy.svg",
-   "sad": "/chibi/paimon/sad.svg",
-   "sleep": "/chibi/paimon/sleep.svg"
+   "idle": "/chibi/paimon/idle.webp",
+   "happy": "/chibi/paimon/happy.webp",
+   "sad": "/chibi/paimon/sad.webp",
+   "sleep": "/chibi/paimon/sleep.webp"
   }
  },
  {
@@ -51,10 +51,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/klee/idle.svg",
-   "happy": "/chibi/klee/happy.svg",
-   "sad": "/chibi/klee/sad.svg",
-   "sleep": "/chibi/klee/sleep.svg"
+   "idle": "/chibi/klee/idle.webp",
+   "happy": "/chibi/klee/happy.webp",
+   "sad": "/chibi/klee/sad.webp",
+   "sleep": "/chibi/klee/sleep.webp"
   }
  },
  {
@@ -80,10 +80,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/venti/idle.svg",
-   "happy": "/chibi/venti/happy.svg",
-   "sad": "/chibi/venti/sad.svg",
-   "sleep": "/chibi/venti/sleep.svg"
+   "idle": "/chibi/venti/idle.webp",
+   "happy": "/chibi/venti/happy.webp",
+   "sad": "/chibi/venti/sad.webp",
+   "sleep": "/chibi/venti/sleep.webp"
   }
  },
  {
@@ -138,10 +138,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/diluc/idle.svg",
-   "happy": "/chibi/diluc/happy.svg",
-   "sad": "/chibi/diluc/sad.svg",
-   "sleep": "/chibi/diluc/sleep.svg"
+   "idle": "/chibi/diluc/idle.webp",
+   "happy": "/chibi/diluc/happy.webp",
+   "sad": "/chibi/diluc/sad.webp",
+   "sleep": "/chibi/diluc/sleep.webp"
   }
  },
  {
@@ -167,10 +167,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/jean/idle.svg",
-   "happy": "/chibi/jean/happy.svg",
-   "sad": "/chibi/jean/sad.svg",
-   "sleep": "/chibi/jean/sleep.svg"
+   "idle": "/chibi/jean/idle.webp",
+   "happy": "/chibi/jean/happy.webp",
+   "sad": "/chibi/jean/sad.webp",
+   "sleep": "/chibi/jean/sleep.webp"
   }
  },
  {
@@ -196,10 +196,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/barbara/idle.svg",
-   "happy": "/chibi/barbara/happy.svg",
-   "sad": "/chibi/barbara/sad.svg",
-   "sleep": "/chibi/barbara/sleep.svg"
+   "idle": "/chibi/barbara/idle.webp",
+   "happy": "/chibi/barbara/happy.webp",
+   "sad": "/chibi/barbara/sad.webp",
+   "sleep": "/chibi/barbara/sleep.webp"
   }
  },
  {
@@ -225,10 +225,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/lisa/idle.svg",
-   "happy": "/chibi/lisa/happy.svg",
-   "sad": "/chibi/lisa/sad.svg",
-   "sleep": "/chibi/lisa/sleep.svg"
+   "idle": "/chibi/lisa/idle.webp",
+   "happy": "/chibi/lisa/happy.webp",
+   "sad": "/chibi/lisa/sad.webp",
+   "sleep": "/chibi/lisa/sleep.webp"
   }
  },
  {
@@ -283,10 +283,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/mona/idle.svg",
-   "happy": "/chibi/mona/happy.svg",
-   "sad": "/chibi/mona/sad.svg",
-   "sleep": "/chibi/mona/sleep.svg"
+   "idle": "/chibi/mona/idle.webp",
+   "happy": "/chibi/mona/happy.webp",
+   "sad": "/chibi/mona/sad.webp",
+   "sleep": "/chibi/mona/sleep.webp"
   }
  },
  {
@@ -341,10 +341,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/zhongli/idle.svg",
-   "happy": "/chibi/zhongli/happy.svg",
-   "sad": "/chibi/zhongli/sad.svg",
-   "sleep": "/chibi/zhongli/sleep.svg"
+   "idle": "/chibi/zhongli/idle.webp",
+   "happy": "/chibi/zhongli/happy.webp",
+   "sad": "/chibi/zhongli/sad.webp",
+   "sleep": "/chibi/zhongli/sleep.webp"
   }
  },
  {
@@ -544,10 +544,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/raiden/idle.svg",
-   "happy": "/chibi/raiden/happy.svg",
-   "sad": "/chibi/raiden/sad.svg",
-   "sleep": "/chibi/raiden/sleep.svg"
+   "idle": "/chibi/raiden/idle.webp",
+   "happy": "/chibi/raiden/happy.webp",
+   "sad": "/chibi/raiden/sad.webp",
+   "sleep": "/chibi/raiden/sleep.webp"
   }
  },
  {

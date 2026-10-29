@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { examples, mainReading, type Kanji, type Level } from '../../data/kanji'
@@ -17,7 +18,7 @@ export function KanjiCard({ k }: { k: Kanji }) {
       <div className="flex flex-wrap items-center justify-center gap-4">
         <StrokeOrder char={k.char} size={150} />
         <div className="text-left">
-          <p className="font-display text-3xl font-extrabold text-torii">{k.meaning}</p>
+          <p className="font-display text-3xl font-extrabold text-wrong">{k.meaning}</p>
           <p className="text-sm opacity-60">{k.en.join(', ')} · {k.strokes} goresan</p>
           {k.on.length > 0 && <p lang="ja"><b className="font-display text-xs">ON</b> {k.on.join('、')}</p>}
           {k.kun.length > 0 && <p lang="ja"><b className="font-display text-xs">KUN</b> {k.kun.join('、')}</p>}
@@ -28,8 +29,8 @@ export function KanjiCard({ k }: { k: Kanji }) {
         <ul className="space-y-1 rounded-2xl bg-paper p-3 text-left">
           {examples(k.char).map((w) => (
             <li key={w.word}>
-              <button onClick={() => speak(w.reading)} className="cursor-pointer text-left hover:text-torii">
-                🔊 <span lang="ja" className="text-lg font-bold">{w.word}</span> <span lang="ja">（{w.reading}）</span> <span className="text-sm opacity-70">{w.meaning}</span>
+              <button onClick={() => speak(w.reading)} className="cursor-pointer text-left hover:text-wrong">
+                <Icon name="speaker" className="h-4 w-4 text-primary" /> <span lang="ja" className="text-lg font-bold">{w.word}</span> <span lang="ja">（{w.reading}）</span> <span className="text-sm opacity-70">{w.meaning}</span>
               </button>
             </li>
           ))}
@@ -48,7 +49,7 @@ export function KanjiLesson() {
   useEffect(() => { nextKanji(level).then(setKanji) }, [level, round])
 
   if (!kanji) return null
-  if (!kanji.length) return <p className={`${card} mx-auto mt-6 max-w-lg text-center font-display text-2xl`}>Semua kanji {level} sudah dipelajari! 🎉</p>
+  if (!kanji.length) return <p className={`${card} mx-auto mt-6 max-w-lg text-center font-display text-2xl`}>Semua kanji {level} sudah dipelajari!</p>
 
   if (phase === 'quiz') return <KanjiQuiz kanji={kanji} onDone={async () => {
     await learn(kanji.map((k) => ({ id: `kanji:${k.char}`, kind: 'kanji', stage: k.level })))
@@ -61,8 +62,8 @@ export function KanjiLesson() {
       <p lang="ja" className="text-4xl">{kanji.map((k) => k.char).join(' ')}</p>
       <p>Masuk SRS! Review dan Stroke Duel akan menguatkannya.</p>
       <div className="flex flex-wrap justify-center gap-2">
-        <button className={`${btn} bg-torii text-white`} onClick={() => { setI(0); setPhase('see'); setRound((r) => r + 1) }}>Pelajaran berikutnya</button>
-        <Link to="/games/stroke-duel" className={`${btn} bg-anemo text-white`}>Stroke Duel</Link>
+        <button className={`${btn} bg-primary text-white`} onClick={() => { setI(0); setPhase('see'); setRound((r) => r + 1) }}>Pelajaran berikutnya</button>
+        <Link to="/games/stroke-duel" className={`${btn} bg-deep text-white`}>Stroke Duel</Link>
       </div>
     </main>
   )
@@ -82,7 +83,7 @@ export function KanjiLesson() {
               <div className="flex justify-center"><StrokePad key={k.char} char={k.char} onDone={() => setTimeout(next, 700)} /></div></>}
       </motion.div>
       {phase === 'see'
-        ? <button className={`${btn} w-full bg-torii text-white`} onClick={() => setPhase('write')}>Tulis ✍️ →</button>
+        ? <button className={`${btn} w-full bg-primary text-white`} onClick={() => setPhase('write')}><Icon name="brush" className="h-4 w-4" /> Tulis</button>
         : <button className="w-full text-sm underline opacity-60" onClick={next}>Lewati latihan menulis</button>}
     </main>
   )

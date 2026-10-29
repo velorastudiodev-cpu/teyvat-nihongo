@@ -28,18 +28,18 @@ export function Revenge() {
   if (n >= queue.length) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-3 text-center`}>
       <div className="flex justify-center"><Buddy mood="happy" size={120} /></div>
-      <p className="font-display text-3xl font-extrabold">{queue.length ? `${fixed} / ${queue.length} dibalas!` : 'Mistake Journal kosong ✨'}</p>
+      <p className="font-display text-3xl font-extrabold">{queue.length ? `${fixed} / ${queue.length} dibalas!` : 'Mistake Journal kosong'}</p>
       <p>{queue.length ? 'Kesalahan yang terbalas dihapus dari jurnal. Yang belum akan menunggu di Revenge Quest berikutnya.' : 'Belum ada kesalahan untuk dibalas.'}</p>
-      <Link to="/daily" className={`${btn} inline-block bg-torii text-white`}>Kembali ke Harian</Link>
+      <Link to="/daily" className={`${btn} inline-block bg-primary text-white`}>Kembali ke Harian</Link>
     </main>
   )
-  return <ItemQuestion key={n} item={queue[n]} title={`⚔️ Revenge Quest · ${n + 1}/${queue.length}`} onDone={async (right) => {
+  return <ItemQuestion key={n} item={queue[n]} title={`Revenge Quest · ${n + 1}/${queue.length}`} onDone={async (right) => {
     if (right) {
       const id = queue[n].id
       await db.mistakes.filter((m) => m.itemId === id && !m.fixed).modify({ fixed: true })
       const got = await earn(PER_FIX)
-      toast(`Balas dendam berhasil! +${got} ✦`, '⚔️')
-      if (fixed + 1 === 5) { const b = await claim(`revenge:${today()}`, BONUS); if (b) toast(`Bonus Revenge +${b} ✦`, '🏆') }
+      toast(`Balas dendam berhasil! +${got} Kirameki`, 'swords')
+      if (fixed + 1 === 5) { const b = await claim(`revenge:${today()}`, BONUS); if (b) toast(`Bonus Revenge +${b} Kirameki`, 'trophy') }
       setFixed(fixed + 1)
     }
     setN(n + 1)

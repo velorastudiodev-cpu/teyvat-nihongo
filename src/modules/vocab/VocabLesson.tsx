@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { Level, Word } from '../../data/kanji'
@@ -20,7 +21,7 @@ export function VocabLesson() {
   useEffect(() => { if (phase === 'see' && words?.[i]) speak(words[i].reading) }, [words, i, phase])
 
   if (!words) return null
-  if (!words.length) return <p className={`${card} mx-auto mt-6 max-w-lg text-center font-display text-2xl`}>Semua kosakata {level} sudah dipelajari! 🎉</p>
+  if (!words.length) return <p className={`${card} mx-auto mt-6 max-w-lg text-center font-display text-2xl`}>Semua kosakata {level} sudah dipelajari!</p>
   if (phase === 'quiz') return <VocabQuiz words={words} onDone={async () => {
     await learn(words.map((w) => ({ id: `vocab:${w.word}`, kind: 'vocab', stage: w.level })))
     sfx.win(); setPhase('done')
@@ -31,7 +32,7 @@ export function VocabLesson() {
       <p className="font-display text-3xl font-extrabold">+{words.length * 5} XP</p>
       <p lang="ja" className="text-2xl">{words.map((w) => w.word).join('・')}</p>
       <div className="flex flex-wrap justify-center gap-2">
-        <button className={`${btn} bg-torii text-white`} onClick={() => { setI(0); setPhase('see'); setRound((r) => r + 1) }}>Pelajaran berikutnya</button>
+        <button className={`${btn} bg-primary text-white`} onClick={() => { setI(0); setPhase('see'); setRound((r) => r + 1) }}>Pelajaran berikutnya</button>
         <Link to="/review" className={`${btn} bg-geo`}>Review</Link>
       </div>
     </main>
@@ -56,7 +57,7 @@ export function VocabLesson() {
           <p className="text-xs opacity-50">geser kartu atau tekan tombol · tap kata untuk dengar</p>
         </motion.div>
       </AnimatePresence>
-      <button className={`${btn} w-full bg-torii text-white`} onClick={next}>{i + 1 < words.length ? 'Berikutnya →' : 'Kuis cepat →'}</button>
+      <button className={`${btn} w-full bg-primary text-white`} onClick={next}>{i + 1 < words.length ? 'Berikutnya →' : 'Kuis cepat →'}</button>
     </main>
   )
 }
@@ -78,7 +79,7 @@ export function WordQuestion({ w, type, title, onAnswer }: { w: Word; type: 'mea
     <Choice title={title} ask={type === 'meaning' ? 'Apa artinya?' : 'Dengarkan, lalu pilih katanya'}
       prompt={type === 'meaning'
         ? <p lang="ja" className="text-5xl font-bold">{w.word}</p>
-        : <button onClick={() => speak(w.reading)} className={`${btn} bg-paper text-4xl`}>🔊</button>}
+        : <button onClick={() => speak(w.reading)} className={`${btn} bg-paper`} aria-label="Putar suara"><Icon name="speaker" className="h-9 w-9" /></button>}
       answer={type === 'meaning' ? w.meaning : w.word} wrong={wrong} lang={type === 'listen' ? 'ja' : undefined}
       say={w.reading} onAnswer={onAnswer}
       explain={<p><span lang="ja" className="text-xl font-bold">{w.word}</span> <span lang="ja">（{w.reading}）</span> = {w.meaning}</p>} />

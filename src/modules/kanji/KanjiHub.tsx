@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../../data/db'
@@ -25,7 +26,7 @@ export function KanjiHub({ kind }: { kind: 'kanji' | 'vocab' }) {
       <div className="flex flex-wrap items-center gap-2">
         {LEVELS.map((l) => (
           <button key={l} onClick={() => setLevel(l)} className={`${btn} ${l === level ? 'bg-ink text-paper' : 'bg-paper'}`}>
-            {levelOpen(l, profile?.stage) ? '' : '🔒 '}{l}
+            {levelOpen(l, profile?.stage) ? null : <Icon name="lock" className="h-3.5 w-3.5" />}{l}
           </button>
         ))}
         <span className="ml-auto text-sm"><b>{learned}</b> / {list.length} dipelajari</span>
@@ -33,16 +34,16 @@ export function KanjiHub({ kind }: { kind: 'kanji' | 'vocab' }) {
 
       {open ? (
         <div className="flex flex-wrap gap-2">
-          <Link to={`/${kind}/learn/${level}`} className={`${btn} bg-torii text-white`}>Pelajaran baru →</Link>
+          <Link to={`/${kind}/learn/${level}`} className={`${btn} bg-primary text-white`}>Pelajaran baru →</Link>
           <Link to="/review" className={`${btn} bg-geo`}>Review</Link>
           {kind === 'kanji' && <>
-            <Link to="/games/stroke-duel" className={`${btn} bg-anemo text-white`}>✍️ Stroke Duel</Link>
-            <Link to="/games/radical-forge" className={`${btn} bg-paper`}>⚒️ Radical Forge</Link>
+            <Link to="/games/stroke-duel" className={`${btn} bg-deep text-white`}><Icon name="brush" className="h-4 w-4" /> Stroke Duel</Link>
+            <Link to="/games/radical-forge" className={`${btn} bg-paper`}><Icon name="hammer" className="h-4 w-4" /> Radical Forge</Link>
           </>}
         </div>
       ) : (
         <p className={`${card} text-sm`}>
-          🔒 {level} terbuka setelah kamu sampai di tahap {level}
+          <Icon name="lock" className="h-4 w-4" /> {level} terbuka setelah kamu sampai di tahap {level}
           {level === 'N5' ? ' (selesaikan hiragana & katakana dulu).' : ' (lulus Gate Exam region sebelumnya).'}
         </p>
       )}

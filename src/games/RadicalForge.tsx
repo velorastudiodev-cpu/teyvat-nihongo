@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Hearts, Icon } from '../ui/Icon'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
 import { db } from '../data/db'
@@ -10,7 +11,7 @@ import { btn, card, sample, shuffle } from '../ui/kit'
 import { sfx } from '../ui/sfx'
 import { speak } from '../ui/speak'
 import { useDeadline } from '../ui/useDeadline'
-import type { GameMode } from './common'
+import { NewBest, type GameMode } from './common'
 import { useGameEnd } from './hooks'
 import { kanjiPool } from './kanjiPool'
 
@@ -26,10 +27,10 @@ export function RadicalForge() {
   const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await kanjiPool(mode, forgeable)) })
   if (!game) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-4`}>
-      <h1 className="font-display text-3xl font-extrabold">⚒️ Radical Forge</h1>
+      <h1 className="flex items-center gap-3 font-display text-3xl font-black"><span className="g-chip h-14 w-14"><Icon name="hammer" className="h-7 w-7" /></span>Radical Forge</h1>
       <p>Pilih komponen yang tepat lalu tempa jadi kanji yang diminta. Contoh: 亻 + 木 = 休 (orang bersandar di pohon = istirahat).</p>
-      <button className={`${btn} w-full bg-torii text-white`} onClick={() => start('daily')}>Daily · {DAILY_ROUNDS} kanji</button>
-      <button className={`${btn} w-full bg-anemo text-white`} onClick={() => start('endless')}>Endless · 3 nyawa</button>
+      <button className={`${btn} w-full bg-primary text-white`} onClick={() => start('daily')}>Daily · {DAILY_ROUNDS} kanji</button>
+      <button className={`${btn} w-full bg-deep text-white`} onClick={() => start('endless')}>Endless · 3 nyawa</button>
     </main>
   )
   return <Forge key={game.run} {...game} onExit={() => setGame(undefined)} />
@@ -78,17 +79,17 @@ function Forge({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due
     <main className={`${card} mx-auto mt-6 max-w-md space-y-3 text-center`}>
       <div className="flex justify-center"><Buddy mood="happy" size={120} /></div>
       <p className="font-display text-4xl font-extrabold">{score} poin</p>
-      <p>{over.newBest ? '🏆 Rekor baru!' : `Rekor: ${best}`}</p>
-      <button className={`${btn} bg-torii text-white`} onClick={onExit}>Main lagi</button>
+      <NewBest newBest={over.newBest} best={best} />
+      <button className={`${btn} bg-primary text-white`} onClick={onExit}>Main lagi</button>
     </main>
   )
 
   return (
     <main className="mx-auto mt-2 max-w-lg space-y-3">
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{'❤️'.repeat(Math.max(0, lives))}</span>
+        <Hearts lives={lives} />
         <span>Skor {score}</span>
-        <span className={left <= 5 ? 'text-torii' : ''}>⏱ {left}s</span>
+        <span className={left <= 5 ? 'text-wrong' : ''}><Icon name="timer" className="h-4 w-4" /> {left}s</span>
       </div>
       <div className={`${card} space-y-4 text-center`}>
         <div className="flex items-center justify-between">
@@ -100,7 +101,7 @@ function Forge({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due
           <Buddy mood={mood} size={80} />
         </div>
         <motion.div key={`${round}${result}`} initial={{ scale: .6, rotate: -8 }} animate={{ scale: 1, rotate: 0 }}
-          className={`mx-auto flex h-28 w-28 items-center justify-center rounded-3xl border-[3px] border-dashed text-6xl font-bold ${result === true ? 'border-anemo bg-anemo/15' : result === false ? 'border-torii bg-torii/10' : 'border-ink/40'}`}>
+          className={`mx-auto flex h-28 w-28 items-center justify-center rounded-3xl border-2 border-dashed text-6xl font-bold ${result === true ? 'border-anemo bg-anemo/15' : result === false ? 'border-wrong bg-wrong/10' : 'border-ink/40'}`}>
           <span lang="ja">{result !== undefined ? k.char : chosen.join('') || '？'}</span>
         </motion.div>
         {result === false && <p lang="ja">{k.char} = {k.parts.join(' + ')}</p>}
@@ -111,7 +112,7 @@ function Forge({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due
               className={`${btn} text-3xl ${chosen.includes(p) ? 'bg-geo' : 'bg-paper'}`}>{p}</motion.button>
           ))}
         </div>
-        <button className={`${btn} w-full bg-torii text-white`} disabled={!chosen.length || result !== undefined} onClick={forge}>Tempa! 🔨</button>
+        <button className={`${btn} w-full bg-primary text-white`} disabled={!chosen.length || result !== undefined} onClick={forge}><Icon name="hammer" /> Tempa!</button>
       </div>
       <button className="text-sm underline opacity-60" onClick={() => { timer.stop(); setLives(0) }}>Berhenti</button>
     </main>

@@ -18,9 +18,9 @@ export function Sentence({ tokens, blank, marks, mode = 'all', known, onTap, cla
   return (
     <p lang="ja" className={`leading-[2.4] ${className}`} aria-label={textOf(tokens)}>
       {tokens.map((t, i) => blanks.includes(i)
-        ? <span key={i} className="mx-1 inline-block min-w-12 border-b-4 border-torii text-center text-torii">？</span>
+        ? <span key={i} className="mx-1 inline-block min-w-12 border-b-4 border-wrong text-center text-wrong">？</span>
         : marks?.[i] !== undefined
-          ? <span key={i} className={`rounded px-0.5 ${marks[i] ? 'bg-anemo/20 text-anemo' : 'bg-torii/15 text-torii underline decoration-wavy'}`}><Ruby token={t} mode={mode} known={known} /></span>
+          ? <span key={i} className={`rounded px-0.5 ${marks[i] ? 'bg-anemo/20 text-anemo' : 'bg-wrong/15 text-wrong underline decoration-wavy'}`}><Ruby token={t} mode={mode} known={known} /></span>
         : onTap
           ? <button key={i} onClick={() => onTap(t)} className="cursor-pointer rounded hover:bg-geo/40"><Ruby token={t} mode={mode} known={known} /></button>
           : <Ruby key={i} token={t} mode={mode} known={known} />)}

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link } from 'react-router-dom'
 import { textOf } from '../../engine/sentence'
 import { bumpDay } from '../../engine/srs/srs'
@@ -39,18 +40,18 @@ export function Listening() {
 
   if (!lines) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-4`}>
-      <h1 className="font-display text-3xl font-extrabold">🎧 Listening</h1>
+      <h1 className="flex items-center gap-3 font-display text-3xl font-black"><span className="g-chip h-12 w-12"><Icon name="headphones" className="h-6 w-6" /></span>Mendengar</h1>
       <p>Dengarkan kalimat, lalu pilih artinya atau tulis apa yang kamu dengar (dikte). Atur kecepatan suaranya:</p>
       <SpeedPicker />
-      <button className={`${btn} w-full bg-torii text-white`} onClick={start}>Kuis dengar ({SESSION} soal)</button>
-      <Link to="/games/listening-echo" className={`${btn} block w-full bg-anemo text-center text-white`}>🎮 Listening Echo</Link>
+      <button className={`${btn} w-full bg-primary text-white`} onClick={start}>Kuis dengar ({SESSION} soal)</button>
+      <Link to="/games/listening-echo" className={`${btn} block w-full bg-anemo text-center text-white`}><Icon name="gamepad" className="h-4 w-4" /> Listening Echo</Link>
     </main>
   )
   if (i >= lines.length) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-3 text-center`}>
       <div className="flex justify-center"><Buddy mood="happy" size={120} /></div>
       <p className="font-display text-3xl font-extrabold">{right} / {lines.length} benar</p>
-      <button className={`${btn} bg-torii text-white`} onClick={start}>Lagi</button>
+      <button className={`${btn} bg-primary text-white`} onClick={start}>Lagi</button>
     </main>
   )
   const line = lines[i]
@@ -72,8 +73,8 @@ export function PlayButton({ text, auto = false }: { text: string; auto?: boolea
   useEffect(() => { if (auto) speak(text) }, [text, auto])
   return (
     <div className="flex justify-center gap-2">
-      <button onClick={() => speak(text)} className={`${btn} bg-paper text-3xl`} aria-label="putar">🔊</button>
-      <button onClick={() => speak(text, Math.min(getRate(), 0.75) * 0.9)} className={`${btn} bg-paper text-2xl`} aria-label="putar pelan">🐢</button>
+      <button onClick={() => speak(text)} className={`${btn} bg-paper`} aria-label="putar"><Icon name="speaker" className="h-8 w-8" /></button>
+      <button onClick={() => speak(text, Math.min(getRate(), 0.75) * 0.9)} className={`${btn} bg-paper`} aria-label="putar pelan"><Icon name="turtle" className="h-8 w-8" /></button>
     </div>
   )
 }
@@ -98,8 +99,8 @@ function Dictation({ line, title, onAnswer }: { line: Line; title: string; onAns
       <PlayButton text={textOf(line.tokens)} auto />
       <form onSubmit={(e) => { e.preventDefault(); submit() }} className="flex gap-2">
         <input ref={input} autoFocus value={typed} onChange={(e) => setTyped(e.target.value)} disabled={result !== undefined} autoComplete="off" autoCapitalize="off"
-          className="min-w-0 flex-1 rounded-full border-[3px] border-ink bg-paper px-4 py-2 text-center text-xl" aria-label="dikte" />
-        <button className={`${btn} bg-torii text-white`}>OK</button>
+          className="min-w-0 flex-1 rounded-full border-2 border-gold/70 bg-paper px-4 py-2 text-center text-xl" aria-label="dikte" />
+        <button className={`${btn} bg-primary text-white`}>OK</button>
       </form>
       {result !== undefined && (
         <div className="space-y-2">

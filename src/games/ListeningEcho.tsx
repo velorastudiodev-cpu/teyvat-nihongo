@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Hearts, Icon } from '../ui/Icon'
 import { motion } from 'framer-motion'
 import { textOf } from '../engine/sentence'
 import type { Expression } from '../characters'
@@ -22,7 +23,7 @@ export function ListeningEcho() {
   const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, lines: (await sentencePool(mode)).lines, all: (await sentencePool('endless')).lines })
   if (!game) return (
     <div>
-      <ModePicker title="🎧 Listening Echo" blurb="Dengarkan kalimatnya, lalu pilih kalimat Jepang yang cocok sebelum waktunya habis." daily={`${DAILY} kalimat`} onStart={start} />
+      <ModePicker title="Listening Echo" icon="headphones" blurb="Dengarkan kalimatnya, lalu pilih kalimat Jepang yang cocok sebelum waktunya habis." daily={`${DAILY} kalimat`} onStart={start} />
       <div className="mt-3 flex justify-center"><SpeedPicker /></div>
     </div>
   )
@@ -61,9 +62,9 @@ function Echo({ mode, lines, all, onExit }: { mode: GameMode; lines: Line[]; all
   return (
     <main className="mx-auto mt-2 max-w-xl space-y-3">
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{'❤️'.repeat(Math.max(0, lives))}</span>
+        <Hearts lives={lives} />
         <span>Skor {score}{buff && <span className="text-anemo"> · {buff.desc}</span>}</span>
-        <span className={left <= 3 ? 'text-torii' : ''}>⏱ {left}s</span>
+        <span className={left <= 3 ? 'text-wrong' : ''}><Icon name="timer" className="h-4 w-4" /> {left}s</span>
       </div>
       <motion.div key={n} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={`${card} space-y-3`}>
         <div className="flex items-center justify-between">
@@ -72,7 +73,7 @@ function Echo({ mode, lines, all, onExit }: { mode: GameMode; lines: Line[]; all
         </div>
         {options.map((o) => (
           <button key={o.ja} onClick={() => pick(o.ja)}
-            className={`block w-full cursor-pointer rounded-2xl border-[3px] px-3 text-left transition-colors ${picked !== undefined && o.ja === line.ja ? 'border-anemo bg-anemo/15' : picked === o.ja ? 'border-torii bg-torii/10' : 'border-ink/20 bg-paper hover:border-ink'}`}>
+            className={`block w-full cursor-pointer rounded-2xl border-2 px-3 text-left transition-colors ${picked !== undefined && o.ja === line.ja ? 'border-anemo bg-anemo/15' : picked === o.ja ? 'border-wrong bg-wrong/10' : 'border-ink/20 bg-paper hover:border-ink'}`}>
             <Sentence tokens={o.tokens} className="text-xl" />
           </button>
         ))}

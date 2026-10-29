@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Hearts, Icon } from '../ui/Icon'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
 import { db } from '../data/db'
@@ -12,7 +13,7 @@ import { btn, card } from '../ui/kit'
 import { sfx } from '../ui/sfx'
 import { StrokePad } from '../ui/strokes'
 import { useDeadline } from '../ui/useDeadline'
-import type { GameMode } from './common'
+import { NewBest, type GameMode } from './common'
 import { useGameEnd } from './hooks'
 import { kanjiPool } from './kanjiPool'
 
@@ -24,10 +25,10 @@ export function StrokeDuel() {
   const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await kanjiPool(mode)) })
   if (!game) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-4`}>
-      <h1 className="font-display text-3xl font-extrabold">✍️ Stroke Duel</h1>
+      <h1 className="flex items-center gap-3 font-display text-3xl font-black"><span className="g-chip h-14 w-14"><Icon name="brush" className="h-7 w-7" /></span>Stroke Duel</h1>
       <p>Tulis kanji dengan urutan & arah goresan yang benar sebelum lawan chibi selesai menulis. Salah goresan = waktu terbuang!</p>
-      <button className={`${btn} w-full bg-torii text-white`} onClick={() => start('daily')}>Daily · {DAILY_ROUNDS} kanji yang sudah kamu pelajari</button>
-      <button className={`${btn} w-full bg-anemo text-white`} onClick={() => start('endless')}>Endless · 3 nyawa</button>
+      <button className={`${btn} w-full bg-primary text-white`} onClick={() => start('daily')}>Daily · {DAILY_ROUNDS} kanji yang sudah kamu pelajari</button>
+      <button className={`${btn} w-full bg-deep text-white`} onClick={() => start('endless')}>Endless · 3 nyawa</button>
     </main>
   )
   return <Duel key={game.run} {...game} onExit={() => setGame(undefined)} />
@@ -72,8 +73,8 @@ function Duel({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due:
     <main className={`${card} mx-auto mt-6 max-w-md space-y-3 text-center`}>
       <div className="flex justify-center gap-2"><Buddy mood="happy" size={110} /><Chibi id={rival} expression="sad" size={90} /></div>
       <p className="font-display text-4xl font-extrabold">{score} poin</p>
-      <p>{over.newBest ? '🏆 Rekor baru!' : `Rekor: ${best}`}</p>
-      <button className={`${btn} bg-torii text-white`} onClick={onExit}>Main lagi</button>
+      <NewBest newBest={over.newBest} best={best} />
+      <button className={`${btn} bg-primary text-white`} onClick={onExit}>Main lagi</button>
     </main>
   )
 
@@ -81,7 +82,7 @@ function Duel({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due:
   return (
     <main className="mx-auto mt-2 max-w-xl space-y-3">
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{'❤️'.repeat(Math.max(0, lives))}</span>
+        <Hearts lives={lives} />
         <span>Skor {score}{bonus > 0 && <span className="text-anemo"> · +{bonus}s buff</span>}</span>
         <span className="opacity-60">{mode === 'daily' ? `${Math.min(round + 1, DAILY_ROUNDS)}/${DAILY_ROUNDS}` : `rekor ${best}`}</span>
       </div>
@@ -89,7 +90,7 @@ function Duel({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due:
         <div className="flex items-center gap-3">
           <Chibi id={rival} expression={outcome === 'lose' ? 'happy' : outcome === 'win' ? 'sad' : 'idle'} size={64} />
           <div className="h-4 flex-1 overflow-hidden rounded-full bg-paper-deep">
-            <motion.div className="h-full bg-torii" style={{ width: `${rivalProgress * 100}%` }} />
+            <motion.div className="h-full bg-primary" style={{ width: `${rivalProgress * 100}%` }} />
           </div>
           <span className="w-12 text-right font-display font-bold">{Math.max(0, limit - elapsed).toFixed(1)}s</span>
         </div>
@@ -102,7 +103,7 @@ function Duel({ mode, pool, due, onExit }: { mode: GameMode; pool: Kanji[]; due:
           <StrokePad key={round} char={k.char} ghost={false} size={240}
             onStroke={(ok) => { if (!ok) mistakes.current++ }} onDone={() => end(true)} />
         </div>
-        {outcome && <p className={`text-center font-display text-2xl font-extrabold ${outcome === 'win' ? 'text-anemo' : 'text-torii'}`}>{outcome === 'win' ? 'Menang! ⚔️' : 'Kalah cepat…'}</p>}
+        {outcome && <p className={`text-center font-display text-2xl font-extrabold ${outcome === 'win' ? 'text-anemo' : 'text-wrong'}`}>{outcome === 'win' ? 'Menang!' : 'Kalah cepat…'}</p>}
       </div>
       <button className="text-sm underline opacity-60" onClick={() => { timer.stop(); setLives(0) }}>Berhenti</button>
     </main>

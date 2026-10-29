@@ -204,3 +204,28 @@
   - `Math.random`/`Date.now` tidak lagi dipanggil saat render, dan `useSpeech` mengembalikan callback yang stabil.
   - Hadiah Boss/Domain diklaim di handler jawaban terakhir. Audio ujian choukai diputar saat berpindah soal.
 - Uji e2e M2–M8 lulus ulang. Solver e2e diperbaiki untuk soal isian yang punya lebih dari satu jawaban benar (わたし（は/も）学生です).
+
+## Tampilan baru bergaya Teyvat + jalan rahasia Raiden Shogun
+- **Chibi baru:** set ilustrasi Paimon, Klee, Venti, Barbara, Diluc, Jean, Lisa, Mona, Zhongli, dan Raiden dari `Genshin Chibi Generate Ver/` dipakai sebagai gambar bawaan (WebP 640 px, total 3,9 MB). File asli dan gambar upload di perangkat tidak disentuh; skema database tetap sama.
+- **Navigasi lebih sederhana:**
+  - **Tab bawah:** 5 tab (Beranda, Belajar, Main, Karakter, Profil) menggantikan 8 tombol di atas.
+  - **Mode fokus:** saat pelajaran, game, review, atau ujian, tab disembunyikan dan diganti tombol Kembali.
+  - **Beranda:** menampilkan satu langkah berikutnya yang jelas (review yang menumpuk → materi tahap ini yang paling tertinggal → Gate Exam), ditambah daftar "Setelah itu", commission, dan estimasi lulus.
+  - **Hub Belajar & Main:** dikelompokkan (Materi inti, Keterampilan, Perjalanan; Event dan mini-game per keterampilan).
+- **Gaya UI Genshin:**
+  - Panel perkamen dengan bingkai emas dan bintang di sudut, tombol pil mengilap, serta kotak dialog gelap dengan nama berwarna emas.
+  - Font Nunito, dan Cinzel untuk nama region.
+  - Halaman Karakter seperti layar karakter: latar warna elemen, bintang, dan tab Karakter/Wish.
+- **Latar region:**
+  - Setiap region punya pemandangan SVG dan partikelnya sendiri: Mondstadt (kincir angin, Katedral, pohon Windrise, benih dandelion), Liyue (Jueyun Karst, Jade Chamber, paviliun pelabuhan, lentera Lantern Rite), Inazuma (Tenshukaku, Sakura Suci, torii di laut, ombak seigaiha, kilat, mitsudomoe), Sumeru (pohon raksasa, daun hutan hujan, jamur bercahaya, partikel Dendro), Fontaine (Court of Fontaine, air terjun, lengkungan akuaduk, gelembung), Natlan (gunung api, mesa, motif suku, bara).
+  - Warna tombol dan aksen ikut berubah.
+  - Tema otomatis mengikuti region tempat kamu berada. Region yang sudah dicapai (atau tema dari Wish) bisa dipilih di Profil.
+- **Emoji dihapus:** semua emoji diganti 70+ ikon SVG gambar sendiri, misalnya speaker, mikrofon, Kirameki (permata bintang), hati, jam pasir, lambang 7 elemen, mitsudomoe, dango, dan sakura.
+- **Jalan Keabadian (Raiden Shogun):**
+  - **Surat dari Tenshukaku:** tiba saat sampai di Inazuma, atau lewat rahasia: streak 7 hari, lalu ketuk lambang Inazuma di Peta 3×.
+  - **Ujian Musou:** 8 soal dengan timer badai; lulus 6/8 untuk diakui. Raiden bergabung dan kamu mendapat +300 Kirameki.
+  - **Ikatan Lv 1–10:** satu percakapan per hari dalam bahasa Jepang (furigana + suara). Jawaban dipilih dalam bahasa Jepang dan diuji: partikel atau bentuk yang salah dikoreksi Shogun, jawaban baik menambah ikatan. Ada 14 cerita, lalu obrolan harian.
+  - **Cara menambah ikatan:** belajar dengan Raiden sebagai companion ikut menambah ikatan, dan dango bisa diberikan sekali sehari.
+  - **Lv 5, Alam Euthymia:** bertemu Ei (影). Tema Alam Euthymia terbuka, dan companion berubah menjadi Ei dengan sapaan yang lebih hangat.
+  - **Lv 10, Janji Keabadian:** gelar dan sapaan khusus sesuai waktu (pagi, siang, malam).
+- **Tes:** 72 unit test (+6 untuk alur Raiden dan validasi semua dialog). E2E M2–M8 dan alur Raiden (rahasia → surat → ujian → percakapan → Euthymia → Ei jadi companion) lulus.

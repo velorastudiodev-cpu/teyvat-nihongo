@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Hearts, Icon, type IconName } from '../../ui/Icon'
 import { Link } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
@@ -44,16 +45,16 @@ export function Boss() {
       <h1 className="font-display text-3xl font-extrabold">{boss.name}</h1>
       <p className="italic opacity-70">"{boss.taunt}"</p>
       <p>Soal campuran dari materi minggu ini. Setiap jawaban benar menyerang boss, setiap salah kamu kehilangan 1 nyawa ({maxLives} nyawa).</p>
-      <p className="font-display font-bold">{beaten ? '✅ Sudah dikalahkan minggu ini (boleh latihan lagi, tanpa hadiah)' : `Hadiah: ✦ ${BOSS_REWARD}`}</p>
-      <button className={`${btn} w-full bg-torii text-white`} onClick={() => setLives(maxLives)}>Tantang! ⚔️</button>
+      <p className="font-display font-bold">{beaten ? <><Icon name="check" className="h-4 w-4 text-anemo" /> Sudah dikalahkan minggu ini (boleh latihan lagi, tanpa hadiah)</> : <>Hadiah: <Icon name="gem" className="h-4 w-4 text-geo" /> {BOSS_REWARD}</>}</p>
+      <button className={`${btn} w-full bg-primary text-white`} onClick={() => setLives(maxLives)}><Icon name="swords" className="h-4 w-4" /> Tantang!</button>
     </main>
   )
   if (over) return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-3 text-center`}>
       <div className="flex justify-center"><Buddy mood={hp <= 0 ? 'happy' : 'sad'} size={120} /></div>
-      <p className="font-display text-3xl font-extrabold">{hp <= 0 ? `${boss.name} kalah! 🎉` : 'Kamu tumbang… coba lagi!'}</p>
-      {reward ? <p className="font-display text-xl text-geo">+{reward} ✦</p> : null}
-      <Link to="/daily" className={`${btn} inline-block bg-torii text-white`}>Kembali ke Harian</Link>
+      <p className="font-display text-3xl font-extrabold">{hp <= 0 ? `${boss.name} kalah!` : 'Kamu tumbang… coba lagi!'}</p>
+      {reward ? <p className="font-display text-xl text-geo">+{reward} <Icon name="gem" className="h-5 w-5" /></p> : null}
+      <Link to="/daily" className={`${btn} inline-block bg-primary text-white`}>Kembali ke Harian</Link>
     </main>
   )
 
@@ -63,8 +64,8 @@ export function Boss() {
         <motion.div animate={hit ? { x: [0, -10, 10, -6, 0], filter: ['brightness(1)', 'brightness(2)', 'brightness(1)'] } : {}} key={n}><BossAvatar boss={boss} small /></motion.div>
         <div className="flex-1">
           <p className="font-display font-bold">{boss.name}</p>
-          <div className="h-4 overflow-hidden rounded-full bg-paper-deep"><motion.div className="h-full bg-torii" animate={{ width: `${(Math.max(0, hp) / BOSS_HP) * 100}%` }} /></div>
-          <p className="text-sm">HP {Math.max(0, hp)} / {BOSS_HP} · {'❤️'.repeat(lives)}{hit ? <span className="ml-2 font-bold text-torii">-{hit}</span> : null}</p>
+          <div className="h-4 overflow-hidden rounded-full bg-paper-deep"><motion.div className="h-full bg-primary" animate={{ width: `${(Math.max(0, hp) / BOSS_HP) * 100}%` }} /></div>
+          <p className="text-sm">HP {Math.max(0, hp)} / {BOSS_HP} · <Hearts lives={lives} />{hit ? <span className="ml-2 font-bold text-wrong">-{hit}</span> : null}</p>
         </div>
       </div>
       <ItemQuestion key={n} item={pool[n % pool.length]} title={`Serangan ${n + 1}`} onDone={(right, ms) => {
@@ -80,10 +81,12 @@ export function Boss() {
   )
 }
 
-function BossAvatar({ boss, small }: { boss: { emoji: string; color: string }; small?: boolean }) {
+function BossAvatar({ boss, small }: { boss: { icon: IconName; color: string }; small?: boolean }) {
   return (
-    <div className={`mx-auto flex items-center justify-center rounded-full border-[3px] border-ink shadow-[3px_3px_0_var(--color-ink)] ${small ? 'h-16 w-16 text-3xl' : 'h-28 w-28 text-6xl'}`} style={{ background: boss.color }}>
-      {boss.emoji}
+    <div className={`relative mx-auto flex items-center justify-center rounded-full text-white shadow-lg ring-2 ring-gold ring-offset-2 ring-offset-paper ${small ? 'h-16 w-16' : 'h-28 w-28'}`}
+      style={{ background: `radial-gradient(circle at 50% 35%, ${boss.color}, #1c2030 85%)` }}>
+      <Icon name="mask" className={small ? 'h-9 w-9' : 'h-16 w-16'} />
+      <Icon name={boss.icon} className={`absolute -right-1 -bottom-1 rounded-full bg-night p-1 ${small ? 'h-6 w-6' : 'h-9 w-9'}`} />
     </div>
   )
 }

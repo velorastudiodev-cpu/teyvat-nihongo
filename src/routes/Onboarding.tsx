@@ -38,7 +38,7 @@ export function Onboarding() {
         <legend className="font-display font-bold">Target akhirmu</legend>
         <div className="mt-2 flex gap-2">
           {TARGETS.map((t) => (
-            <button key={t} onClick={() => setTarget(t)} className={`${btn} ${t === target ? 'bg-torii text-white' : 'bg-paper'}`}>{t}</button>
+            <button key={t} onClick={() => setTarget(t)} className={`${btn} ${t === target ? 'bg-primary text-white' : 'bg-paper'}`}>{t}</button>
           ))}
         </div>
         <p className="mt-1 text-sm opacity-70">Ini tujuan akhir, bukan titik awal. Titik awal ditentukan tes penempatan.</p>
@@ -47,14 +47,14 @@ export function Onboarding() {
         <legend className="font-display font-bold">Menit belajar per hari</legend>
         <div className="mt-2 flex flex-wrap gap-2">
           {MINUTES.map((m) => (
-            <button key={m} onClick={() => setMinutes(m)} className={`${btn} ${m === minutes ? 'bg-anemo text-white' : 'bg-paper'}`}>{m}</button>
+            <button key={m} onClick={() => setMinutes(m)} className={`${btn} ${m === minutes ? 'bg-deep text-white' : 'bg-paper'}`}>{m}</button>
           ))}
         </div>
       </fieldset>
       <label className="block">
         <span className="font-display font-bold">Target tanggal ujian (opsional)</span>
         <input type="date" value={targetDate} min={minDate} onChange={(e) => setTargetDate(e.target.value)}
-          className="mt-2 block rounded-xl border-[3px] border-ink bg-paper px-3 py-1.5" />
+          className="mt-2 block rounded-xl border-2 border-gold/70 bg-paper px-3 py-1.5" />
       </label>
       <div className="flex flex-wrap gap-3">
         <button className={`${btn} bg-geo`} onClick={() => setPhase('test')}>Tes penempatan (±10 menit) →</button>
@@ -73,7 +73,7 @@ export function Onboarding() {
       <h1 className="font-display text-4xl font-extrabold">Mulai dari {STAGE_INFO[placement].label}</h1>
       <p>Region awal: <b>{region.name}</b>. Target akhir: <b>{target}</b>.
         {placement !== 'hiragana' && <> Materi sebelum {STAGE_INFO[placement].label} dilewati karena kamu sudah menguasainya.</>}</p>
-      <button className={`${btn} bg-torii text-white`} onClick={finish}>Mulai petualangan →</button>
+      <button className={`${btn} bg-primary text-white`} onClick={finish}>Mulai petualangan →</button>
     </main>
   )
 }
@@ -116,7 +116,7 @@ function PlacementTest({ target, onDone }: { target: Target; onDone: (s: Stage) 
         <p lang="ja" className="text-4xl font-bold">{q.prompt}</p>
         <div className="grid grid-cols-2 gap-3">
           {choices.map((c) => {
-            const shown = feedback && (c === q.answer ? 'bg-anemo text-white' : c === feedback.pick ? 'bg-torii text-white' : '')
+            const shown = feedback && (c === q.answer ? 'bg-anemo text-white' : c === feedback.pick ? 'bg-primary text-white' : '')
             return (
               <motion.button key={c} whileTap={{ scale: .95 }} onClick={() => answer(c)}
                 animate={feedback?.pick === c && !feedback.correct ? { x: [0, -6, 6, -4, 0] } : {}}

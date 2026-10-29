@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link, useParams } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -30,7 +31,7 @@ export function ReadingHub() {
           const body = <>
             <p className="text-xs font-bold text-anemo">{r.level}{best !== undefined && ` · kuis terbaik ${best}/${r.quiz.length}`}</p>
             <p className="text-2xl" lang="ja"><Sentence tokens={parse(r.title)} className="inline" /></p>
-            <p className="text-sm opacity-70">{open ? r.titleId : `🔒 terbuka di tahap ${r.level}`}</p>
+            <p className="text-sm opacity-70">{open ? r.titleId : <><Icon name="lock" className="h-3.5 w-3.5" /> terbuka di tahap {r.level}</>}</p>
           </>
           return open
             ? <Link key={r.id} to={`/reading/${r.id}`} className={`${card} transition-transform hover:-translate-y-0.5`}>{body}</Link>
@@ -81,7 +82,7 @@ export function ReadingText() {
       <p className="font-display text-3xl font-extrabold">{right} / {r.quiz.length} benar · +{10 + right * 5} XP</p>
       <div className="flex justify-center gap-2">
         <button className={`${btn} bg-paper`} onClick={() => { setQuiz(undefined); setRight(0) }}>Baca lagi</button>
-        <Link to="/reading" className={`${btn} bg-torii text-white`}>Teks lain</Link>
+        <Link to="/reading" className={`${btn} bg-primary text-white`}>Teks lain</Link>
       </div>
     </main>
   )
@@ -95,13 +96,13 @@ export function ReadingText() {
         </div>
         <div className="flex gap-2">
           <FuriganaToggle mode={mode} setMode={setMode} />
-          <button onClick={() => speak(lines.map(textOf).join(''))} className="cursor-pointer rounded-full bg-paper-deep px-3 py-1 text-sm font-bold">🔊 Semua</button>
+          <button onClick={() => speak(lines.map(textOf).join(''))} className="cursor-pointer rounded-full bg-paper-deep px-3 py-1 text-sm font-bold"><Icon name="speaker" className="h-4 w-4" /> Semua</button>
         </div>
       </div>
       <article className={`${card} space-y-1`}>
         {lines.map((ts, i) => (
           <div key={i} className="flex items-start gap-2">
-            <button onClick={() => speak(textOf(ts))} className="mt-3 cursor-pointer text-sm opacity-50 hover:opacity-100" aria-label="dengar baris ini">🔊</button>
+            <button onClick={() => speak(textOf(ts))} className="mt-3 cursor-pointer text-sm opacity-50 hover:opacity-100" aria-label="dengar baris ini"><Icon name="speaker" className="h-5 w-5" /></button>
             <Sentence tokens={ts} mode={mode} known={known} className="text-2xl" onTap={(t) => { setTapped({ t, meaning: lookup(t, r.gloss) }); speak(t.text) }} />
           </div>
         ))}
@@ -109,14 +110,14 @@ export function ReadingText() {
       <AnimatePresence>
         {tapped && (
           <motion.div key={tapped.t.text} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="sticky bottom-3 rounded-2xl border-[3px] border-ink bg-geo/90 p-3 shadow-[3px_3px_0_var(--color-ink)]">
+            className="sticky bottom-3 rounded-2xl border-2 border-gold/70 bg-geo/90 p-3 shadow-md">
             <span lang="ja" className="text-2xl font-bold">{tapped.t.text}</span>
             {tapped.t.kana !== tapped.t.text && <span lang="ja" className="ml-2">（{tapped.t.kana}）</span>}
             <span className="ml-2">{tapped.meaning ?? '—'}</span>
           </motion.div>
         )}
       </AnimatePresence>
-      <button className={`${btn} w-full bg-torii text-white`} onClick={() => { setQuiz(0); setRight(0) }}>Kuis pemahaman →</button>
+      <button className={`${btn} w-full bg-primary text-white`} onClick={() => { setQuiz(0); setRight(0) }}>Kuis pemahaman →</button>
     </main>
   )
 }

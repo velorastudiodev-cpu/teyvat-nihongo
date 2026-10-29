@@ -45,7 +45,7 @@ export function BuildExercise({ ja, tr, title, onAnswer }: { ja: string; tr: str
   const tile = (i: number, from: 'pool' | 'line') => (
     <motion.button layout key={i} lang="ja" disabled={result !== undefined}
       onClick={() => { sfx.pop(); if (from === 'pool') { setPool(pool.filter((x) => x !== i)); setLine([...line, i]) } else { setLine(line.filter((x) => x !== i)); setPool([...pool, i]) } }}
-      className="cursor-pointer rounded-xl border-[3px] border-ink bg-white px-3 py-1 text-xl shadow-[2px_2px_0_var(--color-ink)]">
+      className="cursor-pointer rounded-xl border-2 border-gold/70 bg-white px-3 py-1 text-xl shadow-md">
       <Ruby token={tokens[i]} />
     </motion.button>
   )
@@ -59,11 +59,11 @@ export function BuildExercise({ ja, tr, title, onAnswer }: { ja: string; tr: str
       </div>
       <p className="text-sm opacity-70">Susun kalimat:</p>
       <p className="font-display text-xl font-bold">{tr}</p>
-      <div className={`flex min-h-16 flex-wrap items-end justify-center gap-2 rounded-2xl border-[3px] border-dashed p-2 ${result === true ? 'border-anemo bg-anemo/10' : result === false ? 'border-torii bg-torii/10' : 'border-ink/30'}`}>
+      <div className={`flex min-h-16 flex-wrap items-end justify-center gap-2 rounded-2xl border-2 border-dashed p-2 ${result === true ? 'border-anemo bg-anemo/10' : result === false ? 'border-wrong bg-wrong/10' : 'border-ink/30'}`}>
         {line.map((i) => tile(i, 'line'))}
       </div>
       <div className="flex min-h-14 flex-wrap items-end justify-center gap-2">{pool.map((i) => tile(i, 'pool'))}</div>
-      {result === undefined && <button className={`${btn} w-full bg-torii text-white`} disabled={pool.length > 0} onClick={check}>Cek</button>}
+      {result === undefined && <button className={`${btn} w-full bg-primary text-white`} disabled={pool.length > 0} onClick={check}>Cek</button>}
       {result === false && (
         <div className="space-y-2">
           <Sentence tokens={tokens} className="text-xl" />

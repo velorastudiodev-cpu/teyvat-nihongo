@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Hearts, Icon } from '../ui/Icon'
 import { motion } from 'framer-motion'
 import { isParticle, textOf } from '../engine/sentence'
 import { answer } from '../engine/srs/srs'
@@ -23,7 +24,7 @@ export function ParticleShooter() {
     const { lines, due } = await sentencePool(mode)
     setGame({ run: Date.now(), mode, lines: lines.filter((l) => l.tokens.some(isParticle)), due })
   }
-  if (!game) return <ModePicker title="🎯 Particle Shooter" blurb="Partikel melayang di arena. Tembak partikel yang tepat untuk mengisi kalimat sebelum waktunya habis!" daily={`${DAILY} kalimat`} onStart={start} />
+  if (!game) return <ModePicker title="Particle Shooter" icon="target" blurb="Partikel melayang di arena. Tembak partikel yang tepat untuk mengisi kalimat sebelum waktunya habis!" daily={`${DAILY} kalimat`} onStart={start} />
   return <Arena key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
@@ -75,19 +76,19 @@ function Arena({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; du
   return (
     <main className="mx-auto mt-2 max-w-2xl space-y-3">
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{'❤️'.repeat(Math.max(0, lives))}</span>
-        <span>Skor {score}{combo > 1 && <span className="text-torii"> · combo ×{combo}</span>}{mult > 1 && <span className="text-anemo"> · buff ×{mult}</span>}</span>
-        <span className={left <= 3 ? 'text-torii' : ''}>⏱ {left}s</span>
+        <Hearts lives={lives} />
+        <span>Skor {score}{combo > 1 && <span className="text-wrong"> · combo ×{combo}</span>}{mult > 1 && <span className="text-anemo"> · buff ×{mult}</span>}</span>
+        <span className={left <= 3 ? 'text-wrong' : ''}><Icon name="timer" className="h-4 w-4" /> {left}s</span>
       </div>
       <div className={`${card} space-y-1 text-center`}>
         <Sentence tokens={line.tokens} blank={hit?.ok ? undefined : blank} className="text-2xl" />
         <p className="text-sm opacity-70">{line.tr}</p>
       </div>
-      <div className="relative h-72 overflow-hidden rounded-3xl border-[3px] border-ink bg-[#e3f1ec]">
+      <div className="relative h-72 overflow-hidden rounded-3xl border-2 border-gold/70 bg-[#e3f1ec]">
         {targets.map((t) => (
             <motion.button key={`${round}${t.p}`} onClick={() => shoot(t.p)} lang="ja"
               animate={hit?.p === t.p ? { scale: [1, 1.4, 0], rotate: 20 } : {}}
-              className={`absolute cursor-crosshair rounded-full border-[3px] border-ink px-4 py-2 text-3xl font-bold shadow-[2px_2px_0_var(--color-ink)] ${hit && t.p === line.tokens[blank].text ? 'bg-anemo text-white' : hit?.p === t.p ? 'bg-torii text-white' : 'bg-white'}`}
+              className={`absolute cursor-crosshair rounded-full border-2 border-gold/70 px-4 py-2 text-3xl font-bold shadow-md ${hit && t.p === line.tokens[blank].text ? 'bg-anemo text-white' : hit?.p === t.p ? 'bg-primary text-white' : 'bg-white'}`}
               style={{ top: `${t.top}%`, animation: `drift ${t.dur}s ease-in-out ${t.delay}s infinite alternate` }}>{t.p}</motion.button>
           ))}
         <div className="absolute right-2 bottom-2"><Buddy mood={mood} size={70} /></div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Icon } from '../../ui/Icon'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { State } from 'ts-fsrs'
 import { db } from '../../data/db'
@@ -74,7 +75,7 @@ export function Insight() {
           <div className="mt-3 flex h-36 items-end gap-[2px] border-b border-ink/20">
             {last14.map((x) => (
               <div key={x.d} className="group relative flex h-full flex-1 items-end">
-                <div className={`w-full rounded-t ${x.d === date ? 'bg-torii' : 'bg-anemo'}`} style={{ height: `${(x.n / maxDay) * 100}%`, minHeight: x.n ? 3 : 0 }} />
+                <div className={`w-full rounded-t ${x.d === date ? 'bg-primary' : 'bg-anemo'}`} style={{ height: `${(x.n / maxDay) * 100}%`, minHeight: x.n ? 3 : 0 }} />
                 <span className="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded bg-ink px-2 py-0.5 text-xs text-paper group-hover:block">{x.d.slice(5)}: {x.n}</span>
               </div>
             ))}
@@ -97,14 +98,14 @@ export function Insight() {
               ))}
             </ol>
           ) : <p className="mt-2 text-sm opacity-70">Belum ada. Kesalahan dan "lupa" di SRS akan muncul di sini.</p>}
-          <Link to="/revenge" className="mt-2 inline-block text-sm font-bold underline">⚔️ Revenge Quest →</Link>
+          <Link to="/revenge" className="mt-2 inline-block text-sm font-bold underline"><Icon name="swords" className="h-4 w-4" /> Revenge Quest</Link>
         </section>
 
         <section className={`${card} space-y-3`}>
           <h2 className="font-display text-xl font-extrabold">Proyeksi target</h2>
           <PaceCard profile={profile} />
           <p className="text-sm">Mock test terbaik: {mocks.length ? mocks.map((m) => `${m.id.slice(5)} ${m.best}%`).join(' · ') : 'belum pernah'} · <Link to="/exam" className="font-bold underline">coba mock test</Link></p>
-          {exams.length > 0 && <p className="text-sm opacity-70">Ujian terakhir: {exams.map((e) => `${e.kind === 'gate' ? 'Gate' : 'Mock'} ${e.level} ${e.passed ? '✅' : '❌'}`).join(' · ')}</p>}
+          {exams.length > 0 && <p className="text-sm opacity-70">Ujian terakhir: {exams.map((e) => `${e.kind === 'gate' ? 'Gate' : 'Mock'} ${e.level} ${e.passed ? 'lulus' : 'belum lulus'}`).join(' · ')}</p>}
         </section>
       </div>
     </main>

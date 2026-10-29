@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
@@ -29,8 +30,8 @@ export function MockTest() {
       <p className="opacity-80">Format resmi dalam versi ringkas: <span lang="ja">文字・語彙</span> (8 menit) → <span lang="ja">文法・読解</span> (14 menit) → <span lang="ja">聴解</span> (8 menit). Skor per bagian dan analisis kelemahan muncul di akhir.</p>
       <div className="flex flex-wrap gap-2">
         {LEVELS.map((l) => (
-          <button key={l} disabled={!levelOpen(l, profile.stage)} onClick={() => setSpec(buildExam('mock', l))} className={`${btn} bg-torii text-white`}>
-            {levelOpen(l, profile.stage) ? '' : '🔒 '}Mulai mock {l}
+          <button key={l} disabled={!levelOpen(l, profile.stage)} onClick={() => setSpec(buildExam('mock', l))} className={`${btn} bg-primary text-white`}>
+            {levelOpen(l, profile.stage) ? null : <Icon name="lock" className="h-4 w-4" />} Mulai mock {l}
           </button>
         ))}
       </div>
@@ -41,7 +42,7 @@ export function MockTest() {
             {history.map((h) => (
               <li key={h.id} className="flex justify-between gap-2">
                 <span>{new Date(h.at).toLocaleDateString('id-ID')} · {h.kind === 'gate' ? 'Gate' : 'Mock'} {h.level}</span>
-                <span>{h.sections.map((s) => `${s.right}/${s.total}`).join(' · ')} {h.passed ? '✅' : '❌'}</span>
+                <span>{h.sections.map((s) => `${s.right}/${s.total}`).join(' · ')} <Icon name={h.passed ? 'check' : 'cross'} className={`h-4 w-4 ${h.passed ? 'text-anemo' : 'text-wrong'}`} /></span>
               </li>
             ))}
           </ul>
@@ -62,10 +63,10 @@ export function GateExam() {
 
   if (spec && answers) return <ExamReport spec={spec} answers={answers} extra={unlocked ? (
     <motion.div initial={{ scale: .8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="space-y-2 rounded-3xl bg-geo/30 p-4">
-      <p className="font-display text-2xl font-extrabold">🗺️ {REGIONS.find((r) => r.id === unlocked.nextRegion)?.name} terbuka!</p>
+      <p className="font-display text-2xl font-extrabold"><Icon name="map" className="h-7 w-7 text-primary" /> {REGIONS.find((r) => r.id === unlocked.nextRegion)?.name} terbuka!</p>
       {unlocked.sensei && <div className="flex justify-center"><Chibi id={unlocked.sensei} expression="happy" size={120} /></div>}
-      <p>Sensei baru bergabung{unlocked.reward ? ` · +${unlocked.reward} ✦` : ''}. Tahapmu sekarang {STAGE_INFO[unlocked.next].label}.</p>
-      <Link to="/map" className={`${btn} inline-block bg-torii text-white`}>Lihat Skill Map →</Link>
+      <p>Sensei baru bergabung{unlocked.reward ? ` · +${unlocked.reward} Kirameki` : ''}. Tahapmu sekarang {STAGE_INFO[unlocked.next].label}.</p>
+      <Link to="/map" className={`${btn} inline-block bg-primary text-white`}>Lihat Skill Map →</Link>
     </motion.div>
   ) : <button className={`${btn} bg-paper`} onClick={() => { setSpec(undefined); setAnswers(undefined) }}>Coba lagi</button>} />
   if (spec) return <ExamRunner spec={spec} onDone={async (a) => {
@@ -76,12 +77,12 @@ export function GateExam() {
 
   return (
     <main className={`${card} mx-auto mt-6 max-w-lg space-y-4 text-center`}>
-      <p className="text-6xl">👹</p>
+      <Icon name="door" className="mx-auto h-16 w-16 text-primary" />
       <h1 className="font-display text-3xl font-extrabold">Gate Exam {region.name}</h1>
       {gate ? <>
         <p>Ujian kecil gaya JLPT ({gate.level}): 3 bagian, 16 soal, 15 menit. Lulus <b>≥ 70%</b> untuk membuka <b>{REGIONS.find((r) => r.id === gate.nextRegion)?.name}</b> ({STAGE_INFO[gate.next].label}).</p>
-        <p className="font-display font-bold">Hadiah: ✦ {GATE_REWARD} + sensei region baru</p>
-        <button className={`${btn} w-full bg-torii text-white`} onClick={() => setSpec(buildExam('gate', gate.level))}>Masuki gerbang ⚔️</button>
+        <p className="font-display font-bold">Hadiah: <Icon name="gem" className="h-4 w-4 text-geo" /> {GATE_REWARD} + sensei region baru</p>
+        <button className={`${btn} w-full bg-primary text-white`} onClick={() => setSpec(buildExam('gate', gate.level))}><Icon name="swords" className="h-4 w-4" /> Masuki gerbang</button>
       </> : <p>Gate Exam terbuka saat kamu berada di tahap terakhir region ini. Tahapmu sekarang: <b>{STAGE_INFO[profile.stage].label}</b>.</p>}
       <Link to="/map" className="block text-sm underline">Kembali ke Skill Map</Link>
     </main>

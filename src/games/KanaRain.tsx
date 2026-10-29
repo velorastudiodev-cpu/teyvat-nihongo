@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Hearts } from '../ui/Icon'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { db } from '../data/db'
@@ -8,7 +9,7 @@ import { getCharacter, type Expression } from '../characters'
 import { Buddy } from '../ui/Buddy'
 import { btn, card } from '../ui/kit'
 import { sfx } from '../ui/sfx'
-import { GameSetup, type GameMode, type KanaSet } from './common'
+import { GameSetup, type GameMode, type KanaSet, NewBest } from './common'
 import { kanaPool, useGameEnd } from './hooks'
 
 interface Drop { key: number; kana: Kana; x: number; y: number; born: number }
@@ -17,7 +18,7 @@ const DAILY_DROPS = 30
 export function KanaRain() {
   const [game, setGame] = useState<{ run: number; mode: GameMode; pool: Kana[]; due: Set<string> }>()
   const start = async (mode: GameMode, set: KanaSet) => setGame({ run: Date.now(), mode, ...(await kanaPool(set)) })
-  if (!game) return <GameSetup title="☔ Kana Rain" blurb="Kana berjatuhan! Ketik romaji-nya sebelum menyentuh tanah. Combo menaikkan skor." onStart={start} />
+  if (!game) return <GameSetup title="Kana Rain" icon="rain" blurb="Kana berjatuhan! Ketik romaji-nya sebelum menyentuh tanah. Combo menaikkan skor." onStart={start} />
   return <Rain key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
 
@@ -101,9 +102,9 @@ function Rain({ mode, pool, due, onExit }: { mode: GameMode; pool: Kana[]; due: 
     <main className={`${card} mx-auto mt-6 max-w-md space-y-3 text-center`}>
       <div className="flex justify-center"><Buddy mood={lives > 0 || over.newBest ? 'happy' : 'sad'} size={120} /></div>
       <p className="font-display text-4xl font-extrabold">{score} poin</p>
-      <p>{over.newBest ? '🏆 Rekor baru!' : `Rekor: ${best}`}</p>
+      <NewBest newBest={over.newBest} best={best} />
       <div className="flex justify-center gap-2">
-        <button className={`${btn} bg-torii text-white`} onClick={onExit}>Main lagi</button>
+        <button className={`${btn} bg-primary text-white`} onClick={onExit}>Main lagi</button>
       </div>
     </main>
   )
@@ -111,15 +112,15 @@ function Rain({ mode, pool, due, onExit }: { mode: GameMode; pool: Kana[]; due: 
   return (
     <main className="mx-auto mt-2 max-w-2xl space-y-3">
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{'❤️'.repeat(Math.max(0, lives))}{'🖤'.repeat(Math.max(0, 3 - Math.max(0, lives)))}</span>
-        <span>Skor {score} {combo > 1 && <span className="text-torii">· combo ×{combo}</span>}{mult > 1 && <span className="text-anemo"> · buff ×{mult}</span>}</span>
+        <Hearts lives={lives} max={3} />
+        <span>Skor {score} {combo > 1 && <span className="text-wrong">· combo ×{combo}</span>}{mult > 1 && <span className="text-anemo"> · buff ×{mult}</span>}</span>
         <span className="opacity-60">{mode === 'daily' ? `${Math.min(spawned, DAILY_DROPS)}/${DAILY_DROPS}` : `rekor ${best}`}</span>
       </div>
-      <div className="relative h-[60vh] min-h-80 overflow-hidden rounded-3xl border-[3px] border-ink bg-gradient-to-b from-[#dff1ea] to-paper">
+      <div className="relative h-[60vh] min-h-80 overflow-hidden rounded-3xl border-2 border-gold/70 bg-gradient-to-b from-[#dff1ea] to-paper">
         <AnimatePresence>
           {drops.map((d) => (
             <motion.span key={d.key} lang="ja" exit={{ scale: 1.8, opacity: 0 }} transition={{ duration: .2 }}
-              className="absolute -translate-x-1/2 rounded-2xl border-[3px] border-ink bg-white px-2 text-4xl font-bold shadow-[2px_2px_0_var(--color-ink)]"
+              className="absolute -translate-x-1/2 rounded-2xl border-2 border-gold/70 bg-white px-2 text-4xl font-bold shadow-md"
               style={{ left: `${d.x}%`, top: `${d.y}%` }}>{d.kana.char}</motion.span>
           ))}
         </AnimatePresence>
@@ -127,7 +128,7 @@ function Rain({ mode, pool, due, onExit }: { mode: GameMode; pool: Kana[]; due: 
         <div className="absolute inset-x-0 bottom-0 h-[8%] bg-[#8cc79c]" />
       </div>
       <input autoFocus value={typed} onChange={(e) => type(e.target.value.toLowerCase())} placeholder="ketik romaji…" autoCapitalize="off" autoComplete="off"
-        className="w-full rounded-full border-[3px] border-ink bg-white px-5 py-3 text-center text-2xl" aria-label="romaji" />
+        className="w-full rounded-full border-2 border-gold/70 bg-white px-5 py-3 text-center text-2xl" aria-label="romaji" />
       <button className="text-sm underline opacity-60" onClick={() => setLives(0)}>Berhenti</button>
     </main>
   )

@@ -2,6 +2,7 @@ import Dexie, { type EntityTable } from 'dexie'
 import type { Card } from 'ts-fsrs'
 import type { Expression } from '../characters'
 import type { Stage, Target } from './curriculum'
+import type { Realm } from '../ui/region/regions'
 
 export interface Profile {
   id: 'me'
@@ -18,8 +19,22 @@ export interface Profile {
   pulls?: number
   freezes?: number           // streak freezes in stock
   freezeWeek?: string        // week id of the last free freeze
-  theme?: string
+  theme?: string             // legacy cosmetic theme (superseded by realm)
+  realm?: 'auto' | Realm   // screen theme; 'auto' follows your region
   outfit?: string
+  raiden?: RaidenBond
+}
+
+/** The Raiden Shogun's questline (see engine/raiden). */
+export interface RaidenBond {
+  letter?: number            // when her letter arrived (reaching Inazuma, or the secret)
+  trial?: number             // when the Musou trial was passed
+  bond: number               // bond points; levels at engine/raiden BOND_LEVELS
+  talks: string[]            // ids of finished conversations
+  lastTalk?: string          // date of the last daily conversation
+  ei?: number                // when Ei was met in the Plane of Euthymia
+  taps?: number              // secret: taps on the Inazuma sigil
+  dango?: number             // dango given
 }
 
 /** One SRS item: a kana, kanji, word or grammar pattern. */

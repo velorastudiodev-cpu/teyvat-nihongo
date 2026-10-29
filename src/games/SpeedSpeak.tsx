@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Hearts, Icon } from '../ui/Icon'
 import { motion } from 'framer-motion'
 import { toKana } from 'wanakana'
 import { db } from '../data/db'
@@ -33,7 +34,7 @@ async function wordPool(mode: GameMode) {
 export function SpeedSpeak() {
   const [game, setGame] = useState<{ run: number; mode: GameMode; words: Word[]; due: Set<string> }>()
   const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await wordPool(mode)) })
-  if (!game) return <ModePicker title="⚡ Speed Speak" blurb={`Kata muncul satu per satu. Ucapkan sebelum ${SECONDS} detik habis. Mikrofon tetap menyala, jadi langsung bicara saja!`}
+  if (!game) return <ModePicker title="Speed Speak" icon="echo" blurb={`Kata muncul satu per satu. Ucapkan sebelum ${SECONDS} detik habis. Mikrofon tetap menyala, jadi langsung bicara saja!`}
     daily={`${DAILY} kata yang sudah dipelajari`} onStart={start} />
   return <Speak key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
@@ -94,28 +95,28 @@ function Speak({ mode, words, due, onExit }: { mode: GameMode; words: Word[]; du
   return (
     <main className={`${card} mx-auto mt-4 max-w-lg space-y-4 text-center`}>
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{mode === 'daily' ? `${n + 1}/${DAILY}` : '❤️'.repeat(Math.max(0, lives))}</span>
-        <span>Skor {score}{combo > 1 && <span className="text-torii"> · combo ×{combo}</span>}</span>
-        <span className={left <= 2 ? 'text-torii' : ''}>⏱ {left}s</span>
+        <span>{mode === 'daily' ? `${n + 1}/${DAILY}` : <Hearts lives={lives} />}</span>
+        <span>Skor {score}{combo > 1 && <span className="text-wrong"> · combo ×{combo}</span>}</span>
+        <span className={left <= 2 ? 'text-wrong' : ''}><Icon name="timer" className="h-4 w-4" /> {left}s</span>
       </div>
       <div className="h-2 overflow-hidden rounded-full bg-paper-deep"><div className="h-full bg-geo transition-all duration-1000" style={{ width: `${(timer.left / seconds) * 100}%` }} /></div>
       <motion.div key={n} initial={{ scale: .5, opacity: 0 }} animate={flash === 'miss' ? { x: [0, -8, 8, 0], opacity: 1, scale: 1 } : { scale: flash === 'hit' ? 1.15 : 1, opacity: 1 }}
-        className={`rounded-3xl py-8 ${flash === 'hit' ? 'bg-anemo/20' : flash === 'miss' ? 'bg-torii/10' : 'bg-paper'}`}>
+        className={`rounded-3xl py-8 ${flash === 'hit' ? 'bg-anemo/20' : flash === 'miss' ? 'bg-wrong/10' : 'bg-paper'}`}>
         <p lang="ja" className="text-6xl font-bold">{word.word}</p>
         <p className="mt-2 text-sm opacity-70">{word.meaning}</p>
-        {flash === 'miss' && <p lang="ja" className="mt-1 text-lg font-bold text-torii">{word.reading}</p>}
+        {flash === 'miss' && <p lang="ja" className="mt-1 text-lg font-bold text-wrong">{word.reading}</p>}
       </motion.div>
       <div className="flex items-center justify-center gap-3">
         <Buddy mood={(flash === 'hit' ? 'happy' : flash === 'miss' ? 'sad' : 'idle') as Expression} size={64} />
         {input === 'voice'
-          ? <p className="text-sm">{listening ? '🎤 mendengarkan…' : '🎤 mati'} <span lang="ja" className="opacity-60">{heard}</span></p>
+          ? <p className="text-sm"><Icon name={listening ? 'mic' : 'micOff'} className="h-4 w-4" /> {listening ? 'mendengarkan…' : 'mati'} <span lang="ja" className="opacity-60">{heard}</span></p>
           : <form onSubmit={(e) => { e.preventDefault(); settle(sameWord(heardKana(typed), word.reading)) }} className="flex gap-2">
               <input autoFocus value={typed} onChange={(e) => setTyped(toKana(e.target.value, { IMEMode: true }))} lang="ja" aria-label="jawaban" autoComplete="off"
-                className="w-40 rounded-full border-[3px] border-ink bg-paper px-3 py-1 text-center text-xl" />
-              <button className={`${btn} bg-torii text-white`}>OK</button>
+                className="w-40 rounded-full border-2 border-gold/70 bg-paper px-3 py-1 text-center text-xl" />
+              <button className={`${btn} bg-primary text-white`}>OK</button>
             </form>}
       </div>
-      {error && <p className="text-sm font-bold text-torii">{error}</p>}
+      {error && <p className="text-sm font-bold text-wrong">{error}</p>}
       <button className="text-sm underline opacity-60" onClick={() => { timer.stop(); setLives(0) }}>Berhenti</button>
     </main>
   )

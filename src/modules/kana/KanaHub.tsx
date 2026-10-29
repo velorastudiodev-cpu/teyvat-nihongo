@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../../data/db'
@@ -28,7 +29,7 @@ export function KanaHub() {
         <div className={card}>
           <p className="font-display font-bold">Pelajaran baru</p>
           <p className="text-sm opacity-70">Hari ini {day?.newItems ?? 0}{plan ? ` / ${plan.newPerDay}` : ''} item baru</p>
-          <Link to={`/kana/learn/${script}`} className={`${btn} mt-3 inline-block bg-torii text-white`}>Belajar {script} →</Link>
+          <Link to={`/kana/learn/${script}`} className={`${btn} mt-3 inline-block bg-primary text-white`}>Belajar {script} →</Link>
         </div>
         <div className={card}>
           <p className="font-display font-bold">Review SRS</p>
@@ -38,9 +39,9 @@ export function KanaHub() {
         <div className={card}>
           <p className="font-display font-bold">Main game</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Link to="/games/kana-rain" className={`${btn} bg-anemo text-white`}>Kana Rain</Link>
+            <Link to="/games/kana-rain" className={`${btn} bg-deep text-white`}>Kana Rain</Link>
             <Link to="/games/memory-match" className={`${btn} bg-paper`}>Memory</Link>
-            <Link to="/write/あ" className={`${btn} bg-paper`}>✍️ Tulis</Link>
+            <Link to="/write/あ" className={`${btn} bg-paper`}><Icon name="brush" className="h-4 w-4" /> Tulis</Link>
           </div>
         </div>
       </div>

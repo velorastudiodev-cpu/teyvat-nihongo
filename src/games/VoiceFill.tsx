@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Hearts } from '../ui/Icon'
 import { motion } from 'framer-motion'
 import { isParticle, textOf } from '../engine/sentence'
 import { answer } from '../engine/srs/srs'
@@ -26,7 +27,7 @@ function pickBlanks(line: Line) {
 export function VoiceFill() {
   const [game, setGame] = useState<{ run: number; mode: GameMode; lines: Line[]; due: Set<string> }>()
   const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await sentencePool(mode)) })
-  if (!game) return <ModePicker title="🎤 Voice Fill" blurb="Kalimat punya 1–3 bagian kosong. Ucapkan kalimat lengkapnya atau hanya kata yang hilang. Toleransi ±1 mora untuk kata panjang."
+  if (!game) return <ModePicker title="Voice Fill" icon="mic" blurb="Kalimat punya 1–3 bagian kosong. Ucapkan kalimat lengkapnya atau hanya kata yang hilang. Toleransi ±1 mora untuk kata panjang."
     daily={`${DAILY} kalimat`} onStart={start} />
   return <Fill key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
@@ -58,7 +59,7 @@ function Fill({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due
   return (
     <main className={`${card} mx-auto mt-4 max-w-xl space-y-4 text-center`}>
       <div className="flex items-center justify-between font-display font-bold">
-        <span>{mode === 'daily' ? `${n + 1}/${DAILY}` : '❤️'.repeat(Math.max(0, lives))}</span>
+        <span>{mode === 'daily' ? `${n + 1}/${DAILY}` : <Hearts lives={lives} />}</span>
         <span>Skor {score}</span>
         <Buddy mood={mood} size={64} />
       </div>
@@ -70,7 +71,7 @@ function Fill({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; due
       {result ? (
         <div className="space-y-2">
           <p className="text-sm">Terdengar: <span lang="ja" className="font-bold">{result.heard || '—'}</span></p>
-          <button autoFocus onClick={next} className={`${btn} bg-torii text-white`}>Lanjut →</button>
+          <button autoFocus onClick={next} className={`${btn} bg-primary text-white`}>Lanjut →</button>
         </div>
       ) : <SpeakOrType onAnswer={judge} hint={`Ucapkan ${blanks.length} kata yang hilang, atau seluruh kalimat`} />}
     </main>

@@ -50,7 +50,7 @@ export function Choice({ title, ask, prompt, answer, wrong, lang, say, explain, 
         {choices.map((c) => (
           <motion.button key={c} whileTap={{ scale: .95 }} onClick={() => pick(c)} lang={lang}
             animate={given === c && !right ? { x: [0, -6, 6, -4, 0] } : {}}
-            className={`${btn} ${lang ? 'text-2xl' : 'text-base'} ${given !== undefined && c === answer ? 'bg-anemo text-white' : given === c ? 'bg-torii text-white' : 'bg-paper'}`}>
+            className={`${btn} ${lang ? 'text-2xl' : 'text-base'} ${given !== undefined && c === answer ? 'bg-deep text-white' : given === c ? 'bg-primary text-white' : 'bg-paper'}`}>
             <span className="mr-2 align-super text-[10px] opacity-40" aria-hidden>{choices.indexOf(c) + 1}</span>{c}
           </motion.button>
         ))}

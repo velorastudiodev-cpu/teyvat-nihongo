@@ -24,10 +24,10 @@ export function Write() {
       </div>
       <div className="flex flex-wrap justify-center gap-2">
         <button className={`${btn} bg-paper`} onClick={() => setGhost(!ghost)}>{ghost ? 'Tanpa panduan' : 'Dengan panduan'}</button>
-        <button className={`${btn} bg-torii text-white`} onClick={() => { setResult(undefined); setRound(round + 1) }}>Ulangi</button>
+        <button className={`${btn} bg-primary text-white`} onClick={() => { setResult(undefined); setRound(round + 1) }}>Ulangi</button>
         <Link to={k ? '/kanji' : '/kana'} className={`${btn} bg-paper`}>Kembali</Link>
       </div>
-      {result !== undefined && <p className="font-display font-bold">{result === 0 ? 'Sempurna! ✨' : `${result} kesalahan, coba lagi tanpa panduan!`}</p>}
+      {result !== undefined && <p className="font-display font-bold">{result === 0 ? 'Sempurna!' : `${result} kesalahan, coba lagi tanpa panduan!`}</p>}
     </main>
   )
 }

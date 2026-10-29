@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Hearts, Icon, type IconName } from '../../ui/Icon'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
 import { db } from '../../data/db'
@@ -14,12 +15,12 @@ import { useGameEnd } from '../../games/hooks'
 import { ItemQuestion } from '../Review'
 import { learnedPool, type Q } from './pools'
 
-type Blessing = { id: 'life' | 'shield' | 'score' | 'time'; name: string; desc: string }
+type Blessing = { id: 'life' | 'shield' | 'score' | 'time'; icon: IconName; name: string; desc: string }
 const BLESSINGS: Blessing[] = [
-  { id: 'life', name: '💚 Berkah Barbatos', desc: '+1 nyawa' },
-  { id: 'shield', name: '🛡️ Perisai Jade', desc: 'Abaikan 1 jawaban salah' },
-  { id: 'score', name: '🔥 Semangat Pyro', desc: 'Skor ×1,5 untuk 5 lantai' },
-  { id: 'time', name: '⏳ Waktu Electro', desc: '+5 detik per soal' },
+  { id: 'life', icon: 'anemo', name: 'Berkah Barbatos', desc: '+1 nyawa' },
+  { id: 'shield', icon: 'shield', name: 'Perisai Jade', desc: 'Abaikan 1 jawaban salah' },
+  { id: 'score', icon: 'pyro', name: 'Semangat Pyro', desc: 'Skor ×1,5 untuk 5 lantai' },
+  { id: 'time', icon: 'hourglass', name: 'Waktu Electro', desc: '+5 detik per soal' },
 ]
 const REWARDED_RUNS = 3
 const limitAt = (floor: number, bonus: number) => Math.max(6, Math.round(15 - floor * 0.3)) + bonus
@@ -64,10 +65,10 @@ function Run({ pool, buff, onExit }: { pool: (Q & { stability: number })[]; buff
     if (right) {
       const mult = (floor <= boostUntil ? 1.5 : 1) * (mine?.effect === 'scoreMult' ? mine.value : 1)
       setScore((s) => s + Math.round(10 * floor ** 0.5 * mult))
-    } else if (shield) { setShield(shield - 1); toast('Perisai menahan serangan!', '🛡️') }
+    } else if (shield) { setShield(shield - 1); toast('Perisai menahan serangan!', 'shield') }
     else { livesAfter--; sfx.bad() }
     const next = floor + 1
-    if (mine?.effect === 'heal' && next % 10 === 0) { livesAfter++; toast('Barbara menyembuhkanmu!', '💧') }
+    if (mine?.effect === 'heal' && next % 10 === 0) { livesAfter++; toast('Barbara menyembuhkanmu!', 'hydro') }
     setLives(livesAfter)
     const hardest = pool.slice(0, Math.max(5, Math.ceil(pool.length * Math.max(0.2, 1 - next / 40))))
     setItem(sample(next > 10 ? hardest : pool, 1)[0])
@@ -87,22 +88,22 @@ function Run({ pool, buff, onExit }: { pool: (Q & { stability: number })[]; buff
   if (over) return result ? (
     <div>
       <GameOver score={floor - 1} unit="lantai" newBest={result.newBest} best={best} onExit={onExit} />
-      {reward !== undefined && <p className="mt-2 text-center font-display font-bold">{reward ? `+${reward} ✦ Kirameki` : `Hadiah Kirameki hanya untuk ${REWARDED_RUNS} run pertama setiap hari`}</p>}
+      {reward !== undefined && <p className="mt-2 text-center font-display font-bold">{reward ? `+${reward} Kirameki` : `Hadiah Kirameki hanya untuk ${REWARDED_RUNS} run pertama setiap hari`}</p>}
     </div>
   ) : null
   return (
     <div className="space-y-2">
       <div className={`${card} mx-auto mt-2 flex max-w-lg flex-wrap items-center justify-between gap-2 font-display font-bold`}>
-        <span>🌀 Lantai {floor}</span>
-        <span>{'❤️'.repeat(lives)}{shield ? ` 🛡️×${shield}` : ''}</span>
-        <span>Skor {score}{floor <= boostUntil && ' 🔥'}</span>
-        <span className={left <= 3 ? 'text-torii' : ''}>⏱ {left}s</span>
+        <span className="flex items-center gap-1"><Icon name="spiral" className="h-4 w-4" /> Lantai {floor}</span>
+        <span className="flex items-center gap-1"><Hearts lives={lives} />{shield ? <><Icon name="shield" className="h-5 w-5 text-[#5aa9d6]" />×{shield}</> : null}</span>
+        <span>Skor {score}{floor <= boostUntil && <Icon name="pyro" className="ml-1 h-4 w-4 text-[#e5672e]" />}</span>
+        <span className={left <= 3 ? 'text-wrong' : ''}><Icon name="timer" className="h-4 w-4" /> {left}s</span>
       </div>
       {choice ? (
         <motion.main initial={{ scale: .9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className={`${card} mx-auto max-w-lg space-y-3 text-center`}>
           <p className="font-display text-2xl font-extrabold">Pilih berkah</p>
           {choice.map((b) => (
-            <button key={b.id} onClick={() => bless(b)} className={`${btn} block w-full bg-paper text-left`}>{b.name} <span className="font-sans font-normal opacity-70">· {b.desc}</span></button>
+            <button key={b.id} onClick={() => bless(b)} className={`${btn} w-full justify-start bg-paper text-left`}><span className="g-chip h-8 w-8"><Icon name={b.icon} className="h-4 w-4" /></span>{b.name} <span className="font-sans font-normal opacity-70">· {b.desc}</span></button>
           ))}
         </motion.main>
       ) : <ItemQuestion key={floor} item={item} title={`Lantai ${floor}`} onDone={(right) => done(right)} />}

@@ -29,8 +29,8 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
-        // everything the app needs offline, including the KanjiVG stroke chunks (~6 MB in total)
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // everything the app needs offline: KanjiVG stroke chunks and the chibi art (~13 MB in total)
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         navigateFallback: '/index.html',
         runtimeCaching: [

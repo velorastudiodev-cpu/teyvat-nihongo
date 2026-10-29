@@ -29,7 +29,7 @@ export function Chibi({ id, expression = 'idle', size = 160, outfit }: { id: str
   if (!uploads) return <div style={{ width: size, height: size }} />
   if (url) return <Picture src={url} expression={expression} size={size} alt={c?.name ?? id} outfit={outfit} />
   if (src && !failed.has(src)) {
-    return <img src={src} width={size} height={size} alt={c?.name} className="object-contain"
+    return <Picture src={src} expression={expression} size={size} alt={c?.name ?? id} outfit={outfit}
       onError={() => { failed.add(src); rerender((n) => n + 1) }} />
   }
   const design = DESIGNS[id]
@@ -54,16 +54,15 @@ function artUrl(art?: Art) {
   return url
 }
 
-const FX_EMOJI: Record<Expression, string> = { idle: '', happy: '✨', sad: '💧', sleep: '💤' }
-
-/** Uploaded pictures get the same motion as the built-in SVGs, plus an emoji for the mood. */
-function Picture({ src, expression, size, alt, outfit }: { src: string; expression: Expression; size: number; alt: string; outfit?: string }) {
+/** Picture art (uploads and the bundled illustrations) gets the same motion as the SVGs, plus a drawn mood mark. */
+function Picture({ src, expression, size, alt, outfit, onError }: { src: string; expression: Expression; size: number; alt: string; outfit?: string; onError?: () => void }) {
   const motion = expression === 'happy' ? 'chibi-hop' : expression === 'sleep' ? 'chibi-doze' : 'chibi-breathe'
   return (
     <div className="relative" style={{ width: size, height: size }}>
-      <img src={src} alt={`${alt} (${expression})`} className={`h-full w-full object-contain ${motion} ${expression === 'sleep' ? 'opacity-80' : ''}`} />
+      <img src={src} alt={`${alt} (${expression})`} onError={onError} draggable={false}
+        className={`h-full w-full object-contain drop-shadow-[0_6px_10px_rgba(28,32,48,.25)] ${motion} ${expression === 'sleep' ? 'opacity-85' : ''}`} />
       {outfit && <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full">{OUTFIT_ART[outfit]}</svg>}
-      {FX_EMOJI[expression] && <span className="absolute top-0 right-1" style={{ fontSize: size / 6 }}>{FX_EMOJI[expression]}</span>}
+      {expression !== 'idle' && <svg viewBox="0 0 200 200" className="pointer-events-none absolute inset-0 h-full w-full"><Fx expression={expression} /></svg>}
     </div>
   )
 }

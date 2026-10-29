@@ -1,4 +1,5 @@
 import type { Region } from '../characters'
+import type { IconName } from '../ui/Icon'
 
 export const THEMES: { id: Region; name: string; vars: Record<string, string> }[] = [
   { id: 'mondstadt', name: 'Angin Mondstadt', vars: {} },
@@ -67,11 +68,11 @@ export const CULTURE_NOTES: string[] = [
   'Orang Jepang sering membawa oleh-oleh (お土産) untuk rekan kerja setelah bepergian, biasanya kue kemasan.',
 ]
 
-export const BOSSES = [
-  { id: 'signora', name: 'Signora si Ratu Grammar', emoji: '❄️', color: '#7cc6de', taunt: 'Partikelmu berantakan, pengembara.' },
-  { id: 'scaramouche', name: 'Scaramouche sang Penguasa Kanji', emoji: '⚡', color: '#9b6bd6', taunt: 'Goresanmu terlalu lambat!' },
-  { id: 'dottore', name: 'Dottore si Ilmuwan Kosakata', emoji: '🧪', color: '#7fb23a', taunt: 'Eksperimen hari ini: seberapa banyak kata yang kamu ingat?' },
-  { id: 'childe', name: 'Childe sang Petarung Partikel', emoji: '🌊', color: '#3d8fd6', taunt: 'Ayo bertarung! Tunjukkan hasil latihanmu!' },
+export const BOSSES: { id: string; name: string; icon: IconName; color: string; taunt: string }[] = [
+  { id: 'signora', name: 'Signora si Ratu Grammar', icon: 'cryo', color: '#7cc6de', taunt: 'Partikelmu berantakan, pengembara.' },
+  { id: 'scaramouche', name: 'Scaramouche sang Penguasa Kanji', icon: 'electro', color: '#9b6bd6', taunt: 'Goresanmu terlalu lambat!' },
+  { id: 'dottore', name: 'Dottore si Ilmuwan Kosakata', icon: 'mask', color: '#7fb23a', taunt: 'Eksperimen hari ini: seberapa banyak kata yang kamu ingat?' },
+  { id: 'childe', name: 'Childe sang Petarung Partikel', icon: 'hydro', color: '#3d8fd6', taunt: 'Ayo bertarung! Tunjukkan hasil latihanmu!' },
 ]
 
 export interface Stats {

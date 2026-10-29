@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Icon } from '../../ui/Icon'
 import { Link, useParams } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'framer-motion'
@@ -27,27 +28,27 @@ export function GrammarHub() {
       <h1 className="font-display text-3xl font-extrabold">Grammar</h1>
       <div className="flex flex-wrap items-center gap-2">
         {LEVELS.map((l) => (
-          <button key={l} onClick={() => setLevel(l)} className={`${btn} ${l === level ? 'bg-ink text-paper' : 'bg-paper'}`}>{levelOpen(l, profile?.stage) ? '' : '🔒 '}{l}</button>
+          <button key={l} onClick={() => setLevel(l)} className={`${btn} ${l === level ? 'bg-ink text-paper' : 'bg-paper'}`}>{levelOpen(l, profile?.stage) ? null : <Icon name="lock" className="h-3.5 w-3.5" />}{l}</button>
         ))}
         <span className="ml-auto text-sm"><b>{patterns.filter((p) => learned.includes(`grammar:${p.id}`)).length}</b> / {patterns.length} pola</span>
       </div>
       {open ? (
         <div className="flex flex-wrap gap-2">
-          {next && <Link to={`/grammar/learn/${next.id}`} className={`${btn} bg-torii text-white`}>Pola baru: {next.title} →</Link>}
-          <Link to="/games/particle-shooter" className={`${btn} bg-anemo text-white`}>🎯 Particle Shooter</Link>
-          <Link to="/games/sentence-builder" className={`${btn} bg-paper`}>🧱 Sentence Builder</Link>
-          <Link to="/games/fill-blank-rush" className={`${btn} bg-paper`}>⚡ Fill-Blank Rush</Link>
+          {next && <Link to={`/grammar/learn/${next.id}`} className={`${btn} bg-primary text-white`}>Pola baru: {next.title} →</Link>}
+          <Link to="/games/particle-shooter" className={`${btn} bg-deep text-white`}><Icon name="target" className="h-4 w-4" /> Particle Shooter</Link>
+          <Link to="/games/sentence-builder" className={`${btn} bg-paper`}><Icon name="blocks" className="h-4 w-4" /> Sentence Builder</Link>
+          <Link to="/games/fill-blank-rush" className={`${btn} bg-paper`}><Icon name="bolt" className="h-4 w-4" /> Fill-Blank Rush</Link>
         </div>
-      ) : <p className={`${card} text-sm`}>🔒 {level} terbuka setelah kamu mencapai tahap {level}.</p>}
+      ) : <p className={`${card} text-sm`}><Icon name="lock" className="h-4 w-4" /> {level} terbuka setelah kamu mencapai tahap {level}.</p>}
       <div className="grid gap-2 sm:grid-cols-2">
         {patterns.map((p) => {
           const done = learned.includes(`grammar:${p.id}`)
           const body = <>
-            <p className="font-display font-bold" lang="ja">{done ? '✓ ' : ''}{p.title}</p>
+            <p className="font-display font-bold" lang="ja">{done && <Icon name="check" className="mr-1 h-4 w-4 text-anemo" />}{p.title}</p>
             <p className="text-sm opacity-70">{p.explain}</p>
           </>
           return open
-            ? <Link key={p.id} to={`/grammar/learn/${p.id}`} className={`rounded-2xl border-[3px] p-3 transition-transform hover:-translate-y-0.5 ${done ? 'border-anemo bg-white' : 'border-transparent bg-paper-deep'}`}>{body}</Link>
+            ? <Link key={p.id} to={`/grammar/learn/${p.id}`} className={`rounded-2xl border-2 p-3 transition-transform hover:-translate-y-0.5 ${done ? 'border-anemo bg-white' : 'border-transparent bg-paper-deep'}`}>{body}</Link>
             : <div key={p.id} className="rounded-2xl bg-paper-deep p-3 opacity-60">{body}</div>
         })}
       </div>
@@ -76,9 +77,9 @@ export function GrammarLesson() {
       <p className="text-lg">{p.explain}</p>
       <button onClick={() => speak(textOf(example))} className="w-full cursor-pointer rounded-2xl bg-paper p-3 text-left">
         <Sentence tokens={example} className="text-2xl" />
-        <p className="text-sm opacity-70">🔊 {p.sentences[0][1]}</p>
+        <p className="text-sm opacity-70"><Icon name="speaker" className="mr-1 h-4 w-4" />{p.sentences[0][1]}</p>
       </button>
-      <button className={`${btn} w-full bg-torii text-white`} onClick={() => setPhase('drill')}>5 latihan →</button>
+      <button className={`${btn} w-full bg-primary text-white`} onClick={() => setPhase('drill')}>5 latihan →</button>
     </main>
   )
   if (phase === 'done') return (
@@ -87,8 +88,8 @@ export function GrammarLesson() {
       <p className="font-display text-3xl font-extrabold">Pola dikuasai! +5 XP</p>
       <p lang="ja" className="text-2xl">{p.title}</p>
       <div className="flex flex-wrap justify-center gap-2">
-        <Link to="/grammar" className={`${btn} bg-torii text-white`}>Pola berikutnya</Link>
-        <Link to="/games/sentence-builder" className={`${btn} bg-anemo text-white`}>Sentence Builder</Link>
+        <Link to="/grammar" className={`${btn} bg-primary text-white`}>Pola berikutnya</Link>
+        <Link to="/games/sentence-builder" className={`${btn} bg-deep text-white`}>Sentence Builder</Link>
       </div>
     </main>
   )

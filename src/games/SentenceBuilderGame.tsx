@@ -11,7 +11,7 @@ const SECONDS = 120
 export function SentenceBuilderGame() {
   const [game, setGame] = useState<{ run: number; mode: GameMode; lines: Line[]; due: Set<string> }>()
   const start = async (mode: GameMode) => setGame({ run: Date.now(), mode, ...(await sentencePool(mode)) })
-  if (!game) return <ModePicker title="🧱 Sentence Builder" blurb="Susun blok kata menjadi kalimat yang benar. Kalimat panjang = poin lebih besar."
+  if (!game) return <ModePicker title="Sentence Builder" icon="blocks" blurb="Susun blok kata menjadi kalimat yang benar. Kalimat panjang = poin lebih besar."
     daily={`${DAILY} kalimat`} endless={`Time attack · ${SECONDS} detik`} onStart={start} />
   return <Builder key={game.run} {...game} onExit={() => setGame(undefined)} />
 }
@@ -31,7 +31,7 @@ function Builder({ mode, lines, due, onExit }: { mode: GameMode; lines: Line[]; 
 
   if (over) return result ? <GameOver score={score} newBest={result.newBest} best={best} onExit={onExit} /> : null
   const line = lines[n % lines.length]
-  const head = mode === 'daily' ? `${n + 1}/${DAILY} · skor ${score}` : `⏱ ${left}s · skor ${score}`
+  const head = mode === 'daily' ? `${n + 1}/${DAILY} · skor ${score}` : `${left} detik · skor ${score}`
   return (
     <div>
       <p className="mt-2 text-center font-display font-bold">{head}</p>

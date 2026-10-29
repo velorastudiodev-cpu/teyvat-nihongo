@@ -19,10 +19,10 @@ export async function enableReminder(hour: number) {
 export const disableReminder = () => setPref('reminder-hour', '-1')
 
 const LINES: Record<string, string> = {
-  paimon: 'Paimon lapar… ayo review dulu, nanti kita makan! 🍙',
-  klee: 'Klee bosan! Ayo main Kana Rain bareng Klee! 💥',
+  paimon: 'Paimon lapar… ayo review dulu, nanti kita makan!',
+  klee: 'Klee bosan! Ayo main Kana Rain bareng Klee!',
   zhongli: 'Kontrak hari ini belum dipenuhi. Mari belajar sebentar.',
-  hutao: 'Hihi, kartu-kartumu sudah menunggu seperti hantu~ 👻',
+  hutao: 'Hihi, kartu-kartumu sudah menunggu seperti hantu~',
 }
 
 export async function maybeRemind(now = new Date()) {
