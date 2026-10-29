@@ -1,10 +1,9 @@
 {
   "version": 1,
-  "status": "paused_by_user",
+  "status": "in_progress",
   "notes": [
     "Existing Paimon, Klee and Venti illustrations are preserved; legacy assets are not regenerated.",
-    "Visual reference mapping inspected from contact sheets; detailed reference inspection precedes each generation.",
-    "Production paused at user request. Seven new character sets are complete; remaining 24 characters have not been generated."
+    "Visual reference mapping inspected from contact sheets; detailed reference inspection precedes each generation."
   ],
   "characters": [
     {
@@ -145,8 +144,85 @@
       "references": [
         "Genshin Real References/b5b565f9786a97d2a3cf112838263bad.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Amber_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 850551,
+          "sha256": "7a7abfac35b9e16e72f9481e5f5a32875a1d5afc7b1cd3c4730201ec2c61ac22",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            31,
+            39,
+            1218,
+            1230
+          ],
+          "visual_review": "passed"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Amber_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1191058,
+          "sha256": "1118d88113112809ff2046ae997a777cdfb38df3e96a2be4dcac70f044fd4556",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            30,
+            1236,
+            1238
+          ],
+          "visual_review": "passed"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Amber_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1179712,
+          "sha256": "9a653368c4772b04f7d5d13960a9220230e7e5399c214bb6decb487ea98fa94f",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            27,
+            13,
+            1232,
+            1241
+          ],
+          "visual_review": "passed"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Amber_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1342798,
+          "sha256": "b053c42f3b1aadffa24318511987ca18ae2296c914a3d70846d761145dd5fe55",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            9,
+            1238,
+            1254
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "diluc",
@@ -333,8 +409,85 @@
         "Genshin Real References/14bf4c100b0370d7bd1fd303891ce080.jpg",
         "Genshin Real References/d307b113bc3b4fd3b7f6642b29cf6827.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Kaeya_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1319208,
+          "sha256": "dee59a6337f0cce274ac21e308cc42e5a71838ad42b1fc1c542b3b0900dda657",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            57,
+            16,
+            1234,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Kaeya_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1405388,
+          "sha256": "ac4ec1fac115133a44db7c599b2161c1b2c2fc5335fe9b953396f9250d95e156",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            25,
+            20,
+            1236,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Kaeya_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1296642,
+          "sha256": "e962649bda49ca2f301348302eff43dc33fcd90e35b084d82329a81d9f8ab1c0",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            17,
+            1240,
+            1239
+          ],
+          "visual_review": "passed"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Kaeya_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1367034,
+          "sha256": "72214e2bf65bb84d3099046b45c392ae8fd3127353582b589bf7cbe76e754940",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            31,
+            19,
+            1240,
+            1254
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "mona",
@@ -389,8 +542,85 @@
         "Genshin Real References/a1bea84e9bb4234f9bf269b5d4b21034.jpg",
         "Genshin Real References/a2be3509229b7decc4a00b116720f28a.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Sucrose_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 954560,
+          "sha256": "cda5d82ba4b14046790ef047e49da0d0cc2f01272ec944dcca288faac3fbd963",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            25,
+            89,
+            1224,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Sucrose_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1026594,
+          "sha256": "286744a28f87f66ab277513742747b280b3e2cd708640d98fb29c2f0cece7517",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            37,
+            17,
+            1234,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Sucrose_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1026006,
+          "sha256": "09f702a51a58ce502fd163f4704e3f8e332be00e3536148814a4c80d39edf698",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            22,
+            1242,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Sucrose_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1141096,
+          "sha256": "b08a137950eeecc0330860fa01b67f0d0c8372fad597708dd3696708d3da1eb5",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            15,
+            1230,
+            1254
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "zhongli",
@@ -445,8 +675,85 @@
         "Genshin Real References/600db4823f96099327dd34b897e0f736.jpg",
         "Genshin Real References/d873dc30f5101e4e3fb05db772cff729.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Xiangling_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1059578,
+          "sha256": "f66a16d2adc7ef98eaac211910fcb8a0de82fc7f174fb1b9249122d83a4e6f29",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            31,
+            28,
+            1234,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Xiangling_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1050727,
+          "sha256": "46302b791d487bf3cce4e36b6c4b762e79829f2695b042bede0b8bc7fe6d35b2",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            60,
+            1232,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Xiangling_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1018750,
+          "sha256": "893223c045e4fbe76d0f4022cfd4d8a7301e44e9084ff259db77e167ed6d3a99",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            17,
+            23,
+            1240,
+            1236
+          ],
+          "visual_review": "passed"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Xiangling_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1038253,
+          "sha256": "3b2be744cfc7945e8919cdc7329de027fd8a93f89648a1700607508c9f228fb0",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            26,
+            1224,
+            1254
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "hutao",
@@ -457,8 +764,85 @@
         "Genshin Real References/c8d7203f1faba972f816d0abf9dbbf01.jpg",
         "Genshin Real References/e6cac704fb748ee71392019ac0e96f18.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Hu_Tao_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1241346,
+          "sha256": "ab64a1127eeb26aec82d3bbe44e1003a7b564c7b37d9160f38ba62147757af65",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            31,
+            35,
+            1234,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Hu_Tao_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1401627,
+          "sha256": "3639059529668db718525578bb30a921d10cfc6759f58023d7476f1ad1f7cc54",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            27,
+            33,
+            1236,
+            1238
+          ],
+          "visual_review": "passed"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Hu_Tao_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1382057,
+          "sha256": "6d4624e5a3a0ee5d645a601ab34dc5165dc2a5b731971258084bdc4d2ab5d35f",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            34,
+            1224,
+            1232
+          ],
+          "visual_review": "passed"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Hu_Tao_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1211321,
+          "sha256": "1e1e399930bc48c6ddb2f294b2b2d69247ae32860a5514a6099dd16c0b70d42a",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            39,
+            0,
+            1221,
+            1254
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "xiao",
@@ -470,8 +854,85 @@
         "Genshin Real References/a9a780145cb5b386fd2d23c1c6ecba0b.jpg",
         "Genshin Real References/bb2d38db364d5570551d49b316730fb5.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "complete",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Xiao_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1003044,
+          "sha256": "d5567c8af4b29925c0632b8d46be2d19b99881cc82f56e62578f8db9867306a8",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            25,
+            7,
+            1234,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "senang": {
+          "path": "Genshin Chibi Generate Ver/Xiao_Senang.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1064925,
+          "sha256": "6dbfd565449ac422586522e25271f76529de23e0299b8dd9e0f4ce176c6b996f",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            0,
+            1234,
+            1254
+          ],
+          "visual_review": "passed"
+        },
+        "menyemangati": {
+          "path": "Genshin Chibi Generate Ver/Xiao_Menyemangati.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1168372,
+          "sha256": "7d0a4b75369fa23170dbf6c28179a9cd4187a49c0c79e4edf14b5f4a1e856ad9",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            18,
+            1218,
+            1240
+          ],
+          "visual_review": "passed"
+        },
+        "tidur": {
+          "path": "Genshin Chibi Generate Ver/Xiao_Tidur.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1392930,
+          "sha256": "92c3e557f1d24fcadb3ea8ba5e1868cbdb025e6485fc430278993ce83cbbaa85",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            72,
+            1220,
+            1212
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "ganyu",
@@ -493,8 +954,28 @@
         "Genshin Real References/4fda4b0e95859174521e454aaaf2ce65.jpg",
         "Genshin Real References/dd6f68c7c13951e97168abe1e6fdab70.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "in_progress",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Keqing_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1541849,
+          "sha256": "117b42054743b8ca8d3cbefe0560a1b33fcd6291fa4148c3dfb8597bc8343b43",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            0,
+            15,
+            1242,
+            1254
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "qiqi",
@@ -504,8 +985,28 @@
         "Genshin Real References/d02e7ce93982855ce9f1b390da62d379.jpg",
         "Genshin Real References/f538db0aa8fd1dbea9695e5211fdaeee.jpg"
       ],
-      "status": "pending",
-      "images": {}
+      "status": "in_progress",
+      "images": {
+        "santai": {
+          "path": "Genshin Chibi Generate Ver/Qiqi_Santai.png",
+          "width": 1254,
+          "height": 1254,
+          "bytes": 1151148,
+          "sha256": "10761f24d1cd5948df005278e8654046bf6d8fffba4e4f06c1ac8ef4fee06098",
+          "status": "complete",
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "alpha_bbox": [
+            17,
+            18,
+            1240,
+            1254
+          ],
+          "visual_review": "passed"
+        }
+      }
     },
     {
       "id": "raiden",
