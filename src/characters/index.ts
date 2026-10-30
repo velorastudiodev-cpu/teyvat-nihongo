@@ -2,7 +2,7 @@ import data from '../data/characters.json'
 
 export const EXPRESSIONS = ['idle', 'happy', 'sad', 'sleep'] as const
 export type Expression = (typeof EXPRESSIONS)[number]
-export type Region = 'mondstadt' | 'liyue' | 'inazuma' | 'sumeru' | 'fontaine' | 'natlan'
+export type Region = 'mondstadt' | 'liyue' | 'inazuma' | 'sumeru' | 'fontaine' | 'natlan' | 'nodkrai' | 'snezhnaya'
 export type Element = 'none' | 'anemo' | 'geo' | 'electro' | 'dendro' | 'hydro' | 'pyro' | 'cryo'
 
 export interface Character {
@@ -26,6 +26,8 @@ export const REGIONS: { id: Region; name: string; level: string }[] = [
   { id: 'sumeru', name: 'Sumeru', level: 'N2' },
   { id: 'fontaine', name: 'Fontaine', level: 'N1' },
   { id: 'natlan', name: 'Natlan', level: 'N1' },
+  { id: 'nodkrai', name: 'Nod-Krai', level: 'N1' },
+  { id: 'snezhnaya', name: 'Snezhnaya', level: 'Akhir · Mock N1' },
 ]
 
 export const ELEMENT_COLOR: Record<Element, string> = {

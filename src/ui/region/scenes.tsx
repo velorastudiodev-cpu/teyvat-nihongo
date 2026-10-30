@@ -420,7 +420,137 @@ function Narukami() {
   )
 }
 
-const SCENES = { narukami: Narukami, mondstadt: Mondstadt, liyue: Liyue, inazuma: Inazuma, sumeru: Sumeru, fontaine: Fontaine, natlan: Natlan, euthymia: Euthymia }
+/* ── Nod-Krai: a moonlit northern sea, scattered isles, a lighthouse, kuuvahki in the sky ────── */
+function NodKrai() {
+  return (
+    <>
+      {/* kuuvahki: blue and red polarities drifting across the night */}
+      <path d="M0 220 C240 140 480 260 720 180 S1200 120 1440 200" fill="none" stroke="#6fb2ff" strokeWidth={34} opacity={0.22} className="anim-sway" style={{ animationDuration: '11s' }} />
+      <path d="M0 300 C300 230 560 330 820 260 S1250 230 1440 290" fill="none" stroke="#ff6f7a" strokeWidth={24} opacity={0.18} className="anim-sway" style={{ animationDuration: '13s' }} />
+      <circle cx={1120} cy={150} r={78} fill="#eef3ff" opacity={0.95} />
+      <circle cx={1120} cy={150} r={130} fill="#cfe0ff" opacity={0.12} />
+      <g fill="#ffffff">{[[180, 90], [420, 60], [640, 120], [860, 70], [1300, 260], [260, 330]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r={1.6 + (i % 3)} className="anim-glint" style={{ animationDuration: `${2.4 + i * 0.5}s` }} />)}</g>
+      {/* isles on the horizon */}
+      <path d="M0 600 C120 560 220 560 320 600 Z" fill="#1d2a4a" />
+      <path d="M380 610 C520 520 700 520 860 610 Z" fill="#22325a" />
+      <path d="M980 600 C1100 540 1240 545 1440 590 V610 H980z" fill="#1d2a4a" />
+      {/* lighthouse on the central isle, its beam sweeping the sea */}
+      <g transform="translate(610 540)">
+        <path d="M-16 0 L-10 -120 h20 L16 0z" fill="#e8edf6" />
+        <path d="M-12 -40 h24 M-11 -80 h22" stroke="#b5413e" strokeWidth={8} />
+        <rect x={-14} y={-138} width={28} height={20} fill="#2a3556" />
+        <circle cx={0} cy={-128} r={8} fill="#ffe7a3" className="anim-glint" style={{ animationDuration: '2s' }} />
+        <path d="M0 -128 L-420 -190 L-420 -70z" fill="#ffe7a3" opacity={0.1} />
+      </g>
+      {/* harbour town by the shore */}
+      <g fill="#2c3a63">
+        {[[880, 600, 40, 50], [930, 600, 34, 66], [974, 600, 46, 44], [1030, 600, 38, 58]].map(([x, y, w, h], i) => (
+          <g key={i}><rect x={x} y={y - h} width={w} height={h} /><path d={`M${x - 4} ${y - h} l${w / 2 + 4} -22 ${w / 2 + 4} 22z`} /><rect x={x + w / 2 - 5} y={y - h + 14} width={10} height={10} fill="#ffd98a" opacity={0.85} /></g>
+        ))}
+      </g>
+      {/* the cold sea with moonlight on it */}
+      <path d="M0 610 H1440 V900 H0z" fill="#14203d" />
+      <g stroke="#cfe0ff" strokeWidth={3} strokeLinecap="round" opacity={0.6}>
+        <path d="M1060 650 h120 M1080 690 h80 M1050 730 h140 M1095 770 h60" />
+        <path d="M160 700 h70 M420 760 h90 M760 720 h60" opacity={0.6} />
+      </g>
+      {/* ice floes in front */}
+      <path d="M0 840 L120 800 L260 820 L320 860 L0 900z M1440 830 L1300 800 L1180 830 L1140 880 L1440 900z" fill="#dfe9f7" opacity={0.85} />
+    </>
+  )
+}
+
+/* ── Snezhnaya: snowfields under high peaks, a capital of spires, a railway through the white ── */
+function Snezhnaya() {
+  return (
+    <>
+      <path d="M0 520 L200 300 L330 420 L520 200 L700 420 L860 260 L1040 430 L1220 280 L1440 480 V600 H0z" fill="#c8d8e8" />
+      <path d="M200 300 L250 355 L170 345z M520 200 L580 270 L470 262z M860 260 L910 315 L820 308z M1220 280 L1270 335 L1180 330z" fill="#ffffff" />
+      <path d="M0 600 C300 560 600 590 900 570 S1300 560 1440 580 V900 H0z" fill="#eef4f8" />
+      {/* the capital: towers with spires and lit windows (an original skyline) */}
+      <g transform="translate(720 560)">
+        <rect x={-210} y={-90} width={420} height={90} fill="#6f8db0" />
+        {[-170, -90, 90, 170].map((x, i) => (
+          <g key={x}><rect x={x - 18} y={-150 - (i % 2) * 20} width={36} height={150 + (i % 2) * 20} fill="#5d7ca0" /><path d={`M${x - 22} ${-150 - (i % 2) * 20} l22 -50 22 50z`} fill="#3f5f86" /></g>
+        ))}
+        <rect x={-50} y={-210} width={100} height={210} fill="#4f6f95" />
+        <path d="M-56 -210 l56 -90 56 90z" fill="#2f4c72" />
+        <path d="M0 -300 v-26" stroke="#d8b04c" strokeWidth={5} />
+        <g fill="#ffe29a">{[-180, -100, -40, 30, 100, 180].map((x) => <rect key={x} x={x} y={-60} width={12} height={16} />)}<rect x={-8} y={-150} width={16} height={20} /></g>
+      </g>
+      {/* railway with a train crossing the snow */}
+      <path d="M0 700 C400 680 1000 720 1440 690" fill="none" stroke="#5a6a80" strokeWidth={6} />
+      <path d="M0 712 C400 692 1000 732 1440 702" fill="none" stroke="#5a6a80" strokeWidth={3} strokeDasharray="10 14" />
+      <g transform="translate(300 668)">
+        {[0, 70, 140].map((x, i) => <g key={x}><rect x={x} y={0} width={64} height={30} rx={6} fill={i === 0 ? '#8c3a3a' : '#3f5f86'} /><rect x={x + 8} y={6} width={14} height={10} fill="#ffe29a" /><rect x={x + 32} y={6} width={14} height={10} fill="#ffe29a" /><circle cx={x + 14} cy={32} r={5} fill="#2a2f3a" /><circle cx={x + 50} cy={32} r={5} fill="#2a2f3a" /></g>)}
+        <path d="M10 0 v-14 h12 v14" fill="#8c3a3a" />
+      </g>
+      {/* birches */}
+      {[90, 180, 1240, 1340].map((x, i) => (
+        <g key={x} transform={`translate(${x} ${840 - (i % 2) * 18})`}>
+          <rect x={-6} y={-150} width={12} height={150} fill="#f4f4f0" />
+          <path d="M-6 -120 h6 M0 -80 h6 M-6 -40 h5" stroke="#2a2f3a" strokeWidth={3} />
+          <g fill="#dbe6ee"><circle cx={0} cy={-160} r={34} /><circle cx={-26} cy={-136} r={24} /><circle cx={26} cy={-140} r={24} /></g>
+        </g>
+      ))}
+      <path d="M0 860 C360 840 720 870 1080 850 S1360 846 1440 850 V900 H0z" fill="#ffffff" />
+    </>
+  )
+}
+
+/* ── Celestia: a white isle floating above the clouds, ringed by golden halos ─────────────── */
+function Celestia() {
+  return (
+    <>
+      <g fill="#ffffff" opacity={0.85}>
+        <ellipse cx={200} cy={720} rx={260} ry={60} /><ellipse cx={520} cy={760} rx={300} ry={70} /><ellipse cx={980} cy={740} rx={320} ry={70} /><ellipse cx={1300} cy={710} rx={240} ry={60} />
+        <ellipse cx={720} cy={820} rx={760} ry={90} />
+      </g>
+      <g transform="translate(720 330)">
+        <ellipse cx={0} cy={-150} rx={300} ry={46} fill="none" stroke="#e8c97a" strokeWidth={6} opacity={0.8} className="anim-glint" style={{ animationDuration: '6s' }} />
+        <ellipse cx={0} cy={-150} rx={230} ry={34} fill="none" stroke="#fff1c4" strokeWidth={3} opacity={0.9} />
+        {/* the isle: a white mesa with gilded spires, tapering into rock below */}
+        <path d="M-260 40 h520 l-70 90 q-60 90 -190 150 q-130 -60 -190 -150z" fill="#d9d2c4" />
+        <path d="M-260 40 h520 l-40 24 h-440z" fill="#bfb6a5" />
+        <rect x={-240} y={10} width={480} height={30} fill="#fbf8f1" />
+        {[-180, -90, 90, 180].map((x) => <g key={x}><rect x={x - 14} y={-70} width={28} height={80} fill="#fbf8f1" /><path d={`M${x - 18} -70 l18 -40 18 40z`} fill="#e8c97a" /></g>)}
+        <rect x={-50} y={-150} width={100} height={160} fill="#fbf8f1" />
+        <path d="M-60 -150 l60 -90 60 90z" fill="#e8c97a" />
+        <circle cx={0} cy={-90} r={18} fill="#e8c97a" opacity={0.85} />
+        <path d="M-140 130 l-12 110 M0 280 v120 M150 130 l14 100" stroke="#bfb6a5" strokeWidth={6} opacity={0.6} />
+      </g>
+      <g fill="#fff1c4">{[[220, 160], [420, 90], [1040, 130], [1260, 220], [600, 210], [880, 70]].map(([x, y], i) => <path key={i} d="M0 -9 L2.4 -2.4 9 0 2.4 2.4 0 9 -2.4 2.4 -9 0 -2.4 -2.4z" transform={`translate(${x} ${y})`} className="anim-glint" style={{ animationDuration: `${2.5 + i * 0.6}s` }} />)}</g>
+    </>
+  )
+}
+
+/* ── the Abyss: a torn void, violet rifts and drifting shards of a fallen kingdom ─────────────── */
+function Abyss() {
+  return (
+    <>
+      <circle cx={720} cy={380} r={320} fill="#5b2a86" opacity={0.22} />
+      <g transform="translate(720 380)">
+        <path d="M-160 0 C-90 -110 90 -110 160 0 C90 110 -90 110 -160 0z" fill="#090512" stroke="#b06ae6" strokeWidth={5} />
+        <circle r={46} fill="#2a1145" /><circle r={20} fill="#c38cf0" className="anim-glint" style={{ animationDuration: '3s' }} />
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => <path key={a} d="M0 -190 L10 -240 L0 -300 L-10 -240z" fill="#7a35b8" opacity={0.7} transform={`rotate(${a})`} />)}
+      </g>
+      {/* cracks of violet light */}
+      <g fill="none" stroke="#b06ae6" strokeWidth={4} strokeLinejoin="round" opacity={0.75}>
+        <path d="M0 600 L180 560 L260 610 L420 570" /><path d="M1440 520 L1260 560 L1180 520 L1020 580" /><path d="M520 900 L560 780 L520 720 L600 640" />
+      </g>
+      {/* shards of ruined Khaenri'ahn stonework */}
+      {[[160, 240, 20], [1240, 200, -15], [330, 700, 35], [1110, 720, -30], [880, 120, 10]].map(([x, y, r], i) => (
+        <g key={i} transform={`translate(${x} ${y}) rotate(${r})`}>
+          <path d="M-50 0 L-10 -40 L50 -20 L40 30 L-30 40z" fill="#241634" stroke="#5b2a86" strokeWidth={3} />
+          <path d="M-20 -10 h30 M-10 5 h28" stroke="#7a35b8" strokeWidth={3} />
+        </g>
+      ))}
+      <path d="M0 860 C360 830 720 880 1080 850 S1360 840 1440 850 V900 H0z" fill="#05030a" />
+    </>
+  )
+}
+
+const SCENES = { nodkrai: NodKrai, snezhnaya: Snezhnaya, celestia: Celestia, abyss: Abyss, narukami: Narukami, mondstadt: Mondstadt, liyue: Liyue, inazuma: Inazuma, sumeru: Sumeru, fontaine: Fontaine, natlan: Natlan, euthymia: Euthymia }
 
 export function RegionScene({ region }: { region: keyof typeof SCENES }) {
   const Scene = SCENES[region]

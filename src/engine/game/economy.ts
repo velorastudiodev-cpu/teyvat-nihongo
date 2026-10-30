@@ -2,12 +2,13 @@ import { db } from '../../data/db'
 import { getCharacter } from '../../characters'
 import { today } from '../srs/srs'
 import { daysToFreeze, weekId } from './rules'
+import { multipliers } from '../celestia'
 
-/** Adds Kirameki (Furina as companion: ×1.1). Returns the amount actually added. */
+/** Adds Kirameki (Furina as companion: ×1.1; Celestia's judgments and blessings scale it too). Returns the amount added. */
 export async function earn(amount: number) {
   const p = await db.profile.get('me')
   const buff = getCharacter(p?.companionId ?? '')?.buff
-  const total = Math.round(amount * (buff?.effect === 'kiramekiMult' ? buff.value : 1))
+  const total = Math.round(amount * (buff?.effect === 'kiramekiMult' ? buff.value : 1) * multipliers(p).kirameki)
   await db.profile.update('me', { kirameki: (p?.kirameki ?? 0) + total })
   return total
 }

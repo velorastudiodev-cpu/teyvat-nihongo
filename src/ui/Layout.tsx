@@ -11,17 +11,18 @@ import { Icon, type IconName } from './Icon'
 import { Backdrop } from './region/Backdrop'
 import { REALMS } from './region/regions'
 import { useRealm, useRealmOnDocument } from './region/useRealm'
+import { ShadeDescent } from '../modules/world/WorldPages'
 
 const TABS: { to: string; label: string; icon: IconName; match: RegExp }[] = [
   { to: '/', label: 'Beranda', icon: 'home', match: /^\/$/ },
-  { to: '/learn', label: 'Belajar', icon: 'book', match: /^\/(learn|kana|kanji|vocab|grammar|reading|listening|speaking|map|review|write)/ },
-  { to: '/games', label: 'Main', icon: 'gamepad', match: /^\/(games|daily|boss|domain|revenge)/ },
+  { to: '/learn', label: 'Belajar', icon: 'book', match: /^\/(learn|kana|kanji|vocab|grammar|reading|listening|speaking|map|review|write|hexenzirkel)/ },
+  { to: '/games', label: 'Main', icon: 'gamepad', match: /^\/(games|daily|boss|domain|revenge|fatui|abyss|celestia|snezhnaya)/ },
   { to: '/characters', label: 'Karakter', icon: 'users', match: /^\/(characters|gacha|raiden)/ },
   { to: '/profile', label: 'Profil', icon: 'user', match: /^\/(profile|insight|exam|gate)/ },
 ]
 
 // focused activities: no tab bar, a back button instead, so nothing pulls you away mid-lesson
-const FOCUS = /^\/(games\/|review|domain|boss|revenge|kana\/learn|kanji\/learn|vocab\/learn|grammar\/learn|speaking\/|write|exam|gate|reading\/|raiden\/)/
+const FOCUS = /^\/(games\/|review|domain|boss|revenge|kana\/learn|kanji\/learn|vocab\/learn|grammar\/learn|speaking\/|write|exam|gate|reading\/|raiden\/|fatui\/duel|abyss\/rift|hexenzirkel\/drill)/
 const NO_CORNER = /^\/($|games\/|review|domain|boss|revenge|onboarding|kana\/learn|kanji\/learn|vocab\/learn|grammar\/learn|speaking\/|write|raiden)/
 
 export function Layout() {
@@ -42,6 +43,7 @@ export function Layout() {
       <Backdrop realm={realm} />
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-night focus:px-4 focus:py-2 focus:text-paper">Lewati ke konten</a>
       <Toaster />
+      <ShadeDescent hold={focus || onboarding} />
 
       <header className="g-glass sticky top-0 z-40 border-x-0 border-t-0 pt-[env(safe-area-inset-top)]">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 px-4">

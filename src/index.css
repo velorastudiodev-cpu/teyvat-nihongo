@@ -57,6 +57,26 @@
   --r-primary: #b0447c; --r-accent: #f29ac2; --r-deep: #2a1638; --r-soft: #f8e3ef; --r-glow: #ffd1e6;
   --r-sky-1: #23193f; --r-sky-2: #c99ac4;
 }
+/* Nod-Krai: moonlit northern isles, lit by blue and red kuuvahki */
+:root[data-region="nodkrai"], [data-region="nodkrai"] {
+  --r-primary: #3a6fb0; --r-accent: #7fb8ff; --r-deep: #101b33; --r-soft: #dde8f7; --r-glow: #b8d6ff;
+  --r-sky-1: #1a2547; --r-sky-2: #5d6f9e;
+}
+/* Snezhnaya: the everwinter nation of the Tsaritsa */
+:root[data-region="snezhnaya"], [data-region="snezhnaya"] {
+  --r-primary: #4a7fb5; --r-accent: #9fd0f0; --r-deep: #1c2a42; --r-soft: #e4f0f8; --r-glow: #d5ecff;
+  --r-sky-1: #9db6cf; --r-sky-2: #eef4f8;
+}
+/* Celestia, the floating isle of the Heavenly Principles */
+:root[data-region="celestia"], [data-region="celestia"] {
+  --r-primary: #a8843e; --r-accent: #e8c97a; --r-deep: #3d3424; --r-soft: #f6eedb; --r-glow: #fff1c4;
+  --r-sky-1: #a9cdf0; --r-sky-2: #fdf8ec;
+}
+/* the Abyss, where the Five Sinners gather their power */
+:root[data-region="abyss"], [data-region="abyss"] {
+  --r-primary: #7a35b8; --r-accent: #b06ae6; --r-deep: #12091f; --r-soft: #e9dcf6; --r-glow: #c38cf0;
+  --r-sky-1: #0c0716; --r-sky-2: #3b1d5c;
+}
 /* the Plane of Euthymia, opened by the Raiden Shogun's bond */
 :root[data-region="euthymia"], [data-region="euthymia"] {
   --r-primary: #6a43b8; --r-accent: #b48cf0; --r-deep: #1d1438; --r-soft: #e7dcf8; --r-glow: #e3d0ff;

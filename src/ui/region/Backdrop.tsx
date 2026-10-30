@@ -30,6 +30,22 @@ const MOTES: Record<Realm, { kind: 'fall' | 'rise'; shapes: ReactNode[]; colors:
     <g key="ember"><circle r={2.6} fill="currentColor" /><circle r={6} fill="currentColor" opacity={0.25} /></g>,
     <path key="flame" d="M0 8 C-5 4 -4 -2 0 -8 C4 -2 5 4 0 8z" fill="currentColor" />,
   ] },
+  nodkrai: { kind: 'rise', colors: ['#7fb8ff', '#ff7a86', '#dfe9ff'], shapes: [
+    <g key="mote"><circle r={3} fill="currentColor" /><circle r={8} fill="currentColor" opacity={0.22} /></g>,
+    <path key="glint" d="M0 -6 L1.5 -1.5 6 0 1.5 1.5 0 6 -1.5 1.5 -6 0 -1.5 -1.5z" fill="currentColor" />,
+  ] },
+  snezhnaya: { kind: 'fall', colors: ['#ffffff', '#e4f0f8', '#cfe3f3'], shapes: [
+    <path key="flake" d="M0 -8 V8 M-7 -4 L7 4 M-7 4 L7 -4" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" />,
+    <circle key="snow" r={3} fill="currentColor" />,
+  ] },
+  celestia: { kind: 'rise', colors: ['#fff1c4', '#ffffff', '#e8c97a'], shapes: [
+    <path key="star" d="M0 -7 L1.8 -1.8 7 0 1.8 1.8 0 7 -1.8 1.8 -7 0 -1.8 -1.8z" fill="currentColor" />,
+    <circle key="mote" r={2.5} fill="currentColor" />,
+  ] },
+  abyss: { kind: 'rise', colors: ['#b06ae6', '#7a35b8', '#3b1663'], shapes: [
+    <g key="ember"><circle r={3} fill="currentColor" /><circle r={7} fill="currentColor" opacity={0.25} /></g>,
+    <path key="shard" d="M-4 -6 L5 -3 L3 6 L-5 3z" fill="currentColor" />,
+  ] },
   narukami: { kind: 'fall', colors: ['#f7b6cf', '#ffd6e6', '#ffe9a8'], shapes: [
     <g key="petal" fill="currentColor">{PETAL}</g>,
     <path key="glint" d="M0 -6 L1.5 -1.5 6 0 1.5 1.5 0 6 -1.5 1.5 -6 0 -1.5 -1.5z" fill="currentColor" />,

@@ -248,3 +248,44 @@
   - **Hadiah:** gelar 永遠の契り, +1000 Kirameki, tema baru **Kuil Narukami** (malam, lentera, torii), dan sapaan harian baru dari Ei.
   - Upacaranya bisa diputar ulang di Kenangan.
 - 73 unit test (+1 untuk rahasia terakhir) dan e2e alur Raiden lulus.
+
+## Dunia Teyvat: Fatui, Lima Pendosa Khaenri'ah, Empat Bayangan & Celestia
+Lore diringkas dari riset (alur Archon Quest dan cerita karakter); semua kalimat Jepang ditulis orisinal untuk aplikasi ini, dan tokoh ditampilkan sebagai emblem, bukan potret. Hub baru ada di **Main → Dunia Teyvat**.
+- **Organisasi Fatui** (`/fatui`):
+  - **Daftar Harbinger:** 11 kursi beserta statusnya. Pierro (Jester, pemimpin); kursi 1 Capitano; 2 Dottore; 3 Columbina (mantan); 4 Arlecchino; 5 Pulcinella; 6 Scaramouche (mantan); 7 Sandrone (gugur); 8 Signora (gugur); 9 Pantalone; 10 kosong; 11 Tartaglia.
+  - **Lawan:** duel Harbinger dari kursi 11 sampai Jester, dengan aturan khas tiap tokoh: Foul Legacy Tartaglia, pertukaran setara Pantalone, batas waktu Pulcinella, disiplin Arlecchino, segmen Dottore, duel terhormat Capitano, kebangkitan Jester. Setiap jawaban adalah review SRS sungguhan.
+  - **Rekan:** Pinjaman Pantalone (300 Kirameki, dilunasi 300 XP dalam 7 hari atau ditagih 400) dan Sumpah Hearth House Arlecchino (7 hari belajar berturut-turut, hadiah 500).
+- **Ancaman Abyss** (`/abyss`):
+  - **Elemen baru Abyss.** Setiap Pendosa menyerap satu jenis kelalaian: Vedrfolnir (Waktu) dari review terlambat, Hroptatyr (Akal) dari kesalahan yang belum dibalas, Rhinedottir (Kehidupan) dari hari tanpa belajar, Surtalogi (Kehampaan) dari hari tanpa materi baru, Rerir (Kematian) dari kartu yang berkali-kali terlupa.
+  - **Tahap:** Bisikan → Erosi (−10 Kirameki/hari) → Korupsi (−20/hari, friendship companion −5/hari). Total ≥6 tahap: XP −20%.
+  - **Pemurnian:** bereskan penyebabnya, atau menangkan Abyss Rift untuk menyegel Pendosa itu selama 48 jam.
+  - Materi, review, dan riwayat tidak pernah dihapus.
+- **Celestia & Empat Bayangan** (`/celestia`). Setiap Bayangan menjaga satu aturan:
+  - **Ronova** (Kematian): menebak asal → XP −50% selama 24 jam.
+  - **Istaroth** (Waktu): review menumpuk >3 hari → Kirameki −50% sampai dibereskan.
+  - **Naberius** (Kehidupan): menjejalkan materi → pelajaran baru dikunci sampai besok.
+  - **Asmoday** (Ruang): memundurkan jam perangkat → Kirameki ×0 dan berkat dicabut selama 3 hari.
+  - Saat Bayangan turun, ia tampil di atas seluruh aplikasi dengan dialog Jepang.
+  - **Berkat mingguan:** belajar ≥5 dari 7 hari tanpa hukuman → pilih satu berkat (XP +15%, +1 Streak Freeze, friendship ×2, atau Kirameki +20%).
+- Tema baru: **Celestia** (pulau melayang dengan halo emas) dan **Abyss** (rift ungu dengan reruntuhan Khaenri'ah).
+- Semua efek dipasang di satu titik (`earn`, `bumpDay`, `answer`, `learn`, upkeep harian). 81 unit test (+8 untuk sistem baru); e2e duel → Abyss → turunnya Bayangan lulus.
+- **Chibi baru dari `Genshin Chibi Generate Ver/`:** set lengkap Amber, Kaeya, Sucrose, Xiangling, Hu Tao, Xiao, Ganyu, Keqing, Qiqi, dan Yae Miko kini jadi gambar bawaan (total 20 karakter). Yae memakai ilustrasinya di upacara Kuil Narukami. Set yang belum lengkap (Ayaka, Kazuha, Yoimiya) menunggu sampai keempat ekspresinya ada.
+- Turunnya Bayangan ditahan saat pelajaran, game, atau ujian, lalu tampil setelah kamu kembali ke menu.
+
+## Utara Teyvat: Nod-Krai, Snezhnaya & Tsaritsa, Hexenzirkel
+Lore diriset dari Wikipedia (Snezhnaya), KQM (ikhtisar Versi 7.0), dan panduan komunitas. Kalimat Jepang ditulis orisinal; Tsaritsa dan para penyihir tampil sebagai emblem.
+- **Nod-Krai:** wilayah otonom di ujung selatan Snezhnaya dengan energi kuuvahki (kutub biru/merah), Frostmoon Scions di Pulau Hiisi, Nasha Town, Lightkeeper, dan biro Fatui di Pulau Paha. N1 kini melewati Fontaine → Natlan → Nod-Krai (per sepertiga materi N1). Latar baru: laut malam, mercusuar, aurora kuuvahki.
+- **Snezhnaya** (Versi 7.0, 12 Agustus 2026): akhir perjalanan, dibuka dengan lulus JLPT N1 Mock Test. Latar baru: puncak bersalju, ibu kota bermenara, rel kereta, pohon birch, salju turun.
+  - **Audiensi dengan Tsaritsa** (Anastasya Feodorovna Snezhnaya, Archon Cryo, Dewi Cinta, pendiri Fatui): dialog berfurigana dengan pilihan jawaban Jepang. Hadiah +800 Kirameki dan gelar "Tamu Istana Snezhnograd".
+- **Hexenzirkel** (Belajar → Buntu?): muncul sebagai undangan di Beranda saat ada tanda buntu.
+  - **Alice:** membaca tanda buntu (akurasi rendah, kartu sering terlupa, tumpukan review, absen, Gate gagal) dan menyusun rencana.
+  - **Nicole Reeyn:** meramal kartu paling rawan terlupa (rumus recall FSRS), lalu melatihnya.
+  - **Barbeloth:** menunjukkan pasangan jawaban yang sering tertukar, lalu melatih keduanya.
+  - **Andersdotter:** dongeng pengingat dari bagian-bagian kanji yang sulit.
+  - **Rhinedottir:** transmutasi, yaitu mereset kartu yang berkali-kali terlupa untuk dipelajari ulang (maks. 5/hari).
+- **Karakter baru:**
+  - Nod-Krai: Lauma, Flins, Aino, Ineffa, Columbina, Illuga.
+  - Snezhnaya: Odette, Alyosha.
+  - Mondstadt: Varka, Durin.
+  - Masing-masing punya buff dan dua kalimat Jepang. Tampil sebagai siluet sampai gambarnya ditambahkan; Wish mendahulukan karakter yang sudah bergambar.
+- 87 unit test (+6). E2E: undangan Hexenzirkel → drill Nicole → transmutasi → Peta sampai Snezhnaya → audiensi Tsaritsa lulus.

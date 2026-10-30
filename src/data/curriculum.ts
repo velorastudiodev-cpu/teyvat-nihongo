@@ -17,7 +17,7 @@ export const STAGE_INFO: Record<Stage, StageInfo> = {
   N4: { label: 'JLPT N4', regions: ['liyue'], kana: 0, kanji: 166, vocab: 663, grammar: 130 },
   N3: { label: 'JLPT N3', regions: ['inazuma'], kana: 0, kanji: 367, vocab: 2078, grammar: 180 },
   N2: { label: 'JLPT N2', regions: ['sumeru'], kana: 0, kanji: 367, vocab: 1790, grammar: 200 },
-  N1: { label: 'JLPT N1', regions: ['fontaine', 'natlan'], kana: 0, kanji: 1232, vocab: 2655, grammar: 220 },
+  N1: { label: 'JLPT N1', regions: ['fontaine', 'natlan', 'nodkrai'], kana: 0, kanji: 1232, vocab: 2655, grammar: 220 },
 }
 
 export const stageItems = (s: Stage) => {

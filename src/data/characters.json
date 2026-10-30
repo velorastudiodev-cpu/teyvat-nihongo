@@ -109,10 +109,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/amber/idle.svg",
-   "happy": "/chibi/amber/happy.svg",
-   "sad": "/chibi/amber/sad.svg",
-   "sleep": "/chibi/amber/sleep.svg"
+   "idle": "/chibi/amber/idle.webp",
+   "happy": "/chibi/amber/happy.webp",
+   "sad": "/chibi/amber/sad.webp",
+   "sleep": "/chibi/amber/sleep.webp"
   }
  },
  {
@@ -254,10 +254,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/kaeya/idle.svg",
-   "happy": "/chibi/kaeya/happy.svg",
-   "sad": "/chibi/kaeya/sad.svg",
-   "sleep": "/chibi/kaeya/sleep.svg"
+   "idle": "/chibi/kaeya/idle.webp",
+   "happy": "/chibi/kaeya/happy.webp",
+   "sad": "/chibi/kaeya/sad.webp",
+   "sleep": "/chibi/kaeya/sleep.webp"
   }
  },
  {
@@ -312,10 +312,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/sucrose/idle.svg",
-   "happy": "/chibi/sucrose/happy.svg",
-   "sad": "/chibi/sucrose/sad.svg",
-   "sleep": "/chibi/sucrose/sleep.svg"
+   "idle": "/chibi/sucrose/idle.webp",
+   "happy": "/chibi/sucrose/happy.webp",
+   "sad": "/chibi/sucrose/sad.webp",
+   "sleep": "/chibi/sucrose/sleep.webp"
   }
  },
  {
@@ -370,10 +370,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/xiangling/idle.svg",
-   "happy": "/chibi/xiangling/happy.svg",
-   "sad": "/chibi/xiangling/sad.svg",
-   "sleep": "/chibi/xiangling/sleep.svg"
+   "idle": "/chibi/xiangling/idle.webp",
+   "happy": "/chibi/xiangling/happy.webp",
+   "sad": "/chibi/xiangling/sad.webp",
+   "sleep": "/chibi/xiangling/sleep.webp"
   }
  },
  {
@@ -399,10 +399,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/hutao/idle.svg",
-   "happy": "/chibi/hutao/happy.svg",
-   "sad": "/chibi/hutao/sad.svg",
-   "sleep": "/chibi/hutao/sleep.svg"
+   "idle": "/chibi/hutao/idle.webp",
+   "happy": "/chibi/hutao/happy.webp",
+   "sad": "/chibi/hutao/sad.webp",
+   "sleep": "/chibi/hutao/sleep.webp"
   }
  },
  {
@@ -428,10 +428,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/xiao/idle.svg",
-   "happy": "/chibi/xiao/happy.svg",
-   "sad": "/chibi/xiao/sad.svg",
-   "sleep": "/chibi/xiao/sleep.svg"
+   "idle": "/chibi/xiao/idle.webp",
+   "happy": "/chibi/xiao/happy.webp",
+   "sad": "/chibi/xiao/sad.webp",
+   "sleep": "/chibi/xiao/sleep.webp"
   }
  },
  {
@@ -457,10 +457,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/ganyu/idle.svg",
-   "happy": "/chibi/ganyu/happy.svg",
-   "sad": "/chibi/ganyu/sad.svg",
-   "sleep": "/chibi/ganyu/sleep.svg"
+   "idle": "/chibi/ganyu/idle.webp",
+   "happy": "/chibi/ganyu/happy.webp",
+   "sad": "/chibi/ganyu/sad.webp",
+   "sleep": "/chibi/ganyu/sleep.webp"
   }
  },
  {
@@ -486,10 +486,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/keqing/idle.svg",
-   "happy": "/chibi/keqing/happy.svg",
-   "sad": "/chibi/keqing/sad.svg",
-   "sleep": "/chibi/keqing/sleep.svg"
+   "idle": "/chibi/keqing/idle.webp",
+   "happy": "/chibi/keqing/happy.webp",
+   "sad": "/chibi/keqing/sad.webp",
+   "sleep": "/chibi/keqing/sleep.webp"
   }
  },
  {
@@ -515,10 +515,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/qiqi/idle.svg",
-   "happy": "/chibi/qiqi/happy.svg",
-   "sad": "/chibi/qiqi/sad.svg",
-   "sleep": "/chibi/qiqi/sleep.svg"
+   "idle": "/chibi/qiqi/idle.webp",
+   "happy": "/chibi/qiqi/happy.webp",
+   "sad": "/chibi/qiqi/sad.webp",
+   "sleep": "/chibi/qiqi/sleep.webp"
   }
  },
  {
@@ -573,10 +573,10 @@
    }
   ],
   "assets": {
-   "idle": "/chibi/yae/idle.svg",
-   "happy": "/chibi/yae/happy.svg",
-   "sad": "/chibi/yae/sad.svg",
-   "sleep": "/chibi/yae/sleep.svg"
+   "idle": "/chibi/yae/idle.webp",
+   "happy": "/chibi/yae/happy.webp",
+   "sad": "/chibi/yae/sad.webp",
+   "sleep": "/chibi/yae/sleep.webp"
   }
  },
  {
@@ -983,6 +983,296 @@
    "happy": "/chibi/mualani/happy.svg",
    "sad": "/chibi/mualani/sad.svg",
    "sleep": "/chibi/mualani/sleep.svg"
+  }
+ },
+ {
+  "id": "varka",
+  "name": "Varka",
+  "nameJa": "ヴァルカ",
+  "region": "mondstadt",
+  "element": "anemo",
+  "buff": {
+   "game": "weekly-boss",
+   "effect": "extraLife",
+   "value": 1,
+   "desc": "+1 nyawa di Weekly Boss"
+  },
+  "lines": [
+   {
+    "ja": "自由の風は、遠い北にも届く。",
+    "tr": "Angin kebebasan sampai juga ke utara yang jauh."
+   },
+   {
+    "ja": "騎士として、共に進もう。",
+    "tr": "Sebagai ksatria, mari maju bersama."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/varka/idle.svg",
+   "happy": "/chibi/varka/happy.svg",
+   "sad": "/chibi/varka/sad.svg",
+   "sleep": "/chibi/varka/sleep.svg"
+  }
+ },
+ {
+  "id": "durin",
+  "name": "Durin",
+  "nameJa": "ドゥリン",
+  "region": "mondstadt",
+  "element": "pyro",
+  "buff": {
+   "game": "radical-forge",
+   "effect": "extraTime",
+   "value": 4,
+   "desc": "+4 detik di Radical Forge"
+  },
+  "lines": [
+   {
+    "ja": "新しい世界、全部知りたい！",
+    "tr": "Dunia baru, aku mau tahu semuanya!"
+   },
+   {
+    "ja": "もう一回、やってみよう！",
+    "tr": "Ayo coba sekali lagi!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/durin/idle.svg",
+   "happy": "/chibi/durin/happy.svg",
+   "sad": "/chibi/durin/sad.svg",
+   "sleep": "/chibi/durin/sleep.svg"
+  }
+ },
+ {
+  "id": "lauma",
+  "name": "Lauma",
+  "nameJa": "ラウマ",
+  "region": "nodkrai",
+  "element": "dendro",
+  "buff": {
+   "game": "domain-run",
+   "effect": "heal",
+   "value": 1,
+   "desc": "Pulihkan 1 nyawa tiap 10 lantai di Domain Run"
+  },
+  "lines": [
+   {
+    "ja": "月の導きがありますように。",
+    "tr": "Semoga bimbingan bulan menyertaimu."
+   },
+   {
+    "ja": "言葉にも、聖なる力が宿ります。",
+    "tr": "Kata-kata pun menyimpan kekuatan suci."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/lauma/idle.svg",
+   "happy": "/chibi/lauma/happy.svg",
+   "sad": "/chibi/lauma/sad.svg",
+   "sleep": "/chibi/lauma/sleep.svg"
+  }
+ },
+ {
+  "id": "flins",
+  "name": "Flins",
+  "nameJa": "フリンズ",
+  "region": "nodkrai",
+  "element": "electro",
+  "buff": {
+   "game": "stroke-duel",
+   "effect": "extraTime",
+   "value": 4,
+   "desc": "+4 detik di Stroke Duel"
+  },
+  "lines": [
+   {
+    "ja": "夜道は、灯りとともに。",
+    "tr": "Jalan malam, bersama cahaya pelita."
+   },
+   {
+    "ja": "急がず、確かに進みましょう。",
+    "tr": "Mari melangkah tanpa tergesa, tapi pasti."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/flins/idle.svg",
+   "happy": "/chibi/flins/happy.svg",
+   "sad": "/chibi/flins/sad.svg",
+   "sleep": "/chibi/flins/sleep.svg"
+  }
+ },
+ {
+  "id": "aino",
+  "name": "Aino",
+  "nameJa": "アイノ",
+  "region": "nodkrai",
+  "element": "hydro",
+  "buff": {
+   "game": "kana-rain",
+   "effect": "scoreMult",
+   "value": 1.2,
+   "desc": "Skor Kana Rain ×1,2"
+  },
+  "lines": [
+   {
+    "ja": "よーし、作ってみよう！",
+    "tr": "Oke, ayo coba buat!"
+   },
+   {
+    "ja": "失敗も、次の材料だよ！",
+    "tr": "Gagal pun jadi bahan untuk berikutnya!"
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/aino/idle.svg",
+   "happy": "/chibi/aino/happy.svg",
+   "sad": "/chibi/aino/sad.svg",
+   "sleep": "/chibi/aino/sleep.svg"
+  }
+ },
+ {
+  "id": "ineffa",
+  "name": "Ineffa",
+  "nameJa": "イネファ",
+  "region": "nodkrai",
+  "element": "electro",
+  "buff": {
+   "game": "speed-speak",
+   "effect": "extraTime",
+   "value": 2,
+   "desc": "+2 detik di Speed Speak"
+  },
+  "lines": [
+   {
+    "ja": "任務を開始します。",
+    "tr": "Memulai tugas."
+   },
+   {
+    "ja": "効率よく学びましょう。",
+    "tr": "Mari belajar dengan efisien."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/ineffa/idle.svg",
+   "happy": "/chibi/ineffa/happy.svg",
+   "sad": "/chibi/ineffa/sad.svg",
+   "sleep": "/chibi/ineffa/sleep.svg"
+  }
+ },
+ {
+  "id": "columbina",
+  "name": "Columbina",
+  "nameJa": "コロンビーナ",
+  "region": "nodkrai",
+  "element": "hydro",
+  "buff": {
+   "game": "fill-blank-rush",
+   "effect": "comboMult",
+   "value": 1.2,
+   "desc": "Multiplier combo Fill-Blank Rush ×1,2"
+  },
+  "lines": [
+   {
+    "ja": "静かな歌を、聞かせてあげる。",
+    "tr": "Akan kuperdengarkan lagu yang tenang."
+   },
+   {
+    "ja": "月の光は、誰にでも降りそそぐの。",
+    "tr": "Cahaya bulan menyinari siapa saja."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/columbina/idle.svg",
+   "happy": "/chibi/columbina/happy.svg",
+   "sad": "/chibi/columbina/sad.svg",
+   "sleep": "/chibi/columbina/sleep.svg"
+  }
+ },
+ {
+  "id": "illuga",
+  "name": "Illuga",
+  "nameJa": "イルーガ",
+  "region": "nodkrai",
+  "element": "geo",
+  "buff": {
+   "game": "weekly-boss",
+   "effect": "damageMult",
+   "value": 1.15,
+   "desc": "Serangan Weekly Boss ×1,15"
+  },
+  "lines": [
+   {
+    "ja": "灯台の光は、消させない。",
+    "tr": "Cahaya mercusuar takkan kubiarkan padam."
+   },
+   {
+    "ja": "見張りは任せてくれ。",
+    "tr": "Serahkan penjagaan padaku."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/illuga/idle.svg",
+   "happy": "/chibi/illuga/happy.svg",
+   "sad": "/chibi/illuga/sad.svg",
+   "sleep": "/chibi/illuga/sleep.svg"
+  }
+ },
+ {
+  "id": "odette",
+  "name": "Odette",
+  "nameJa": "オデット",
+  "region": "snezhnaya",
+  "element": "cryo",
+  "buff": {
+   "game": "particle-shooter",
+   "effect": "scoreMult",
+   "value": 1.2,
+   "desc": "Skor Particle Shooter ×1,2"
+  },
+  "lines": [
+   {
+    "ja": "雪の上でも、優雅にね。",
+    "tr": "Di atas salju pun, tetap anggun."
+   },
+   {
+    "ja": "さあ、一緒に踊りましょう。",
+    "tr": "Ayo, kita menari bersama."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/odette/idle.svg",
+   "happy": "/chibi/odette/happy.svg",
+   "sad": "/chibi/odette/sad.svg",
+   "sleep": "/chibi/odette/sleep.svg"
+  }
+ },
+ {
+  "id": "alyosha",
+  "name": "Alyosha",
+  "nameJa": "アリョーシャ",
+  "region": "snezhnaya",
+  "element": "electro",
+  "buff": {
+   "game": "domain-run",
+   "effect": "comboShield",
+   "value": 1,
+   "desc": "Abaikan 1 jawaban salah di Domain Run"
+  },
+  "lines": [
+   {
+    "ja": "森のことなら、任せろ。",
+    "tr": "Kalau soal hutan, serahkan padaku."
+   },
+   {
+    "ja": "獲物を待つのも、修行だ。",
+    "tr": "Menunggu buruan pun bagian dari latihan."
+   }
+  ],
+  "assets": {
+   "idle": "/chibi/alyosha/idle.svg",
+   "happy": "/chibi/alyosha/happy.svg",
+   "sad": "/chibi/alyosha/sad.svg",
+   "sleep": "/chibi/alyosha/sleep.svg"
   }
  }
 ]

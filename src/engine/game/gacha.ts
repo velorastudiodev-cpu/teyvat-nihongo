@@ -8,11 +8,14 @@ import { PULL_COST, roll, seeded, weekId, type Rarity } from './rules'
 
 export interface Reward { rarity: Rarity; kind: 'character' | 'theme' | 'outfit' | 'sticker'; id: string; name: string; dupe?: number }
 
-/** This week's featured character: a drawn one you don't own yet, if any. */
+// a character "has art" when it has a drawn SVG or bundled illustrations; silhouettes come only once those run out
+const hasArt = (c: (typeof characters)[number]) => !!DESIGNS[c.id] || c.assets.idle.endsWith('.webp')
+
+/** This week's featured character: one with art that you don't own yet, if any. */
 export async function featured() {
   const owned = new Set(await db.owned.toCollection().primaryKeys())
   const pool = characters.filter((c) => !owned.has(c.id))
-  const drawn = pool.filter((c) => DESIGNS[c.id])
+  const drawn = pool.filter(hasArt)
   const list = drawn.length ? drawn : pool
   return list.length ? list[Math.floor(seeded(weekId(today()))() * list.length)] : undefined
 }
@@ -31,7 +34,7 @@ export async function pull(times: number): Promise<Reward[] | undefined> {
     if (r.rarity === 5) {
       const owned = new Set(await db.owned.toCollection().primaryKeys())
       const free = characters.filter((c) => !owned.has(c.id))
-      const drawn = free.filter((c) => DESIGNS[c.id])      // drawn chibi first; silhouettes only once those run out
+      const drawn = free.filter(hasArt)
       const c = feat && !owned.has(feat.id) && Math.random() < 0.5 ? feat : pickOne(drawn.length ? drawn : free)
       if (c) { await db.owned.add({ charId: c.id, friendship: 0, obtainedAt: Date.now() }); out.push({ rarity: 5, kind: 'character', id: c.id, name: c.name }) }
       else out.push({ rarity: 5, kind: 'character', id: 'paimon', name: 'Starglitter', dupe: 60 })

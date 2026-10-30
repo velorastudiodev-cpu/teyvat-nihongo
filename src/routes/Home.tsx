@@ -11,6 +11,7 @@ import { REALMS } from '../ui/region/regions'
 import { useHomeRegion } from '../ui/region/useRealm'
 import { RaidenCard } from '../modules/raiden/RaidenCard'
 import { greetingFor } from '../modules/raiden/lines'
+import { WorldEvents } from '../modules/world/WorldPages'
 
 export function Home() {
   const profile = useLiveQuery(() => db.profile.get('me'))
@@ -44,6 +45,7 @@ export function Home() {
           </div>
         </Link>
 
+        <WorldEvents profile={profile} />
         <RaidenCard profile={profile} show="events" />
 
         {/* the one next step */}

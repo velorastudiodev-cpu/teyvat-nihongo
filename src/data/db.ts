@@ -23,6 +23,30 @@ export interface Profile {
   realm?: 'auto' | Realm   // screen theme; 'auto' follows your region
   outfit?: string
   raiden?: RaidenBond
+  fatui?: FatuiState
+  abyss?: AbyssState
+  celestia?: CelestiaState
+}
+
+/** Harbinger duels won, and the contracts in force (see engine/fatui). */
+export interface FatuiState {
+  beaten: string[]
+  loan?: { start: string; due: string; result?: 'repaid' | 'collected'; collected?: number }
+  oath?: { start: string; result?: 'kept' | 'broken' }
+}
+/** The Five Sinners: last reading of each one's stage, seals from won rifts, daily drains (see engine/abyss). */
+export interface AbyssState {
+  stages: Record<string, number>
+  seals: Record<string, number>        // sinner → sealed until (epoch ms)
+  drained: Record<string, number>      // date → Kirameki drained that day
+  seen?: Record<string, number>        // sinner → highest stage already announced
+}
+/** Judgments of the Four Shades and Celestia's weekly blessing (see engine/celestia). */
+export interface CelestiaState {
+  judgments: { shade: string; at: number; until?: number; reason: string; lifted?: number }[]
+  blessing?: { shade: string; until: number }
+  blessWeek?: string
+  seen?: number                        // newest judgment already shown
 }
 
 /** The Raiden Shogun's questline (see engine/raiden). */

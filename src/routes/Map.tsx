@@ -11,6 +11,7 @@ import { RegionScene } from '../ui/region/scenes'
 import { REALMS } from '../ui/region/regions'
 import { sfx } from '../ui/sfx'
 import { toast } from '../ui/toastBus'
+import { useHomeRegion } from '../ui/region/useRealm'
 
 const SIGIL_MSG = {
   count: 'Lambang itu bergetar pelan…',
@@ -22,6 +23,7 @@ const SIGIL_MSG = {
 export function SkillMap() {
   const profile = useLiveQuery(() => db.profile.get('me'))
   const passed = useLiveQuery(() => db.unlocks.where('id').startsWith('gate:').primaryKeys(), []) ?? []
+  const home = useHomeRegion(profile)
   if (!profile) return null
   if (!profile.stage || !profile.target) return <Navigate to="/onboarding" />
   const current = stageIndex(profile.stage)
@@ -43,9 +45,12 @@ export function SkillMap() {
         {REGIONS.map((r) => {
           const realm = REALMS[r.id]
           const stages = STAGES.filter((s) => STAGE_INFO[s].regions.includes(r.id))
-          const open = stages.some((s) => stageIndex(s) <= current)
-          const here = stages.some((s) => stageIndex(s) === current)
-          const beyond = stages.every((s) => stageIndex(s) > target)
+          // Snezhnaya has no stage of its own: it is the journey's end, reached by passing the N1 mock test
+          const finale = r.id === 'snezhnaya'
+          const order = REGIONS.findIndex((x) => x.id === r.id)
+          const open = finale ? home === 'snezhnaya' : stages.some((s) => stageIndex(s) < current) || (stages.some((s) => stageIndex(s) === current) && order <= REGIONS.findIndex((x) => x.id === home))
+          const here = r.id === home
+          const beyond = finale ? target < stageIndex('N1') : stages.every((s) => stageIndex(s) > target)
           const sigil = (
             <span className={`g-chip h-11 w-11 ${here ? 'ring-4 ring-glow' : ''}`}>
               <Icon name={realm.element === 'none' ? 'sparkle' : realm.element} className="h-6 w-6" />
@@ -94,7 +99,10 @@ export function SkillMap() {
                       </li>
                     )
                   })}
-                  {!beyond && stages.includes('N1') && (
+                  {finale && (open
+                    ? <li><Link to="/snezhnaya" className="g-btn w-full bg-primary text-white"><Icon name="cryo" /> Audiensi dengan Tsaritsa</Link></li>
+                    : <li className="flex items-center gap-2 rounded-2xl border border-dashed border-ink/30 px-3 py-2 font-display font-bold opacity-70"><Icon name="lock" className="h-4 w-4" /> Lulus JLPT N1 Mock Test untuk menyeberang ke Snezhnaya</li>)}
+                  {!beyond && !finale && r.id === 'nodkrai' && (
                     <li><Link to="/exam" className="g-btn w-full bg-geo"><Icon name="medal" /> Ujian akhir: JLPT N1 Mock Test</Link></li>
                   )}
                   {!beyond && !stages.includes('N1') && (passed.includes(`gate:${r.id}`)

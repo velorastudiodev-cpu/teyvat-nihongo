@@ -45,6 +45,8 @@ import { Revenge } from './modules/daily/Revenge'
 import { GateExam, MockTest } from './modules/exam/ExamPages'
 import { Insight } from './modules/insight/Insight'
 import { RaidenLetter, RaidenPage, RaidenTalk, RaidenTrial, RaidenVow } from './modules/raiden/RaidenPage'
+import { AbyssPage, AbyssRift, CelestiaPage, FatuiDuel, FatuiPage, NewGate } from './modules/world/WorldPages'
+import { HexenDrill, HexenPage, SnezhnayaPage } from './modules/world/NorthPages'
 
 const router = createBrowserRouter([
   {
@@ -54,17 +56,17 @@ const router = createBrowserRouter([
       { path: '/onboarding', element: <Onboarding /> },
       { path: '/map', element: <SkillMap /> },
       { path: '/kana', element: <KanaHub /> },
-      { path: '/kana/learn/:script', element: <Lesson /> },
+      { path: '/kana/learn/:script', element: <NewGate><Lesson /></NewGate> },
       { path: '/review', element: <Review /> },
       { path: '/kanji', element: <KanjiHub kind="kanji" /> },
-      { path: '/kanji/learn/:level', element: <KanjiLesson /> },
+      { path: '/kanji/learn/:level', element: <NewGate><KanjiLesson /></NewGate> },
       { path: '/vocab', element: <KanjiHub kind="vocab" /> },
-      { path: '/vocab/learn/:level', element: <VocabLesson /> },
+      { path: '/vocab/learn/:level', element: <NewGate><VocabLesson /></NewGate> },
       { path: '/write/:char', element: <Write /> },
       { path: '/learn', element: <LearnHub /> },
       { path: '/games', element: <GamesHub /> },
       { path: '/grammar', element: <GrammarHub /> },
-      { path: '/grammar/learn/:id', element: <GrammarLesson /> },
+      { path: '/grammar/learn/:id', element: <NewGate><GrammarLesson /></NewGate> },
       { path: '/reading', element: <ReadingHub /> },
       { path: '/reading/:id', element: <ReadingText /> },
       { path: '/listening', element: <Listening /> },
@@ -92,6 +94,14 @@ const router = createBrowserRouter([
       { path: '/games/memory-match', element: <MemoryMatch /> },
       { path: '/characters/:id?', element: <Characters /> },
       { path: '/raiden', element: <RaidenPage /> },
+      { path: '/fatui', element: <FatuiPage /> },
+      { path: '/fatui/duel/:id', element: <FatuiDuel /> },
+      { path: '/abyss', element: <AbyssPage /> },
+      { path: '/abyss/rift/:id', element: <AbyssRift /> },
+      { path: '/celestia', element: <CelestiaPage /> },
+      { path: '/snezhnaya', element: <SnezhnayaPage /> },
+      { path: '/hexenzirkel', element: <HexenPage /> },
+      { path: '/hexenzirkel/drill/:witch', element: <HexenDrill /> },
       { path: '/raiden/letter', element: <RaidenLetter /> },
       { path: '/raiden/talk', element: <RaidenTalk /> },
       { path: '/raiden/vow', element: <RaidenVow /> },

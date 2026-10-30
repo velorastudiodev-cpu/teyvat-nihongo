@@ -54,6 +54,9 @@ export function LearnHub() {
         { to: '/listening', glyph: '聴', name: 'Mendengar', desc: 'Dengar lalu pilih, dikte, 0.75×–1.25×' },
         { to: '/speaking', glyph: '話', name: 'Berbicara', desc: 'Shadowing, baca kanji, game suara' },
       ]} />
+      <Section title="Buntu?" items={[
+        { to: '/hexenzirkel', icon: 'sparkle', name: 'Hexenzirkel', desc: 'Pesta teh para penyihir: rencana, ramalan kartu rawan, dongeng pengingat' },
+      ]} />
       <Section title="Perjalanan" items={[
         { to: '/map', icon: 'map', name: 'Peta Teyvat', desc: 'Region, tahap, dan Gate Exam' },
         { to: '/exam', icon: 'exam', name: 'JLPT Mock Test', desc: 'Simulasi ujian dengan timer per bagian' },
@@ -81,6 +84,12 @@ export function GamesHub() {
   const skills = [...new Set(GAMES.map((g) => g.skill))]
   return (
     <div className="mx-auto max-w-3xl space-y-5 py-4">
+      <Section title="Dunia Teyvat" items={[
+        { to: '/fatui', icon: 'snowmask', name: 'Organisasi Fatui', desc: 'Duel para Harbinger dan kontrak Pantalone & Arlecchino' },
+        { to: '/abyss', icon: 'abyss', name: 'Ancaman Abyss', desc: 'Lima Pendosa Khaenri\'ah memangsa kelalaian belajarmu' },
+        { to: '/celestia', icon: 'halo', name: 'Celestia', desc: 'Tatanan Empat Bayangan: berkat bagi yang taat' },
+        { to: '/snezhnaya', icon: 'cryo', name: 'Snezhnaya', desc: 'Negeri Tsaritsa di akhir perjalanan; Nod-Krai di gerbangnya' },
+      ]} />
       <Section title="Event" items={[
         { to: '/daily', icon: 'scroll', name: 'Commission Harian', desc: '4 misi kecil setiap hari, hadiah Kirameki' },
         { to: '/boss', icon: 'mask', name: 'Weekly Boss', desc: 'Lawan Harbinger dengan materi minggu ini' },
